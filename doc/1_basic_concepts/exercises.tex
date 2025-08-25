@@ -248,3 +248,126 @@ where $\lambda_j \geq 0$ for each $j = 1, \ldots, t$.
   Consider e.g.\ $u = (1,0,1)$, which satisfies $1 \geq 1^2 + 0^2$ and so $u \in S$.
   Letting however $\lambda_1 = 2$ (and $\lambda_2 = 0$), we have $2u = (2,0,2) \notin S$ as $2 \not\geq 2^2 + 0^2$.
 \end{solution}
+
+\begin{exercise}
+  Consider the linear system $0 \leq x_i \leq 1$ for $i = 1, \ldots, n$, and let $P$ denote the solution set.
+  Explain how to solve a linear programming problem
+  \begin{equation}
+    \max\{ c^T x : x \in P \}.
+  \end{equation}
+  What if the linear system was $a_i \leq x_i \leq b_i$ for $i = 1, \ldots, n$?
+  Here we assume $a_i \leq b_i$ for each $i$.
+\end{exercise}
+
+\begin{solution}
+  We choose the solution component-wise, by maximizing each component $c_i x_i$.
+  If $c_i > 0$, simply let $x_i = 1$.
+  If $c_i < 0$, increasing $x_i$ decreases the objective function, so we let $x_i = 0$.
+  The same argument holds in the alternate case, just choose $x_i = b_i$ or $x_i = a_i$ respectively based on the sign of $c_i$.
+\end{solution}
+
+\begin{exercise}
+  Is the union of two convex sets again convex?
+\end{exercise}
+
+\begin{solution}
+  No.
+  Let $A = [-2, -1]$ and $B = [1, 2]$.
+  Then $A \cup B = [-2, -1] \cup [1, 2]$ is not convex, as e.g.\ $\tfrac{1}{2} 1 + (1 - \tfrac{1}{2}) (-1) = 0 \notin A \cup B$.
+\end{solution}
+
+\begin{exercise}
+  Determine the sum $A + B$ in each of the following cases:
+  \begin{align*}
+    (i) && A &= \{ (x, y) : x^2 + y^2 \leq 1 \}, & B &= \{ (3, 4) \}; \\
+    (ii) && A &= \{ (x, y) : x^2 + y^2 \leq 1 \}, & B &= [0, 1] \times \{0\}; \\
+    (iii) && A &= \{ (x, y) : x + 2y = 5 \}, & B &= \{ (x, y) : x = y, 0 \leq x \leq 1 \}; \\
+    (iv) && A &= [0, 1] \times [1, 2], & B &= [0, 2] \times [0, 2].
+  \end{align*}
+\end{exercise}
+
+\begin{solution}
+  Taking the cases in turn:
+
+  (\emph{i}) The sum $A + B$ is given by the set of points $\{ u + (3, 4) : u \in A \}$, that is, the unit disk centred around $(3, 4)$.
+
+  (\emph{ii}) The sum $A + B$ is given by those points that are either in the rectangle with corners at $(0,-1)$, $(1, -1)$, $(1, 1)$ and $(0, 1)$, or in the unit disks centred about $(0,0)$ or $(1, 0)$.
+
+  (\emph{iii}) Let $B = \{ (\lambda, \lambda) : 0 \leq \lambda \leq 1 \}$.
+  Then we can write a point $(x, y) \in A + B$ as
+  \begin{equation}
+    (x, y) = (x_0 + \lambda, y_0 + \lambda).
+  \end{equation}
+  Then
+  \begin{equation}
+    x + 2y = (x_0 + 2y_0) + 3 \lambda = 5 + 3\lambda,
+  \end{equation}
+  which gives us that
+  \begin{equation}
+    A + B = \{ (x, y) : 5 \leq x + 2y \leq 8 \}.
+  \end{equation}
+
+  (\emph{iv}) The sum $A + B$ is simply given by $[0, 3] \times [1, 4]$.
+\end{solution}
+
+\begin{exercise}
+  More enumerated exercises\dots
+
+  \begin{enumerate}[label = (\emph{\roman*})]
+    \item Prove that, for every $\lambda \in \mathbb{R}$ and $A, B \subseteq \mathbb{R}^n$, it holds that $\lambda(A + B) = \lambda A + \lambda B$.
+
+    \item Is it true that $(\lambda + \mu) A = \lambda A + \mu A$ for every $\lambda, \mu \in \mathbb{R}$ and $A \subseteq \mathbb{R}^n$?
+      If not, find a counterexample.
+
+    \item Show that, if $\lambda, \mu \geq 0$ and $A \subseteq \mathbb{R}^n$ is convex, then $(\lambda + \mu) A = \lambda A + \mu A$.
+  \end{enumerate}
+\end{exercise}
+
+\begin{solution}
+  Taking the exercises in turn again\dots
+
+  (\emph{i}) We have that
+  \begin{align*}
+    \lambda (A + B) &= \{ \lambda (a + b) : a \in A, b \in B \} \\
+    &= \{ \lambda a + \lambda b : a \in A, b \in B \} \\
+    &= \{ a + b : a \in \lambda A, b \in \lambda B \} \\
+    &= \lambda A + \lambda B.
+  \end{align*}
+
+  (\emph{ii}) No, it is not true.
+  Consider $A = [1, 2]$, $\lambda = 1$ and $\mu = -1$.
+  Then we have
+  \begin{equation}
+    (\lambda + \mu) A = 0A = \{ 0 \}
+    \quad\text{and}\quad
+    \lambda A + \mu A = [1, 2] + [-2, -1] = [-1, 1].
+  \end{equation}
+
+  (\emph{iii}) Let $\lambda, \mu \geq 0$.
+  For any $a \in A$, we have that
+  \begin{equation}
+    (\lambda + \mu) a = \lambda a + \mu a \in \lambda A + \mu A,
+  \end{equation}
+  so $(\lambda + \mu) A \subseteq \lambda A + \mu A$.
+  For the reverse inclusion, let $u \in \lambda A + \mu A$.
+  Then $u = \lambda a + \mu b$ for some $a, b \in A$.
+  Scaling the factors, we have that
+  \begin{equation}
+    u = (\lambda + \mu) \left(
+      \frac{\lambda}{\lambda + \mu} a + \frac{\mu}{\lambda + \mu} b
+    \right).
+  \end{equation}
+  As both the inner coefficients are non-negative and sum to one, and $a, b \in A$, we have that
+  \begin{equation}
+    \frac{\lambda}{\lambda + \mu} a + \frac{\mu}{\lambda + \mu} b \in A,
+  \end{equation}
+  and $u \in (\lambda + \mu) A$.
+  Therefore, $(\lambda + \mu) A = \lambda A + \mu A$ with the given assumptions.
+\end{solution}
+
+\begin{exercise}
+  Show that if $C_1, \dots, C_t \subseteq \mathbb{R}^n$ are all convex sets, then $C_1 \cap \dots \cap C_t$ is convex.
+  Do the same when all sets are affine (or linear subspaces, or convex cones).
+  In fact, a similar result for the intersection of any family of convex sets.
+  Explain this.
+\end{exercise}
