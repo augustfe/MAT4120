@@ -162,3 +162,89 @@ We shall see that this means that $\mathbb{R}^n_+$ is a convex cone, a special t
     }
   \end{figure}
 \end{solution}
+
+\begin{exercise}
+  Show that each convex cone is indeed a convex set.
+\end{exercise}
+
+\begin{solution}
+  To see that a convex cone is a convex set, let first $x_1,x_2 \in C$.
+  Then let $0 \leq \lambda_1 \leq 1$ and $\lambda_2 = 1 - \lambda_1 \geq 0$.
+  We then have by definition of the convex cone that
+  \begin{equation}
+    \lambda_1 x_1 + (1 - \lambda_1) x_1 = \lambda_1 x_1 + \lambda_2 x_2 \in C,
+  \end{equation}
+  showing that the set is convex.
+\end{solution}
+
+\begin{exercise}
+  Let $A \in \mathbb{R}^{m \times n}$ and consider the set $C = \{ x \in \mathbb{R}^n : Ax \leq O \}$.
+  Prove that $C$ is a convex cone.
+\end{exercise}
+
+\begin{solution}
+  Let $x_1, x_2 \in C$ and $\lambda_1, \lambda_2 \in \mathbb{R}_+$.
+  We then have
+  \begin{equation}
+    A(\lambda_1 x_1 + \lambda_2 x_2) = \lambda_1 Ax_1 + \lambda_2 Ax_2 \leq \lambda_1 O + \lambda_2 O = O,
+  \end{equation}
+  showing that the set is a convex cone.
+\end{solution}
+
+\paragraph{Polyhedral cone}
+A convex cone of the form $\{x \in \mathbb{R}^n : Ax \leq O \}$ where $A \in \mathbb{R}^{m \times n}$ is called a \emph{polyhedral cone}.
+Let $x_1, \ldots, x_t \in \mathbb{R}^n$ and let $C(x_1, \ldots, x_t)$ be the set of vectors of the form
+\begin{equation}
+  u = \sum_{j = 1}^{t} \lambda_j x_j,
+\end{equation}
+where $\lambda_j \geq 0$ for each $j = 1, \ldots, t$.
+
+\begin{exercise}
+  Prove that $C(x_1, \ldots, x_t)$ is a convex cone.
+\end{exercise}
+
+\begin{solution}
+  Let $C = C(x_1, \ldots, x_t)$ here for convenience.
+  Let $u, v \in C$ with respective coefficients $\lambda_j, \mu_j \geq 0$ for $j = 1, \ldots, t$.
+  Then, for arbitrary coefficients $\alpha, \beta \geq 0$, we have
+  \begin{equation}
+    \begin{split}
+      A(\alpha u + \beta v) &= A\left(\alpha \sum_{j=1}^{t} \lambda_j x_j + \beta \sum_{j=1}^{t} \mu_j x_j\right) \\
+      &= \alpha A \sum_{j=1}^{t} \lambda_j x_j + \beta A \sum_{j=1}^{t} \mu_j x_j \\
+      &\leq \alpha O + \beta O = O,
+    \end{split}
+  \end{equation}
+  showing that $\alpha u + \beta v \in C$, and that $C$ is a convex cone.
+\end{solution}
+
+\begin{exercise}
+  Let $S = \{ (x, y, z) : z \geq x^2 + y^2 \} \subset \mathbb{R}^3$.
+  Sketch the set and verify that it is a convex set.
+  Is $S$ a finitely generated cone?
+\end{exercise}
+
+\begin{solution}
+  Let $u = (x_1, y_1, z_1)$ and $v = (x_2, y_2, z_2)$ be two points in $S$, and $0 \leq \lambda \leq 1$.
+  We then seek to show that $\lambda u + (1 - \lambda) v \in S$.
+  Note that $f(x) = x^2$ is convex, i.e.\ that $f(\lambda x_1 + (1 - \lambda) x_2) \leq \lambda f(x_1) + (1 - \lambda) f(x_2)$.
+
+  Considering the right hand side of the inequality first, we have component-wise that
+  \begin{equation}
+    \begin{split}
+      (\lambda x_1 + (1 - \lambda) x_2)^2 &\leq \lambda x_1^2 + (1 - \lambda) x_2^2 \\
+      (\lambda y_1 + (1 - \lambda) y_2)^2 &\leq \lambda y_1^2 + (1 - \lambda) y_2^2,
+    \end{split}
+  \end{equation}
+  and therefore
+  \begin{equation}
+    \begin{split}
+      (\lambda x_1 + (1 - \lambda) x_2)^2 + (\lambda y_1 + (1 - \lambda) y_2)^2 &\leq \lambda (x_1^2 + y_1^2) + (1 - \lambda) (x_2^2 + y_2^2) \\
+      &\leq \lambda z_1 + (1 - \lambda) z_2,
+    \end{split}
+  \end{equation}
+  and so $\lambda u + (1 - \lambda) v \in S$, showing that $S$ is convex.
+
+  $S$ is not a finitely generated cone, as it should then be closed under scaling.
+  Consider e.g.\ $u = (1,0,1)$, which satisfies $1 \geq 1^2 + 0^2$ and so $u \in S$.
+  Letting however $\lambda_1 = 2$ (and $\lambda_2 = 0$), we have $2u = (2,0,2) \notin S$ as $2 \not\geq 2^2 + 0^2$.
+\end{solution}
