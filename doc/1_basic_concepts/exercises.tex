@@ -1,0 +1,81 @@
+\section{The basic concepts}
+
+\begin{exercise}
+  Let \( x_1, x_2, y_1, y_2 \in \mathbb{R}^n \) and assume that $x_1 \leq x_2$ and $y_1 \leq y_2$.
+  Verify that the inequality $x_1 + y_1 \leq x_2 + y_2$ holds.
+  Let now $\lambda$ be a non-negative real number.
+  Explain why $\lambda x_1 \leq \lambda x_2$ holds.
+  What happens if $\lambda$ is negative?
+\end{exercise}
+
+\begin{solution}
+  With $x_1 \leq x_2$, we have that
+  \begin{equation}
+    (x_1)_i \leq (x_2)_i \qquad \forall i = 1, \ldots, n.
+  \end{equation}
+  Component-wise, we then have
+  \begin{equation}
+    (x_1)_i + (y_1)_i \leq (x_2)_i + (y_2)_i \qquad \forall i = 1, \ldots, n,
+  \end{equation}
+  and thus $x_1 + y_1 \leq x_2 + y_2$.
+  Similarly, if $\lambda \geq 0$, we have
+  \begin{equation}
+    \lambda (x_1)_i \leq \lambda (x_2)_i \qquad \forall i = 1, \ldots, n,
+  \end{equation}
+  and therefore $\lambda x_1 \leq \lambda x_2$.
+  Finally, for $\lambda < 0$, the inequality reverses:
+  \begin{equation}
+    \lambda (x_1)_i \geq \lambda (x_2)_i \qquad \forall i = 1, \ldots, n,
+  \end{equation}
+  giving $\lambda x_1 \geq \lambda x_2$.
+\end{solution}
+
+\paragraph{Example 1.2.1}
+\emph{(The non-negative real vectors)}
+The sum of two non-negative numbers is again a non-negative number.
+Similarly, we see that the sum of two non-negative vectors is a non-negative vector.
+Moreover, if we multiply a non-negative vector by a non-negative number, we get another non-negative vector.
+These two properties may be summarized by saying that $\mathbb{R}^n_+$ is closed under addition and multiplication by non-negative scalars.
+We shall see that this means that $\mathbb{R}^n_+$ is a convex cone, a special type of convex set.
+
+\begin{exercise}
+  Think about the question in Exercise 1.1 again, now in light of the properties explained in Example 1.2.1.
+\end{exercise}
+
+\begin{solution}
+  We can now rewrite $x_1 \leq x_2$ as $x_2 - x_1 \in \mathbb{R}^n_+$.
+  We can now easily consider the first question as
+  \begin{equation}
+    (x_2 + y_2) - (x_1 + y_1) = (x_2 - x_1) + (y_2 - y_1) \in \mathbb{R}^n_+,
+  \end{equation}
+  as $\mathbb{R}^n_+$ is closed under addition.
+  Similarly, we can use the fact that $\mathbb{R}^n_+$ is closed under multiplication by non-negative scalars to see that
+  \begin{equation}
+    (\lambda x_2 - \lambda x_1) = \lambda (x_2 - x_1) \in \mathbb{R}^n_+,
+  \end{equation}
+  for $\lambda \geq 0$.
+  As $\mathbb{R}^n_+$ is not closed under multiplication by negative scalars, we cannot conclude that $\lambda x_1 \leq \lambda x_2$ for $\lambda < 0$.
+\end{solution}
+
+\begin{exercise}
+  Let $a \in \mathbb{R}^n_+$ and assume that $x \leq y$.
+  Show that $a^T x \leq a^T y$.
+  What happens if we do not require $a$ to be non-negative here?
+\end{exercise}
+
+\begin{solution}
+  With $a \in \mathbb{R}^n_+$ and $x \leq y$, we have that
+  \begin{equation}
+    x_i \leq y_i \qquad \forall i = 1, \ldots, n,
+  \end{equation}
+  and consequently
+  \begin{equation}
+    a_i x_i \leq a_i y_i \qquad \forall i = 1, \ldots, n,
+  \end{equation}
+  as shown previously.
+  Written in vector notation, we therefore have
+  \begin{equation}
+    a^T x \leq a^T y.
+  \end{equation}
+  With $a$ not necessarily non-negative, we may have neither $a^T x \geq a^T y$ nor $a^T x \leq a^T y$, as we could have $a_i x_i > a_i y_i$ for some $i$.
+\end{solution}
