@@ -1,0 +1,88 @@
+\begin{tikzpicture}[line cap=round, line join=round, >=latex]
+  \tikzset{
+    axis/.style={gray, dashed},
+    tick/.style={gray, thick},
+    vlabel/.style={font=\small},
+  }
+
+  \begin{scope}
+    \coordinate (A1) at (0,0);
+    \coordinate (B1) at (1,0);
+
+    \draw[axis] ($(A1)+(-0.4,0)$) -- ($(B1)+(0.4,0)$);
+
+    \def\yt{0.15}
+    \foreach \P in {A1,B1}{
+      \draw[tick] ($(\P)+(0,\yt)$) -- ($(\P)+(0,-\yt)$);
+    }
+    \node[vlabel, below left] at (A1) {$0$};
+    \node[vlabel, below right] at (B1) {$e_1$};
+
+    \draw[very thick, my_red] (A1)--(B1);
+  \end{scope}
+
+  \begin{scope}[xshift=2.5cm]
+    \coordinate (O2) at (0,0);
+    \coordinate (X2) at (1,0);
+    \coordinate (Y2) at (0,1);
+
+    \draw[axis] ($(O2)+(-0.4,0)$)--($(X2)+(0.4,0)$);
+    \draw[axis] ($(O2)+(0,-0.4)$)--($(Y2)+(0,0.4)$);
+
+    \coordinate (A2) at (0,0);
+    \coordinate (B2) at (1,0);
+    \coordinate (C2) at (0,1);
+
+    \fill[my_red, opacity=0.18] (A2)--(B2)--(C2)--cycle;
+    \draw[very thick,my_red] (A2)--(B2)--(C2)--cycle;
+
+    \node[vlabel, below left]  at (A2) {$0$};
+    \node[vlabel, below right] at (B2) {$e_1$};
+    \node[vlabel, above left]  at (C2) {$e_2$};
+  \end{scope}
+
+  \begin{scope}[
+      xshift=5cm,
+      x={(1,0)}, y={(0,1)}, z={(0.8, 0.6)}
+    ]
+
+    % Axes 0..1 with padding
+    \draw[axis] (-0.4,0,0) -- (1.4,0,0);
+    \draw[axis] (0,-0.4,0) -- (0,1.4,0);
+    \draw[axis] (0,0,-0.4) -- (0,0,1.4);
+
+    % Ticks at 1
+    \def\tt{0.06}
+    \draw[tick] (1,0,0)++(\tt,0,0)--+(-2*\tt,0,0);
+    \draw[tick] (0,1,0)++(0,\tt,0)--+(0,-2*\tt,0);
+    \draw[tick] (0,0,1)++(\tt,0,0)--+(-2*\tt,0,0);
+
+    % Vertices
+    \coordinate (O3) at (0,0,0);
+    \coordinate (X3) at (1,0,0);
+    \coordinate (Y3) at (0,1,0);
+    \coordinate (Z3) at (0,0,1);
+
+    \begin{scope}[canvas is xz plane at y=0] % triangle O-X-Z
+      \fill[my_red, opacity=0.18] (0,0) -- (1,0) -- (0,1) -- cycle;
+    \end{scope}
+
+    \begin{scope}[canvas is yz plane at x=0] % triangle O-Y-Z
+      \fill[my_red, opacity=0.18] (0,0) -- (1,0) -- (0,1) -- cycle;
+    \end{scope}
+
+    \begin{scope}[canvas is xy plane at z=0] % triangle O-X-Y
+      \fill[my_red, opacity=0.18] (0,0) -- (1,0) -- (0,1) -- cycle;
+    \end{scope}
+
+    \draw[very thick, my_red, dashed] (O3) -- (Z3);
+    \draw[very thick, my_red] (O3) -- (X3) -- (Z3) -- (Y3);
+    \draw[very thick, my_red] (O3) -- (Y3) -- (X3);
+
+    % Labels
+    \node[vlabel, below left]  at (O3) {$0$};
+    \node[vlabel, below right] at (X3) {$e_1$};
+    \node[vlabel, above left]  at (Y3) {$e_2$};
+    \node[vlabel, above right] at (Z3) {$e_3$};
+  \end{scope}
+\end{tikzpicture}

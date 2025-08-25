@@ -79,3 +79,86 @@ We shall see that this means that $\mathbb{R}^n_+$ is a convex cone, a special t
   \end{equation}
   With $a$ not necessarily non-negative, we may have neither $a^T x \geq a^T y$ nor $a^T x \leq a^T y$, as we could have $a_i x_i > a_i y_i$ for some $i$.
 \end{solution}
+
+\begin{exercise}
+  Show that every ball $B(a, r): = \{ x \in \mathbb{R}^n : \norm{x - a} \leq r \}$ is convex (where $a \in \mathbb{R}^n$ and $r \geq 0$).
+\end{exercise}
+
+\begin{solution}
+  Let $x, y \in B(a, r)$ for some $a \in \mathbb{R}^n$ and $r \geq 0$.
+  Then, let $0 \leq \lambda \leq 1$ and consider $z = \lambda x + (1 - \lambda) y$.
+  We then have
+  \begin{equation}
+    \begin{split}
+      \norm{z - a} &= \norm{\lambda (x - a) + (1 - \lambda) (y - a)} \\
+      &\leq \lambda \norm{x - a} + (1 - \lambda) \norm{y - a} \\
+      &\leq \lambda r + (1 - \lambda) r = r,
+    \end{split}
+  \end{equation}
+  showing that $z \in B(a, r)$.
+  $B(a, r)$ is therefore convex.
+\end{solution}
+
+\begin{exercise}
+  Explain how you can write the LP problem $\max\{ c^T x : Ax \leq b \}$ in the form $\max\{ c^T x : Ax = b, x \geq O \}$
+\end{exercise}
+
+\begin{solution}
+  We introduce new slack variables $w \in \mathbb{R}^m_+$, where $m$ is the number of rows/inequalities in $A$, defined by
+  \begin{equation}
+    w_j = b_j - (Ax)_j \quad \forall j = 1, \ldots, m.
+  \end{equation}
+  We can then rewrite our system of equations by setting $\tilde{A} =
+  \begin{bmatrix} A & I
+  \end{bmatrix}$, $\tilde{x} =
+  \begin{bmatrix} x \\ w
+  \end{bmatrix}$, and $\tilde{c} =
+  \begin{bmatrix} c \\ 0
+  \end{bmatrix}$.
+  We then have
+  \begin{equation}
+    \tilde{A} \tilde{x} =
+    \begin{bmatrix} A & I
+    \end{bmatrix}
+    \begin{bmatrix} x \\ w
+    \end{bmatrix} = Ax + w = b,
+  \end{equation}
+  and
+  \begin{equation}
+    \tilde{c}^T \tilde{x} =
+    \begin{bmatrix} c \\ 0
+    \end{bmatrix}^T
+    \begin{bmatrix} x \\ w
+    \end{bmatrix} = c^T x.
+  \end{equation}
+  Again, as we require $w \geq 0$, we then have $Ax \leq b$.
+\end{solution}
+
+\begin{exercise}
+  Make a drawing of the standard simplices $S_1$, $S_2$, and $S_3$.
+  Verify that each unit vector $e_j$ lies in $S_n$ ($e_j$ has a one in position $j$, all other components are zero).
+  Each $x \in S_n$ may be written as a linear combination $x = \sum_{j=1}^{n} \lambda_j e_j$ where each $\lambda_j$ is non-negative and $\sum_{j = 1}^{n} \lambda_j = 1$.
+  How?
+  Can this be done in several ways?
+\end{exercise}
+
+\begin{solution}
+
+  \cref{fig:simplices} shows the standard simplices $S_1$, $S_2$, and $S_3$.
+  Clearly each unit vector $e_j$ lies in $S_n$.
+  Each $x \in S_n$ may be written as $\sum_{j=1}^{n} \lambda_j e_j$ where $\lambda_j = x_j$, i.e.\ the coordinate components of $x$.
+
+  \begin{figure}[htbp]
+    \centering
+
+    \resizebox{0.9\textwidth}{!}{
+      \input{1_basic_concepts/simplices.tex}
+    }
+    \caption{
+      The simplices $S_1$, $S_2$, and $S_3$.
+      For $S_1$, the standard simplex is the point $e_1$,
+      for $S_2$, the standard simplex is the line segment between $e_1$ and $e_2$,
+      and for $S_3$, the standard simplex is the triangle with vertices $e_1$, $e_2$, and $e_3$.\label{fig:simplices}
+    }
+  \end{figure}
+\end{solution}
