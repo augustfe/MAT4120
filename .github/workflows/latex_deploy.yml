@@ -1,0 +1,58 @@
+name: Build LaTeX Documents & Deploy
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    name: Compile all LaTeX documents
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Compile LaTeX documents
+        uses: xu-cheng/latex-action@v3
+        with:
+          # point at multiple root files (bash-globbed)
+          root_file: doc/main.tex
+          work_in_root_file_dir: true
+
+      - name: Collect PDFs
+        run: |
+          mkdir -p out
+          cp doc/main.pdf   out/main.pdf
+
+      - name: Upload PDFs artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: latex-pdfs
+          path: out/*.pdf
+
+  deploy_to_gh_pages:
+    name: Deploy to GitHub Pages
+    needs: build
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Download PDFs artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: latex-pdfs
+          path: deployment_assets
+
+      - name: List files in deployment assets (for debugging)
+        run: ls -R deployment_assets
+
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: deployment_assets
+          branch: gh-pages
+          clean: true
