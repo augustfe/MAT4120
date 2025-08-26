@@ -1,0 +1,17 @@
+\begin{tikzpicture}
+  \coordinate (A) at (1, 1);
+  \coordinate (B) at (1, -1);
+  \coordinate (C) at (-1, -1);
+  \coordinate (D) at (-1, 1);
+
+  \fill[my_red, opacity=0.18] (A) -- (B) -- (C) -- (D) -- cycle;
+  \draw[very thick, my_red] (A) -- (B) -- (C) -- (D) -- cycle;
+
+  \draw[gray, dashed] (-1.5, 0) -- (1.5, 0);
+  \draw[gray, dashed] (0, -1.5) -- (0, 1.5);
+
+  \node at (0, 1) [above left] {\tiny$1$};
+  \node at (1, 0) [below right] {\tiny$1$};
+  \node at (0, -1) [below left] {\tiny$-1$};
+  \node at (-1, 0) [below left] {\tiny$-1$};
+\end{tikzpicture}

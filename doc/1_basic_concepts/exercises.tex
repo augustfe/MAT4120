@@ -371,3 +371,151 @@ where $\lambda_j \geq 0$ for each $j = 1, \ldots, t$.
   In fact, a similar result for the intersection of any family of convex sets.
   Explain this.
 \end{exercise}
+
+\begin{solution}
+  Let $x, y \in C_1 \cap \dots \cap C_t$ and $0 \leq \lambda \leq 1$. Then $x, y \in C_i$ for all $i = 1, \dots, t$. Since each $C_i$ is convex, we have that
+  \begin{equation}
+    \lambda x + (1 - \lambda) y \in C_i
+  \end{equation}
+  for all $i = 1, \dots, t$. Thus,
+  \begin{equation}
+    \lambda x + (1 - \lambda) y \in C_1 \cap \dots \cap C_t,
+  \end{equation}
+  proving that the intersection is convex.
+
+  Suppose there is a matrix $A \in \mathbb{R}^{m \times n}$ and a vector $b \in \mathbb{R}^m$.
+  Then the set
+  \begin{equation}
+    C = \{ x \in \mathbb{R}^n : Ax = b \}
+  \end{equation}
+  is an affine set.
+  Then let $x \in \bigcap_{i = 1}^t C_i$, meaning that $A_i x = b_i$ for all $i = 1, \dots, t$.
+  Thus, $x$ satisfies
+  \begin{equation}
+    (A_1 + A_2 + \cdots + A_t) x = b_1 + b_2 + \cdots + b_t,
+  \end{equation}
+  and $\bigcap_{i = 1}^t C_i$ is itself affine.
+
+  A similar argument shows that the closure property of convex sets is preserved under finite intersections.
+\end{solution}
+
+\begin{exercise}
+  Consider a family (possibly infinite) of linear inequalities $a_i^T x \leq b, i \in I$, and $C$ be its solution set, i.e., $C$ is the set of points satisfying all the inequalities.
+  Prove that $C$ is a convex set.
+\end{exercise}
+
+\begin{solution}
+  Let $x, y \in C$, and $0 \leq \lambda \leq 1$.
+  Then, for each $i \in I$, we have
+  \begin{equation}
+    a_i^T (\lambda x + (1 - \lambda) y) = \lambda a_i^T x + (1 - \lambda) a_i^T y \leq \lambda b_i + (1 - \lambda) b_i = b_i.
+  \end{equation}
+  Therefore, $\lambda x + (1 - \lambda) y \in C$, and $C$ is convex.
+\end{solution}
+
+\begin{exercise}
+  Consider the unit disc $S = \{ (x_1, x_2) \in \mathbb{R}^2 : x_1^2 + x_2^2 \leq 1 \}$ in $\mathbb{R}^2$.
+  Find a family of linear inequalities as in the previous problem with solution set $S$.
+\end{exercise}
+
+\begin{solution}
+  Let $U = \{ (\cos\theta, \sin\theta) : 0 \leq \theta < 2\pi \}$ be the unit circle in $\mathbb{R}^2$.
+  Then, for each $(u, v) \in U$, we have the linear inequalities
+  \begin{equation}
+    u x_1 + v x_2 \leq 1.
+  \end{equation}
+  This feels like a circular argument, but alright.
+\end{solution}
+
+\begin{exercise}
+  Is the unit ball $B = \{ x \in \mathbb{R}^n : \norm{x}_2 \leq 1 \}$ a polyhedron?
+\end{exercise}
+
+\begin{solution}
+  I don't believe the unit ball is a polyhedron.
+  A polyhedron requires a \emph{finite} number of linear inequalities, i.e.\ constraints which can be written as $Ax \leq b$.
+  The unit ball however is inherently smooth, without edges, and therefore requires an infinite number of linear constraints, as those applied in the previous exercise.
+\end{solution}
+
+\begin{exercise}
+  Show that the unit ball $B_\infty = \{ x \in \mathbb{R}^n : \norm{x}_\infty \leq 1 \}$ is convex.
+  Here $\norm{x}_\infty = \max_j \abs{x_j}$ is the max norm of $x$.
+  Show that $B_\infty$ is a polyhedron.
+  Illustrate when $n = 2$.
+\end{exercise}
+
+\begin{solution}
+  Let $x, y \in B_\infty$ and $0 \leq \lambda \leq 1$.
+  We then have
+  \begin{equation}
+    \norm{\lambda x + (1 - \lambda) y}_\infty \leq \lambda \norm{x}_\infty + (1 - \lambda) \norm{y}_\infty \leq \lambda + (1 - \lambda) = 1,
+  \end{equation}
+  so $\lambda x + (1 - \lambda) y \in B_\infty$, and $B_\infty$ is convex.
+  $B_\infty$ is a polyhedron, as it is described by the constraints
+  \begin{equation}
+    x_j \leq 1
+    \quad\text{and}\quad
+    -x_j \leq 1
+    \qquad
+    j = 1, \ldots, n.
+  \end{equation}
+  When $n = 2$, $B_\infty$ is the unit square, with corners $(\pm 1, \pm 1)$ and $(\pm 1, \mp 1)$, as seen in \cref{fig:unit_square}.
+
+  \begin{figure}[htbp]
+    \centering
+
+    \resizebox{0.4\textwidth}{!}{
+      \input{1_basic_concepts/unit_square.tex}
+    }
+    \caption{$B_\infty$ when $n = 2$.\label{fig:unit_square}}
+  \end{figure}
+\end{solution}
+
+\begin{exercise}
+  Show that the unit ball $B_1 = \{ x \in \mathbb{R}^n : \norm{x}_1 \leq 1 \}$ is convex.
+  Here $\norm{x}_1 = \sum_{j=1}^n \abs{x_j}$ is the absolute norm of $x$.
+  Show that $B_1$ is a polyhedron.
+  Illustrate when $n = 2$.
+\end{exercise}
+
+\begin{solution}
+  Let $x, y \in B_1$ and $0 \leq \lambda \leq 1$.
+  Then we have
+  \begin{equation}
+    \begin{split}
+      \norm{\lambda x + (1 - \lambda) y}_1
+      &= \sum_{j=1}^n \abs{\lambda x_j + (1 - \lambda) y_j} \\
+      &\leq \sum_{j=1}^n \lambda \abs{x_j} + (1 - \lambda) \abs{y_j}
+      = \lambda \sum_{j=1}^n \abs{x_j} + (1 - \lambda)\sum_{j=1}^n \abs{y_j} \\
+      &\leq \lambda + (1 - \lambda) = 1.
+    \end{split}
+  \end{equation}
+  Therefore, $\lambda x + (1 - \lambda) y \in B_1$, and $B_1$ is convex.
+
+  $B_1$ is a polyhedron, as it is described by the constraints
+  \begin{equation}
+    \sum_{j = 1}^{n} \sigma_j x_j \leq 1, \quad \forall (\sigma_1, \ldots, \sigma_n) \in \{-1, 1\}^n.
+  \end{equation}
+  When $n = 2$, $B_1$ is the unit diamond, with corners $(\pm 1, 0)$ and $(0, \pm 1)$, as seen in \cref{fig:unit_diamond}.
+
+  \begin{figure}[htbp]
+    \centering
+    \resizebox{0.4\textwidth}{!}{
+      \input{1_basic_concepts/unit_diamond.tex}
+    }
+    \caption{$B_1$ when $n = 2$.\label{fig:unit_diamond}}
+  \end{figure}
+\end{solution}
+
+\paragraph{Proposition 1.5.1} (\emph{Affine sets}).
+Let $C$ be a non-empty subset of $\mathbb{R}^n$.
+Then $C$ is an affine set if an only if there is a matrix $A \in \mathbb{R}^{m \times n}$ and a vector $b \in \mathbb{R}^m$ for some $m$ such that
+\begin{equation}
+  C = \{ x \in \mathbb{R}^n : Ax = b \}.
+\end{equation}
+Moreover, $C$ may be written as $C = L + x_0 = \{ x + x_0 : x \in L \}$ for some linear subspace $L$ of $\mathbb{R}^n$.
+The subspace $L$ is unique.
+
+\begin{exercise}
+  Prove Proposition 1.5.1.
+\end{exercise}
