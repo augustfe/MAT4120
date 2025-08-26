@@ -519,3 +519,36 @@ The subspace $L$ is unique.
 \begin{exercise}
   Prove Proposition 1.5.1.
 \end{exercise}
+
+\begin{solution}
+  Let $x_0 \in C$, where $C$ is affine, and $L = \{ x - x_0 : x \in C \}$.
+  For an arbitrary $x \in C$, we have that
+  \begin{equation}
+    \lambda (x - x_0) = \lambda x + (1 - \lambda) x_0 - x_0 \in L.
+  \end{equation}
+  Finish later, this is getting long.
+\end{solution}
+
+\begin{exercise}
+  Let $C$ be a non-empty affine set in $\mathbb{R}^n$.
+  Define $L = C - C$.
+  Show that $L$ is a subspace and that $C = L + x_0$ for some vector $x_0$.
+\end{exercise}
+
+\begin{solution}
+  We have that
+  \begin{equation}
+    L = C - C = \{ x - y : x, y \in C \}.
+  \end{equation}
+  We have from the previous exercise that $C = L + x_0$ for a subspace $L$.
+  Letting $x,y \in C$, we can express these as
+  \begin{equation}
+    x = \alpha + x_0
+    \quad\text{and}\quad
+    y = \beta + x_0
+  \end{equation}
+  for some $\alpha, \beta \in L$.
+  Then $x - y = \alpha - \beta \in L$, showing that $C - C \subseteq L$.
+  For the reverse inclusion, let $\alpha \in L$.
+  Then $\alpha = x - x_0$ for some $x \in C$, showing that $L \subseteq C - C$, proving that $L = C - C$.
+\end{solution}
