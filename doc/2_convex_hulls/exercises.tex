@@ -417,3 +417,140 @@ Similarly, we define the \emph{relative boundary} of $S$ by $\rbd(S) = \cl(S) \s
   showing that $\theta u + (1 - \theta) v$ is a convex combination of points in $S$, and therefore lies in $W$.
   $W$ is thus convex.
 \end{solution}
+
+\paragraph{Proposition 2.1.1 (Convex sets).}
+A set $C \subseteq \mathbb{R}^n$ is convex if and only if it contains all convex combinations of its points.
+A set $C \subseteq \mathbb{R}^n$ is a convex cone if and only if it contains all non-negative combinations of its points.
+
+\begin{exercise}
+  Prove the second statement of Proposition~2.1.1.
+\end{exercise}
+
+\begin{solution}
+  This is the definition of a convex cone?
+\end{solution}
+
+\begin{exercise}
+  Give a geometrical interpretation of the induction step in the proof of Proposition~2.1.1.
+\end{exercise}
+
+\begin{solution}
+  This essentially traces out a Bezier curve.
+\end{solution}
+
+\begin{exercise}
+  Let $S = \{ (0, 0), (1, 0), (0, 1) \}$.
+  Show that $\conv(S) = \{ (x_1, x_2) \in \mathbb{R}^2 : x_1 \geq 0, x_2 \geq 0, x_1 + x_2 \leq 1 \}$.
+\end{exercise}
+
+\begin{solution}
+  A point in $\conv(S)$ can be written as
+  \begin{equation}
+    x
+    = \lambda_1 (0, 0) + \lambda_2 (1, 0) + \lambda_3 (0, 1)
+    = (\lambda_2, \lambda_3),
+  \end{equation}
+  where $\lambda_i \geq 0$ and $\lambda_1 + \lambda_2 + \lambda_3 = 1$.
+  Thus, we have that $\lambda_2, \lambda_3 \geq 0$ and $\lambda_2 + \lambda_3 \leq 1$, showing that $\conv(S) = \{ (x_1, x_2) \in \mathbb{R}^2 : x_1 \geq 0, x_2 \geq 0, x_1 + x_2 \leq 1 \}$.
+\end{solution}
+
+\begin{exercise}
+  Let $S$ consist of the points $(0, 0, 0)$, $(1, 0, 0)$, $(0, 1, 0)$, $(0, 0, 1)$, $(1, 1, 0)$, $(1, 0, 1)$, $(0, 1, 1)$, and $(1, 1, 1)$.
+  Show that $\conv(S) = \{ (x_1, x_2, x_3) \in \mathbb{R}^3 : 0 \leq x_i \leq 1 \text{ for } i = 1, 2, 3 \}$.
+  Also determine $\conv(S \setminus \{(1, 1, 1)\})$ as the solution set of a system of linear inequalities.
+  Illustrate these cases geometrically.
+\end{exercise}
+
+\begin{solution}
+  Consider instead the points $(0, 0)$, $(1, 0)$, $(0, 1)$, and $(1, 1)$ in $\mathbb{R}^2$, as the argument is similar and easier to visualize.
+  A point in $\conv(S)$ can be written as
+  \begin{equation}
+    x
+    = \lambda_1 (0, 0) + \lambda_2 (1, 0) + \lambda_3 (0, 1) + \lambda_4 (1, 1)
+    = (\lambda_2 + \lambda_4, \lambda_3 + \lambda_4),
+  \end{equation}
+  where $\lambda_i \geq 0$ and $\sum_{i=1}^4 \lambda_i = 1$.
+  Thus we are bounded by the constraints
+  \begin{align*}
+    0 \leq x_1 &= \lambda_2 + \lambda_4 \leq 1, \\
+    0 \leq x_2 &= \lambda_3 + \lambda_4 \leq 1,
+  \end{align*}
+  showing that $\conv(S) = \{ (x_1, x_2) \in \mathbb{R}^2 : 0 \leq x_i \leq 1 \text{ for } i = 1, 2 \}$.
+  The same argument holds in $\mathbb{R}^3$, where we end up with the unit cube.
+  For $\conv(S \setminus \{(1, 1)\})$, we end up in the same scenario as the previous exercise, spanning out the unit triangle, as in \cref{fig:unit_triangle}
+\end{solution}
+
+\begin{exercise}
+  Let $A, B \subseteq \mathbb{R}^n$.
+  Prove that $\conv(A + B) = \conv(A) + \conv(B)$.
+  (Hint: it is useful to consider the sum $\sum_{j,k} \lambda_j \mu_k (a_j + b_k)$ where $a_j \in A$, $b_k \in B$ and $\lambda_j, \mu_k \geq 0$ with $\sum_j \lambda_j = 1$ and $\sum_k \mu_k = 1$.)
+\end{exercise}
+
+\begin{solution}
+  We have that
+  \begin{align*}
+    \sum_{j,k} \lambda_j \mu_k (a_j + b_k)
+    &= \sum_{j,k} \lambda_j \mu_k a_j + \sum_{j,k} \lambda_j \mu_k b_k \\
+    &= \sum_k \mu_k \left( \sum_j \lambda_j a_j \right) + \sum_j \lambda_j \left( \sum_k \mu_k b_k \right) \\
+    &= \sum_j \lambda_j a_j + \sum_k \mu_k b_k.
+  \end{align*}
+  As $\sum_{j,k} \lambda_j \mu_k = 1$, the left-hand side is a convex combination of points in $A + B$, while the right-hand side is an element in $\conv(A) + \conv(B)$.
+  Therefore, $\conv(A + B) \subseteq \conv(A) + \conv(B)$.
+  As $\conv(A) + \conv(B)$ is a convex set, it equals its convex hull, and
+  \begin{equation}
+    \conv(A + B) \subseteq \conv(\conv(A) + \conv(B)) = \conv(A) + \conv(B).
+  \end{equation}
+\end{solution}
+
+\setcounter{exercise}{36}
+\setcounter{solution}{36}
+
+\begin{exercise}\label{ex:intr_equals_rint}
+  Let $S \subseteq \mathbb{R}^n$.
+  Show that either $\intr(S) = \rint(S)$ or $\intr(S) = \emptyset$.
+\end{exercise}
+
+\begin{solution}
+  If $\intr(S) \neq \emptyset$, then there exists a point $x \in \intr(S)$ and an $r > 0$ such that $B^\circ(x, r) \subseteq S$.
+  As $B^\circ(x, r) \subseteq \aff(S)$, we have that $x \in \rint(S)$.
+  Thus, $\intr(S) \subseteq \rint(S)$.
+
+  Conversely, if $x \in \rint(S)$, then there exists an $r > 0$ such that $B^\circ(x, r) \cap \aff(S) \subseteq S$.
+  As $B^\circ(x, r) \cap \aff(S)$ is open in $\aff(S)$, we have that $x \in \intr(S)$.
+  Thus, $\rint(S) \subseteq \intr(S)$.
+
+  Therefore, if $\intr(S) \neq \emptyset$, we have $\intr(S) = \rint(S)$.
+  If $\intr(S) = \emptyset$, then the statement holds trivially.
+\end{solution}
+
+\begin{exercise}
+  Prove Theorem 2.4.3.
+  (%
+    Hint: To prove that $\rint(C)$ is convex, use Theorem 2.4.2.
+    Concerning $\intr(C)$, use \cref{ex:intr_equals_rint}.
+    Finally, to show that $\cl(C)$ is convex, let $x, y \in \cl(C)$ and consider the two point sequences that converge to $x$ and $y$ respectively.
+    Then, look at a convex combination of $x$ and $y$ and construct a suitable sequence!%
+  )
+\end{exercise}
+
+\begin{solution}
+  Theorem 2.4.2 states that a convex set has a ``thin boundary'', i.e., for $C \subseteq \mathbb{R}^n$ non-empty and convex, and $x_1 \in \rint(C)$, $x_2 \in \cl(C)$, we have
+  \begin{equation}
+    (1 - \lambda) x_1 + \lambda x_2 \in \rint(C)
+  \end{equation}
+  for all $0 \leq \lambda < 1$.
+
+  Theorem 2.4.3 on the other hand states as follows:
+  If $C \subseteq \mathbb{R}^n$ is a convex set, then all sets $\rint(C)$, $\intr(C)$ and $\cl(C)$ are convex.
+  Therefore, assume $C \subseteq \mathbb{R}^n$ is convex.
+
+  Let $x, y \in \rint(C)$.
+  As $\rint(C) \subseteq C \subseteq \cl(C)$, we can simply apply Theorem 2.4.2 to show that $\rint(C)$ is convex.
+  By \cref{ex:intr_equals_rint}, we have that either $\intr(C) = \rint(C)$ or $\intr(C) = \emptyset$.
+  In both cases, $\intr(C)$ is convex.
+
+  Finally, let $x, y \in \cl(C)$,
+  and let $x^k, y^k \in C$ be sequences such that $x^k \to x$ and $y^k \to y$.
+  As $C$ is convex, $(1 - \lambda) x^k + \lambda y^k \in C$ for all $0 \leq \lambda \leq 1$, which converges to $(1 - \lambda) x + \lambda y$.
+  Thus, $(1 - \lambda) x + \lambda y \in \cl(C)$, showing that $\cl(C)$ is convex.
+\end{solution}
