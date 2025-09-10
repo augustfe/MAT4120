@@ -1,0 +1,419 @@
+\section{Convex hulls and Carathéodory's theorem}
+
+\begin{exercise}
+  Illustrate some combinations (linear, convex, non-negative) of two vectors in $\mathbb{R}^2$.
+\end{exercise}
+
+\begin{solution}
+  Let $\mathbf{u} =
+  \begin{pmatrix} 1 \\ 0
+  \end{pmatrix}$ and $\mathbf{v} =
+  \begin{pmatrix} 0 \\ 1
+  \end{pmatrix}$.
+  \begin{itemize}
+    \item Linear combinations: $\alpha \mathbf{u} + \beta \mathbf{v}$ for $\alpha, \beta \in \mathbb{R}$.
+    \item Convex combinations: $\alpha \mathbf{u} + \beta \mathbf{v}$ for $\alpha, \beta \geq 0$ and $\alpha + \beta = 1$.
+    \item Non-negative combinations: $\alpha \mathbf{u} + \beta \mathbf{v}$ for $\alpha, \beta \geq 0$.
+  \end{itemize}
+  The linear combinations fill the entire $\mathbb{R}^2$ plane, the convex combinations fill the line segment between $\mathbf{u}$ and $\mathbf{v}$, and the non-negative combinations fill the first quadrant of the plane.
+\end{solution}
+
+\begin{exercise}
+  Choose your favourite three points $x_1$, $x_2$, $x_3$ in $\mathbb{R}^2$, but make sure that they do not all lie on the same line.
+  Thus, the three points form the corners of a triangle $C$.
+  Describe those points that are convex combinations of two of the three points.
+  What about the interior of the triangle $C$, i.e., those points that lie in $C$ but not on the boundary (the three sides): can these points be written as convex combinations of $x_1$, $x_2$ and $x_3$? If so, how?
+\end{exercise}
+
+\begin{solution}
+  Let's choose the points $x_1 = (0, 0)$, $x_2 = (1, 0)$, and $x_3 = (0, 1)$, i.e., the corners of a right triangle.
+  The points that are convex combinations of two of the three points are those that lie on the edges of the triangle.
+  The interior points, which do not lie on the boundary, can be expressed as
+  \begin{equation}
+    c = \lambda_1 x_1 + \lambda_2 x_2 + \lambda_3 x_3,
+  \end{equation}
+  with $0 < \lambda_i < 1$ for $i = 1, 2, 3$ and $\lambda_1 + \lambda_2 + \lambda_3 = 1$.
+  \begin{figure}[htbp]
+    \centering
+
+    \resizebox{0.3\textwidth}{!}{
+      \input{2_convex_hulls/unit_triangle.tex}
+    }
+    \caption{
+      The unit triangle with points $x_1$, $x_2$, and $x_3$.\label{fig:unit_triangle}
+    }
+  \end{figure}
+\end{solution}
+
+\begin{exercise}
+  Show that $\conv(S)$ is convex for all $S \subseteq \mathbb{R}^n$.
+  (Hint: look at two convex combinations $\sum_j \lambda_j x_j$ and $\sum_j \mu_j y_j$, and note that both these points may be written as a convex combination of the same set of vectors.)
+\end{exercise}
+
+\begin{solution}
+  Let $u, v \in \conv(S)$.
+  Then there exists points $x_1, x_2, \ldots, x_n \in S$ and $y_1, y_2, \ldots, y_m \in S$ and coefficients $\lambda_i, \mu_j \geq 0$ with $\sum_i \lambda_i = 1$ and $\sum_j \mu_j = 1$ such that
+  \begin{equation}
+    u = \sum_{i=1}^n \lambda_i x_i, \quad v = \sum_{j=1}^m \mu_j y_j.
+  \end{equation}
+  For any $0 \leq \theta \leq 1$, we have that
+  \begin{equation}
+    \begin{split}
+      \theta u + (1 - \theta) v
+      &= \theta \sum_{i=1}^n \lambda_i x_i + (1 - \theta) \sum_{j=1}^m \mu_j y_j \\
+      &= \sum_{i=1}^n (\theta \lambda_i) x_i + \sum_{j=1}^m ((1 - \theta) \mu_j) y_j.
+    \end{split}
+  \end{equation}
+  The new coefficients are non-negative, and furthermore we have
+  \begin{equation}
+    \sum_{i=1}^n (\theta \lambda_i) + \sum_{j=1}^m ((1 - \theta) \mu_j)
+    = \theta \cdot 1 + (1 - \theta) \cdot 1
+    = 1,
+  \end{equation}
+  showing that $\theta u + (1 - \theta) v$ is a convex combination of points in $S$, and therefore lies in $\conv(S)$.
+  $\conv(S)$ is thus convex.
+\end{solution}
+
+\begin{exercise}
+  Give an example of two distinct sets $S$ and $T$ having the same convex hull.
+  It makes sense to look for a smallest possible subset $S_0$ of a set $S$ such that $S = \conv(S_0)$.
+  We study this question later.
+\end{exercise}
+
+\begin{solution}
+  Let $S = \{(0, 0), (1, 0), (0, 1)\}$ and $T = \{(0, 0), (1, 0), (0, 1), (0.5, 0.5)\}$.
+  Both sets have the same convex hull, which is the triangle formed by the points $(0, 0)$, $(1, 0)$, and $(0, 1)$.
+  The point $(0.5, 0.5)$ in set $T$ lies within this triangle and does not change the convex hull.
+\end{solution}
+
+\begin{exercise}
+  Prove that if $S \subseteq T$, then $\conv(S) \subseteq \conv(T)$.
+\end{exercise}
+
+\begin{solution}
+  Let $u \in \conv(S)$.
+  Then there exist points $x_1, x_2, \ldots, x_n \in S$ and coefficients $\lambda_i \geq 0$ with $\sum_i \lambda_i = 1$ such that
+  \begin{equation}
+    u = \sum_{i=1}^n \lambda_i x_i.
+  \end{equation}
+  Since $S \subseteq T$, we have that $x_i \in T$ for all $i$.
+  Therefore, $u$ is also a convex combination of points in $T$, and thus lies in $\conv(T)$.
+  Hence, $\conv(S) \subseteq \conv(T)$.
+\end{solution}
+
+\begin{exercise}
+  If $S$ is convex, then $\conv(S) = S$.
+  Show this!
+\end{exercise}
+
+\begin{solution}
+  Since $S$ is convex, for any $u, v \in S$ and any $0 \leq \lambda \leq 1$, we have $\lambda u + (1 - \lambda) v \in S$.
+  By the definition of convex hull, $\conv(S)$ is the smallest convex set containing $S$.
+  Since $S$ is already convex and contains itself, it follows that $\conv(S) = S$.
+\end{solution}
+
+\begin{exercise}
+  Let $S = \{ x \in \mathbb{R}^2 : \norm{x}_2 = 1 \}$, this is the unit circle in $\mathbb{R}^2$.
+  Determine $\conv(S)$ and $\cone(S)$.
+\end{exercise}
+
+\begin{solution}
+  The convex hull $\conv(S)$ of the unit circle is the unit disk, i.e., the set $\{ x \in \mathbb{R}^2 : \norm{x}_2 \leq 1 \}$.
+  This is because any point inside the unit circle can be expressed as a convex combination of points on the unit circle.
+
+  The conical hull $\cone(S)$ of the unit circle is the entire $\mathbb{R}^2$ plane.
+  This is because any point in $\mathbb{R}^2$ can be expressed as a non-negative combination of points on the unit circle, scaled appropriately.
+  This can be seen simply by looking at the problem in polar coordinates.
+\end{solution}
+
+\begin{exercise}
+  Does affine independence imply linear independence?
+  Does linear independence imply affine independence?
+  Prove or disprove!
+\end{exercise}
+
+\begin{solution}
+  Affine independence does not imply linear independence.
+  Consider a set of linearly independent vectors $x_2, \ldots, x_t \in \mathbb{R}^n$ and let $x_1 = 0$.
+  Then clearly the set $\{x_1, x_2, \ldots, x_t\}$ is affinely independent, but not linearly independent since $x_1$ is the zero vector.
+
+  Linear independence does imply affine independence.
+  Suppose $\{x_1, x_2, \ldots, x_t\}$ is linearly independent.
+  To show affine independence, we need to show that the only solution to
+  \begin{equation}
+    \sum_{i=1}^t \lambda_i x_i = 0 \quad \text{and} \quad \sum_{i=1}^t \lambda_i = 0
+  \end{equation}
+  is $\lambda_i = 0$ for all $i$.
+  Since the vectors are linearly independent, the first equation implies that all $\lambda_i$ must be zero.
+  Thus, the set is affinely independent.
+\end{solution}
+
+\begin{exercise}
+  Let $x_1, \ldots, x_t \in \mathbb{R}^n$ be affinely independent and let $w \in \mathbb{R}^n$.
+  Show that $x_1 + w, \ldots, x_t + w$ are also affinely independent.
+\end{exercise}
+
+\begin{solution}
+  As $x_1, \ldots, x_t$ are affinely independent, we have that
+  \begin{equation}
+    \{ x_2 - x_1, x_3 - x_1, \ldots, x_t - x_1 \}
+  \end{equation}
+  is linearly independent.
+  We then have that
+  \begin{equation}
+    \{ (x_2 + w) - (x_1 + w), \ldots, (x_t + w) - (x_1 + w) \}
+    = \{ x_2 - x_1, x_3 - x_1, \ldots, x_t - x_1 \},
+  \end{equation}
+  which is linearly independent.
+  Thus, $x_1 + w, \ldots, x_t + w$ are affinely independent.
+\end{solution}
+
+\paragraph{Dimension of a set.}
+The \emph{dimension} of a set $S \subseteq \mathbb{R}^n$, denoted by $\dim(S)$, is the maximal number of affinely independent points in $S$ minus 1.
+So, for example in $\mathbb{R}^3$, the dimension of a point and a lines is $0$ and $1$ respectively, and the dimension of the plane $x_3 = 0$ is $2$.
+
+\begin{exercise}
+  Let $L$ be a linear subspace of dimension (in the usual linear algebra sense) $t$.
+  Check this this coincides with our new definition of dimension above.
+  (Hint: add $O$ to a ``suitable'' set of vectors).
+\end{exercise}
+
+\begin{solution}
+  Let $\{v_1, v_2, \ldots, v_t\}$ be a basis for the linear subspace $L$.
+  Then the set $\{0, v_1, v_2, \ldots, v_t\}$ contains $t + 1$ affinely independent points in $L$.
+  To see this, note that the vectors $v_1, v_2, \ldots, v_t$ are linearly independent by definition of a basis.
+  Therefore, the maximal number of affinely independent points in $L$ is $t + 1$, and thus $\dim(L) = t + 1 - 1 = t$, which coincides with the usual definition of dimension in linear algebra.
+\end{solution}
+
+\begin{exercise}
+  Consider a convex set $C$ of dimension $d$.
+  Then there are (and no more than) $d + 1$ affinely independent points in $C$.
+  Let $S = \{ x_1, \ldots, x_{d+1} \}$ denote a set of such points.
+  Then the set of all convex combinations of these vectors, i.e., $\conv(S)$ is a polytope contained in $C$ and $\dim(S) = \dim(C)$.
+  Moreover, let $A$ be the set of all vectors of the form $\sum_{j = 1}^{t}\lambda_j x_j$ where $\sum_{j = 1}^{t} \lambda_j = 1$ (no sign restrictions of the $\lambda$'s).
+  Then $A$ is an affine set containing $C$, and it is the smallest affine set with this property.
+  $A$ is called the \emph{affine hull} of $C$.
+
+  Prove the last statements in the previous paragraph.
+\end{exercise}
+
+\begin{solution}
+  Consider two points $u, v \in A$ where
+  \begin{equation}
+    u = \sum_{j = 1}^{t} \lambda_j x_j
+    \quad\text{and}\quad
+    v = \sum_{j = 1}^{t} \mu_j x_j,
+  \end{equation}
+  where $\sum_{j = 1}^{t} \lambda_j = 1$ and $\sum_{j = 1}^{t} \mu_j = 1$.
+  Then, we have that
+  \begin{equation}
+    (1 - \theta)u + \theta v
+    = \sum_{j = 1}^{t} ((1 - \theta) \lambda_j + \theta \mu_j) x_j \in A
+  \end{equation}
+  for any $\theta \in \mathbb{R}$ as the coefficients still sum to $1$.
+  $A$ is therefore affine.
+  Choosing $\lambda_j = \delta_{ij}$ (the Kronecker delta) shows that $x_i \in A$ for all $i$, and thus $\conv(C) = C \subseteq A$.
+\end{solution}
+
+\begin{exercise}
+  Construct a set which is neither open nor closed.
+\end{exercise}
+
+\begin{solution}
+  Consider the interval $S = (0, 1]$ in $\mathbb{R}$.
+  This set is not open because it contains the point $1$, which is a limit point of the set.
+  It is not closed because it does not contain the point $0$, which is also a limit point of the set.
+  Therefore, $S$ is neither open nor closed.
+\end{solution}
+
+\begin{exercise}
+  Show that $x^k \to x$ if and only if $x_j^k \to x_j$ for $j = 1, \ldots, n$.
+  Thus convergence of a point sequence simply means that all the component sequences are convergent.
+\end{exercise}
+
+\begin{solution}
+  ($\Rightarrow$) Suppose $x^k \to x$.
+  Then, as
+  \begin{equation}
+    \abs{x_j^k - x_j} \leq \norm{x^k - x},
+  \end{equation}
+  we have that $x_j^k \to x_j$ for each component $j$.
+
+  ($\Leftarrow$) Conversely, suppose $x_j^k \to x_j$ for each component $j$.
+  Then,
+  \begin{equation}
+    \norm{x^k - x}^2 = \sum_{j = 1}^{n} (x_j^k - x_j)^2 \to 0 = 0,
+  \end{equation}
+  showing that $x^k \to x$.
+  This is all rather informal, but the details are easy to fill in.
+\end{solution}
+
+\begin{exercise}
+  Show that every simplex cone is closed.
+\end{exercise}
+
+\begin{solution}
+  Let $x_1, \ldots, x_t \in \mathbb{R}^n$ be linearly independent vectors, and consider the simplex cone spanned by these vectors.
+  Let $X$ be the matrix with columns $x_1, \ldots, x_t$.
+  Then any point in the simplex cone can be written as $X \boldsymbol{\lambda}$ for some $\boldsymbol{\lambda} \geq 0$.
+  $X$ then has full column rank, and thus $X^T X$ is invertible, so we define the pseudo-inverse $X^\dagger = (X^T X)^{-1} X^T$.
+  We then obtain $\boldsymbol{\lambda} = X^\dagger x$, such that the simplex cone can be written as the inverse image of the closed set $\{ \boldsymbol{\lambda} : \boldsymbol{\lambda} \geq 0 \}$ under the continuous map $x \mapsto X^\dagger x$.
+  The simplex cone is therefore closed.
+\end{solution}
+
+\paragraph{Boundary of a set.}
+The \emph{boundary} $\bd(S)$ of $S$ is defined by $\bd(S) = \cl(S) \setminus \intr(S)$.
+For instance, we have that $\bd(B(a, r)) = \{ x \in \mathbb{R}^n : \norm{x - a} = r \}$.
+
+\begin{exercise}
+  Prove that $x \in \bd(S)$ if and only if each ball with center $x$ intersects both $S$ and the complement of $S$.
+\end{exercise}
+
+\begin{solution}
+  For $x \in \bd(S)$, we have that $x \in \cl(S)$ and $x \notin \intr(S)$.
+  Since $x \in \cl(S)$, every ball centred at $x$ intersects $S$.
+  Since $x \notin \intr(S)$, every ball centred at $x$ also intersects the complement of $S$.
+\end{solution}
+
+\paragraph{Affine hull.}
+The \emph{affine hull} of a set $S$, denoted by $\aff(S)$, is the smallest affine set containing $S$.
+
+\paragraph{Relative interior and relative boundary.}
+We say that $x$ is a \emph{relative interior point} of $S$ if there is an $r > 0$ such that
+\begin{equation}
+  B^\circ(x, r) \cap \aff(S) \subseteq S.
+\end{equation}
+This means that $x$ is the center of some open ball whose intersection with $\aff(S)$ is contained in $S$.
+We let the \emph{relative interior} of $S$, denoted by $\intr(S)$, be the set of all such relative interior points of $S$.
+Similarly, we define the \emph{relative boundary} of $S$ by $\rbd(S) = \cl(S) \setminus \rint(S)$.
+
+\begin{exercise}
+  Consider again the set $C = \{ (x_1, x_2, 0) \in \mathbb{R}^3 : x_1^2 + x_2^2 \leq 1 \}$.
+  Verify that:
+  \begin{enumerate}[label = (\textit{\roman*})]
+    \item $C$ is closed,
+    \item $\dim(C) = 2$,
+    \item $\intr(C) = \emptyset$,
+    \item $\bd(C) = C$,
+    \item $\rint(C) = \{ (x_1, x_2, 0) \in \mathbb{R}^3 : x_1^2 + x_2^2 < 1 \}$,
+    \item $\rbd(C) = \{ (x_1, x_2, 0) \in \mathbb{R}^3 : x_1^2 + x_2^2 = 1 \}$.
+  \end{enumerate}
+\end{exercise}
+
+\begin{solution}
+  (\textit{i}): Assume that $x^k \to x$ where $x^k = (x_k, y_k, 0) \in C$ for all $k$.
+  As $x_k^2 + y_k^2 \leq 1$ for all $k$, we have that $x^2 + y^2 \leq 1$ by taking limits, showing that $x \in C$.
+  Similarly, as $z_k = 0$ for all $k$, we have that $z = 0$, and thus $x \in C$.
+  $C$ is therefore closed.
+
+  (\textit{ii}): We find only two linearly independent vectors in $C$, for instance $(1, 0, 0)$ and $(0, 1, 0)$.
+  Thus, $\dim(C) = 2$.
+  A similar argument is possible through the affinely independent points $(0, 0, 0)$, $(1, 0, 0)$, and $(0, 1, 0)$.
+
+  (\textit{iii}): Any ball centred around a point $x = (x_1, x_2, 0) \in C$ will contain points of the form $(x_1, x_2, \varepsilon)$ for $\varepsilon > 0$, which are not in $C$.
+  Thus, $\intr(C) = \emptyset$.
+
+  (\textit{iv}): As $\intr(C) = \emptyset$, we have that $\bd(C) = \cl(C) \setminus \intr(C) = C \setminus \emptyset = C$.
+
+  (\textit{v}): We have that $\aff(C)$ is the plane $z = 0$.
+  For a point $x = (x_1, x_2, 0) \in C$ with $x_1^2 + x_2^2 < 1$, we can find a ball $B^\circ(x, r) \subset B^\circ(0, 1)$.
+  Then
+  \begin{equation}
+    \begin{split}
+      B^\circ(x, r) \cap \aff(C)
+      &= \{ (y_1, y_2, 0) : (y_1 - x_1)^2 + (y_2 - x_2)^2 < r^2 \} \\
+      &= (B^\circ((x_1, x_2), r), 0) \subseteq C,
+    \end{split}
+  \end{equation}
+  so $\{ (x_1, x_2, 0) \in \mathbb{R}^3 : x_1^2 + x_2^2 < 1 \} \subseteq \rint(C)$.
+  If we have a point $x = (x_1, x_2, 0)$ with $x_1^2 + x_2^2 = 1$, any ball centred at $x$ will contain points of the form $(x_1, x_2, \varepsilon)$ for $\varepsilon > 0$, which are not in $C$.
+  Thus, $\rint(C) = \{ (x_1, x_2, 0) \in \mathbb{R}^3 : x_1^2 + x_2^2 < 1 \}$.
+
+  (\textit{v}): We have simply
+  \begin{equation}
+    \begin{split}
+      \rbd(C) &= \cl(C) \setminus \rint(C) = C \setminus \{ (x_1, x_2, 0) \in \mathbb{R}^3 : x_1^2 + x_2^2 < 1 \} \\
+      &= \{ (x_1, x_2, 0) \in \mathbb{R}^3 : x_1^2 + x_2^2 = 1 \}.
+    \end{split}
+  \end{equation}
+\end{solution}
+
+\begin{exercise}
+  Show that every polytope in $\mathbb{R}^n$ is bounded.
+  (Hint: use the properties of the norm: $\norm{x + y} \leq \norm{x} + \norm{y}$ and $\norm{\lambda x} = \lambda \norm{x}$ for $\lambda \geq 0$.)
+\end{exercise}
+
+\begin{solution}
+  For a polytope $P = \conv(\{x_1, \ldots, x_t\})$, we can express any point $x \in P$ as
+  \begin{equation}
+    x = \sum_{i=1}^t \lambda_i x_i,
+  \end{equation}
+  where $\lambda_i \geq 0$ and $\sum_{i=1}^t \lambda_i = 1$.
+  We then have that
+  \begin{equation}
+    \begin{split}
+      \norm{x}
+      &= \norm*{\sum_{i=1}^t \lambda_i x_i} \leq \sum_{i=1}^t \norm{\lambda_i x_i} = \sum_{i=1}^t \lambda_i \norm{x_i} \\
+      &\leq \max_{i=1, \ldots, t} \norm{x_i} \sum_{i=1}^t \lambda_i = \max_{i=1, \ldots, t} \norm{x_i}.
+    \end{split}
+  \end{equation}
+  Thus, $P$ is bounded.
+\end{solution}
+
+\begin{exercise}
+  Consider the standard simplex $S_t$.
+  Show that it is compact, i.e., closed and bounded.
+\end{exercise}
+
+\begin{solution}
+  The standard simplex $S_t$ is given by
+  \begin{equation}
+    S_t = \{ x \in \mathbb{R}^t : x_i \geq 0, \sum_{i=1}^t x_i = 1 \},
+  \end{equation}
+  or equivalently, $S_t = \conv(\{e_1, e_2, \ldots, e_t\})$ where $e_i$ are the standard basis vectors in $\mathbb{R}^t$.
+  As $S_t$ is a polytope, it is bounded by the previous exercise.
+  It is closed as it is the inverse of the closed set $\{1\}$ under the continuous map $x \mapsto \sum_{i=1}^t x_i$ intersected with the closed set $\{ x : x_i \geq 0 \text{ for all } i \}$.
+  Thus, $S_t$ is compact.
+\end{solution}
+
+\begin{exercise}
+  Give an example of a convex cone which is not closed.
+\end{exercise}
+
+\begin{solution}
+  Consider the set $C = \{ (x_1, x_2) \in \mathbb{R}^2 : x_2 > 0 \}$.
+  This set is a convex cone because for any $x, y \in C$ and any $\alpha, \beta \geq 0$, we have $\alpha x + \beta y \in C$.
+  However, $C$ is not closed because it does not contain the boundary line $x_2 = 0$.
+  Thus, $C$ is a convex cone that is not closed.
+\end{solution}
+
+\begin{exercise}
+  Let $S \subseteq \mathbb{R}^2$ and let $W$ be the set of all convex combinations of points in $S$.
+  Prove that $W$ is convex.
+\end{exercise}
+
+\begin{solution}
+  Let $u, v \in W$ be two convex combinations of points in $S$, i.e.,
+  \begin{equation}
+    u = \sum_{i=1}^m \lambda_i x_i
+    \quad\text{and}\quad
+    v = \sum_{j=1}^n \mu_j y_j.
+  \end{equation}
+  where $x_i, y_j \in S$, $\lambda_i, \mu_j \geq 0$, and $\sum_{i=1}^m \lambda_i = 1$, $\sum_{j=1}^n \mu_j = 1$.
+  For any $0 \leq \theta \leq 1$, we have that
+  \begin{equation}
+    \begin{split}
+      \theta u + (1 - \theta) v
+      &= \theta \sum_{i=1}^m \lambda_i x_i + (1 - \theta) \sum_{j=1}^n \mu_j y_j \\
+      &= \sum_{i=1}^m (\theta \lambda_i) x_i + \sum_{j=1}^n ((1 - \theta) \mu_j) y_j.
+    \end{split}
+  \end{equation}
+  The new coefficients are non-negative, and furthermore we have
+  \begin{equation}
+    \sum_{i=1}^m (\theta \lambda_i) + \sum_{j=1}^n ((1 - \theta) \mu_j)
+    = \theta \cdot 1 + (1 - \theta) \cdot 1
+    = 1,
+  \end{equation}
+  showing that $\theta u + (1 - \theta) v$ is a convex combination of points in $S$, and therefore lies in $W$.
+  $W$ is thus convex.
+\end{solution}

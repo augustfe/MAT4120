@@ -1,0 +1,15 @@
+\begin{tikzpicture}
+  \coordinate (A) at (0, 0);
+  \coordinate (B) at (0, 1);
+  \coordinate (C) at (1, 0);
+
+  \fill[my_red, opacity=0.18] (A) -- (B) -- (C) -- cycle;
+  \draw[thick, my_red] (A) -- (B) -- (C) -- cycle;
+
+  \draw[gray, dashed] (-0.25, 0) -- (1.25, 0);
+  \draw[gray, dashed] (0, -0.25) -- (0, 1.25);
+
+  \node at (A) [below left] {\tiny$0$};
+  \node at (B) [left] {\tiny$1$};
+  \node at (C) [below] {\tiny$1$};
+\end{tikzpicture}

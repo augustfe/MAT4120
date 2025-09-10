@@ -6,9 +6,9 @@
 \usepackage{microtype}
 \usepackage{geometry}
 \usepackage{booktabs}
-\usepackage{graphicx, tikz}
-\usepackage{caption}
-\usepackage{subcaption}
+\usepackage{graphicx}
+\usepackage{caption, subcaption}
+% \usepackage{subcaption}
 \usepackage{comment}
 
 \usepackage{tikz}
@@ -31,32 +31,8 @@
 \usepackage{enumerate}
 \usepackage{enumitem}
 
-\DeclarePairedDelimiter\abs{\lvert}{\rvert}%
-\DeclarePairedDelimiter\norm{\lVert}{\rVert}%
-
-\newtheoremstyle{exerciseStyle}
-{ } % Space above
-{ } % Space below
-{\normalfont} % Body font % chktex 1
-{ } % Indent amount
-{\bfseries} % Theorem head font
-{.} % Punctuation after theorem head
-{ } % Space after theorem head
-{\thmname{#1}\thmnumber{ #2}} % Theorem head spec (can be left empty, meaning `normal`)
-\theoremstyle{exerciseStyle}
-\newtheorem{exercise}{Exercise}[section]
-
-\newtheoremstyle{solutionStyle}
-{ } % Space above
-{ } % Space below
-{\normalfont} % Body font % chktex 1
-{ } % Indent amount
-{\bfseries} % Theorem head font
-{.} % Punctuation after theorem head
-{ } % Space after theorem head
-{\thmname{#1}\thmnumber{ #2}} % Theorem head spec (can be left empty, meaning `normal`)
-\theoremstyle{solutionStyle}
-\newtheorem{solution}{Solution}[section]
+\input{mathops.tex}
+\input{exer_sol.tex}
 
 \numberwithin{equation}{section}
 
@@ -79,5 +55,7 @@
 \end{abstract}
 
 \include{1_basic_concepts/exercises}
+
+\include{2_convex_hulls/exercises}
 
 \end{document} % chktex 17
