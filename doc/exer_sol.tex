@@ -21,3 +21,8 @@
 {\thmname{#1}\thmnumber{ #2}} % Theorem head spec (can be left empty, meaning `normal`)
 \theoremstyle{solutionStyle}
 \newtheorem{solution}{Solution}[section]
+
+\newcommand{\setexsol}[1]{%
+  \setcounter{exercise}{\numexpr#1-1\relax}% chktex 8
+  \setcounter{solution}{\numexpr#1-1\relax}% chktex 8
+}
