@@ -299,4 +299,119 @@
   \begin{equation}
     \min(a_1, 0) + \min(a_2, 0) > 2 (a_1 + a_2).
   \end{equation}
+
+  There are several cases where this holds.
+  Firstly, if $a \geq 0$, then we require $b \in [a_1 + a_2, 2 (a_1 + a_2))$. % chktex 9
+  If $a_1 \geq 0 \geq a_2$, then we require $b \in [a_1, 2 (a_1 + a_2))$, and similarly for $a_2 \geq 0 \geq a_1$, we require $b \in [a_2, 2 (a_1 + a_2))$. % chktex 9
+  If $a_1, a_2 \leq 0$, then we require $b \in (2(a_1 + a_2), a_1 + a_2]$. % chktex 9
+\end{solution}
+
+\begin{exercise}
+  Let $C$ be a unit ball in $\mathbb{R}^n$ and let $y \notin C$.
+  Find a hyperplane that separates $C$ and $y$.
+\end{exercise}
+
+\begin{solution}
+  Choosing $x_0$ to be the midpoint between $y$ and the nearest point in $C$ to $y$, i.e.,
+  \begin{equation}
+    x_0 = \tfrac{1}{2} \left(y + \frac{y}{\norm{y}}\right),
+  \end{equation}
+  we can then simply choose $y$ to be the normal vector of the hyperplane.
+  The hyperplane is then given by
+  \begin{equation}
+    H = \{ x \in \mathbb{R}^n : y^T x = x_0 \}.
+  \end{equation}
+\end{solution}
+
+\begin{exercise}
+  Find an example in $\mathbb{R}^2$ of two sets that have a unique separating hyperplane.
+\end{exercise}
+
+\begin{solution}
+  Let $S = \{ (x, y) : x^2 + y^2 \leq 1, x \leq 0 \}$ and $T = \{ (x, y) : x^2 + y^2 \leq 1, x \geq 1 \}$.
+  The unique separating hyperplane is then given by $H = \{ (x, y) : x = 0 \}$.
+\end{solution}
+
+\begin{exercise}
+  Let $S,T \subseteq \mathbb{R}^n$.
+  Explain the following fact: there exists a hyperplane that separates $S$ and $T$ if and only if there is a linear function $l: \mathbb{R}^n \to \mathbb{R}$ such that $l(s) \leq l(t)$ for all $s \in S$ and $t \in T$.
+  Is there a similar equivalence for the notion of strong separation?
+\end{exercise}
+
+\begin{solution}
+  A hyperplane that separates $S$ and $T$ can be defined by a normal vector $a$ and a constant $\alpha$ such that $a^T s \leq \alpha$ for all $s \in S$ and $a^T t \geq \alpha$ for all $t \in T$.
+  Defining the linear function $l(x) = a^T x$, we have that $l(s) \leq \alpha \leq l(t)$ for all $s \in S$ and $t \in T$, which shows one direction of the equivalence.
+
+  Conversely, if there exists a linear function $l: \mathbb{R}^n \to \mathbb{R}$ such that $l(s) \leq l(t)$ for all $s \in S$ and $t \in T$, we can express this linear function as $l(x) = a^T x$ for some vector $a$.
+  Let $\alpha = \sup_{s \in S} l(s)$.
+  Then, we have $a^T s \leq \alpha$ for all $s \in S$ and $a^T t \geq \alpha$ for all $t \in T$, which defines a hyperplane that separates $S$ and $T$.
+
+  For strong separation, the equivalence holds with the additional requirement that there exists an $\varepsilon > 0$ such that $l(s) + \varepsilon < \alpha < l(t) - \varepsilon$ for all $s \in S$ and $t \in T$.
+  This ensures that the hyperplane not only separates the sets but does so with a positive margin, thus achieving strong separation.
+\end{solution}
+
+\begin{exercise}
+  Let $C$ be a non-empty closed convex set in $\mathbb{R}^n$.
+  Then the associated projection operator $p_C$ is Lipschitz continuous with Lipschitz constant $1$, i.e.,
+  \begin{equation}
+    \norm*{p_C(x) - p_C(y)} \leq \norm{x - y} \quad \text{for all } x, y \in \mathbb{R}^n.
+  \end{equation}
+  (Such an operator is called non-expansive).
+  You are asked to prove this using the following procedure:
+  Define $a = x - p_C(x)$ and $b = y - p_C(y)$.
+  Verify that $(a - b)^T (p_C(x) - p_C(y)) \geq 0$.
+  (%
+    Show first that $a^T (p_C(y) - p_C(x)) \leq 0$ and $b^T (p_C(x) - p_C(y)) \leq 0$ using~\eqref{eq:unique_nearest}.
+    Then consider $\norm{x - y}^2 = \norm{(a - b) + (p_C(x) - p_C(y))}^2$ and do some calculations.%
+  )
+\end{exercise}
+
+\begin{solution}
+  Let's follow the helpful suggestions.
+  Let $a = x - p_C(x)$ and $b = y - p_C(y)$.
+  As $p_C(x)$ is the nearest point in $C$ to $x$, we have by~\eqref{eq:unique_nearest} that
+  \begin{equation}
+    (x - p_C(x))^T (z - p_C(x)) \leq 0 \quad \text{for all } z \in C,
+  \end{equation}
+  and therefore specifically for $z = p_C(y)$ as well.
+  Similarly for $b$ and $p_C(y)$, we have
+  \begin{equation}
+    (p_C(y) - y)^T (p_C(y) - z) = (y - p_C(y))^T (z - p_C(y)) \leq 0 \quad \text{for all } z \in C,
+  \end{equation}
+  and thus specifically for $z = p_C(x)$.
+  Adding these two inequalities, we get
+  \begin{equation}
+    (a - b)^T (p_C(y) - p_C(x)) = a^T (p_C(y) - p_C(x)) + b^T (p_C(x) - p_C(y)) \leq 0.
+  \end{equation}
+  This gives us
+  \begin{equation}
+    \begin{split}
+      \norm{x - y}^2 &= \norm{(a - b) + (p_C(x) - p_C(y))}^2 \\
+      &= \norm{a - b}^2 + \norm{p_C(x) - p_C(y)}^2 + 2 (a - b)^T (p_C(x) - p_C(y)) \\
+      &\geq \norm{a - b}^2 + \norm{p_C(x) - p_C(y)}^2 \\
+      &\geq \norm{p_C(x) - p_C(y)}^2,
+    \end{split}
+  \end{equation}
+  as desired.
+\end{solution}
+
+\begin{exercise}
+  Consider the outer description of closed convex sets given in Corollary~3.2.4.
+  What is this description for each of the following sets:
+  \begin{enumerate}[label = (\emph{\roman*})]
+    \item $C_1 = \{ x \in \mathbb{R}^n : \norm{x} \leq 1 \}$,
+    \item $C_2 = \conv(\{0, 1\}^n)$,
+    \item $C_3$ is the convex hull of the points $(1,1)$, $(1,-1)$, $(-1,1)$, and $(-1,-1)$ in $\mathbb{R}^2$.
+    \item $C_4$ is the convex hull of all vectors in $\mathbb{R}^n$ having components that are either $1$ or $-1$.
+  \end{enumerate}
+\end{exercise}
+
+\begin{solution}
+  I don't quite see the point of having almost identical subproblems, but alright.
+  \begin{enumerate}[label = (\emph{\roman*})]
+    \item The half-planes are the tangents to the unit ball, as used in a previous exercise.
+    \item One half of the half-planes are given by $x_i = 0$ for $i = 1, \ldots, n$, and the other half by $x_i = 1$ for $i = 1, \ldots, n$.
+    \item Similarly, here the half-planes are given by $x_1 = 1$, $x_1 = -1$, $x_2 = 1$, and $x_2 = -1$, almost equivalently to (\emph{ii}).
+    \item Again, the half-planes are given by $x_i = 1$ and $x_i = -1$ for $i = 1, \ldots, n$, almost equivalently to (\emph{ii}) and (\emph{iii}).
+  \end{enumerate}
 \end{solution}
