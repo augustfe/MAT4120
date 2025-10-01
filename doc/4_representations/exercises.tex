@@ -1,0 +1,47 @@
+\section{Representation of convex sets}
+
+\begin{exercise}
+  Consider the polytope $P \subset \mathbb{R}^2$ being the convex hull of the point $(0, 0)$, $(1, 0)$ and $(0, 1)$ (so $P$ is a simplex in $\mathbb{R}^2$).
+  \begin{enumerate}[label = (\emph{\roman*})]
+    \item Find the unique face of $P$ that contains the point $(1/3, 1/2)$.
+    \item Find all faces of $P$ that contain the point $(1/3, 2/3)$.
+    \item Determine all the faces of $P$.
+  \end{enumerate}
+\end{exercise}
+
+\begin{solution}
+  Beginning with (\emph{iii}), we note the the dimension $0$ faces of $P$ are the vertices.
+  The dimension $1$ faces are the edges between the vertices, and the dimension $2$ face is $P$ itself.
+  (\emph{i}): The point $(1/3, 1/2)$ clearly does not lie on any of the edges or vertices, so the only face containing it is $P$ itself.
+  (\emph{ii}): The point $(1/3, 2/3)$ lies on the edge between $(0, 1)$ and $(1, 0)$ ($\lambda = 1/3$), so the faces containing it are this edge and $P$ itself.
+\end{solution}
+
+\begin{exercise}
+  Explain why an equivalent definition of face is obtained using the condition: if whenever $x_1, x_2 \in C$ and $(1/2)(x_1 + x_2) \in F$, then $x_1, x_2 \in F$.
+\end{exercise}
+
+\begin{solution}
+  Let $F$ be a face of $C$.
+  Then, by definition, if $x_1, x_2 \in C$ and $\lambda x_1 + (1 - \lambda) x_2 \in F$ for some $\lambda \in (0, 1)$, then $x_1, x_2 \in F$.
+  In particular, this holds for $\lambda = 1/2$, so the condition is satisfied.
+
+  For the converse, assume that $F$ satisfies the midpoint condition: whenever $x_1, x_2 \in C$ and $(1/2)(x_1 + x_2) \in F$, then $x_1, x_2 \in F$.
+  We can essentially perform a binary search to find each point on the line segment between $x_1$ and $x_2$.
+  More precisely, for a point $y = \lambda x_1 + (1 - \lambda) x_2$ where $\lambda \in (0, 1)$, we can express $\lambda$ in its binary representation.
+  This means that there is a sequence $\{ \sigma_i (1/2)^i \}_{i=1}^\infty$ where $\sigma_i \in \{ -1, 1 \}$, $\sigma_1 = 1/2$, such that
+  \begin{equation}
+    \lambda_n = \sum_{i=1}^n \sigma_i (1/2)^i,
+  \end{equation}
+  and $\lambda_n \to \lambda$ as $n \to \infty$.
+  We can then define a sequence of points $\{ y_n \}_{n=1}^\infty$ where $y_n = \lambda_n x_1 + (1 - \lambda_n) x_2$.
+  At each step $n$, we are only considering a subinterval $[x_l^n, x_r^n] \subseteq [x_1, x_2]$ where $y_n = \frac{1}{2}(x_l^n + x_r^n)$.
+  By the midpoint condition, if $y_n \in F$, then $x_l^n, x_r^n \in F$.
+  If $\lambda > \lambda_n$, we set $x_l^{n+1} = y_n$ and $x_r^{n+1} = x_r^n$.
+  If $\lambda < \lambda_n$, we set $x_l^{n+1} = x_l^n$ and $x_r^{n+1} = y_n$.
+  In either case, we have that $y_{n+1} = \frac{1}{2}(x_l^{n+1} + x_r^{n+1})$.
+  Since $y_1 \in F$, we have that $x_l^1, x_r^1 \in F$.
+  By induction, we have that $x_l^n, x_r^n \in F$ for all $n$.
+  Since $y_n$ is the midpoint of $x_l^n$ and $x_r^n$, we have that $y_n \in F$ for all $n$.
+  Finally, since $y_n \to y$ as $n \to \infty$ and $F$ is closed, we have that $y \in F$.
+  Thus, $F$ is a face of $C$.
+\end{solution}
