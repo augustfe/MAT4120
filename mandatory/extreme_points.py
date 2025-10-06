@@ -6,6 +6,8 @@ from pathlib import Path
 import numpy as np
 import sympy as sp
 
+TOL = 1e-9
+
 
 def find_feasible_point(A: sp.Matrix, b: sp.Matrix) -> list[sp.Matrix]:
     candidates = []
@@ -55,20 +57,6 @@ def _order_points_counterclockwise(points: np.ndarray) -> np.ndarray:
     indexed_points = list(enumerate(points))
     indexed_points.sort(key=lambda item: math.atan2(item[1][1] - cy, item[1][0] - cx))
     return np.array([index for index, _ in indexed_points])
-
-
-def _axis_tick_values(min_val: float, max_val: float) -> list[float]:
-    if max_val < min_val:
-        min_val, max_val = max_val, min_val
-
-    if math.isclose(max_val, min_val, rel_tol=1e-9, abs_tol=1e-9):
-        return [min_val]
-
-    start = math.floor(min(min_val, 0.0))
-    end = math.ceil(max(max_val, 0.0))
-    tick_values = {min_val, max_val}
-    tick_values.update(float(value) for value in range(start, end + 1))
-    return sorted(tick_values)
 
 
 @dataclass
@@ -126,17 +114,64 @@ def _build_feasible_region_polygon(geometry: GeometryData) -> str:
     )
 
 
+def _unique_points(points: list[np.ndarray]) -> list[np.ndarray]:
+    unique: list[np.ndarray] = []
+    for candidate in points:
+        if not any(np.allclose(candidate, existing, atol=TOL) for existing in unique):
+            unique.append(candidate)
+    return unique
+
+
+def _clip_line_to_box(
+    a_vec: np.ndarray,
+    b_val: float,
+    x_limits: tuple[float, float],
+    y_limits: tuple[float, float],
+) -> tuple[np.ndarray, np.ndarray] | None:
+    x_min, x_max = x_limits
+    y_min, y_max = y_limits
+
+    x_max = y_max = max(x_max, y_max)
+
+    points: list[np.ndarray] = []
+    a_x, a_y = a_vec
+
+    if abs(a_y) > TOL:
+        for x in (x_min, x_max):
+            y = (b_val - a_x * x) / a_y
+            if y_min - TOL <= y <= y_max + TOL:
+                points.append(np.array([x, y], dtype=float))
+
+    if abs(a_x) > TOL:
+        for y in (y_min, y_max):
+            x = (b_val - a_y * y) / a_x
+            if x_min - TOL <= x <= x_max + TOL:
+                points.append(np.array([x, y], dtype=float))
+
+    points = _unique_points(points)
+    if len(points) < 2:
+        return None
+
+    direction = np.array([-a_y, a_x], dtype=float)
+    if np.linalg.norm(direction) <= TOL:
+        direction = np.array([1.0, 0.0])
+
+    scores = [np.dot(point, direction) for point in points]
+    order = np.argsort(scores)
+    return points[order[0]], points[order[-1]]
+
+
 def _build_axis_elements(bounds: PlotBounds) -> tuple[list[str], list[str]]:
     x_min, y_min = np.floor(bounds.mins).astype(int)
     x_max, y_max = np.ceil(bounds.maxs).astype(int)
 
     # Axis lines with labels
-    def command(x_min, x_max, y_min, y_max, symbol, axis=True) -> str:
+    def command(x_min, x_max, y_min, y_max, axis=True, on_x=True) -> str:
+        symbol = "\\i" if not axis else "x" if on_x else "y"
         desc = "axis, ->" if axis else "tick"
-        if axis:
-            where = "below right" if symbol == "x" else "above left"
-        else:
-            where = "below" if symbol == "x" else "left"
+        where = "below" + " right" * axis if on_x else "above " * axis + "left"
+        # if axis:
+        #     where += " right" if on_x else " above"
         return (
             f"\\draw[{desc}] "
             f"({x_min},{y_min}) -- ({x_max},{y_max}) "
@@ -144,15 +179,15 @@ def _build_axis_elements(bounds: PlotBounds) -> tuple[list[str], list[str]]:
         )
 
     axis_commands = [
-        command(x_min - 0.5, x_max + 0.5, 0, 0, "x"),
-        command(0, 0, y_min - 0.5, y_max + 0.5, "y"),
+        command(x_min - 0.5, x_max + 0.5, 0, 0, on_x=True),
+        command(0, 0, y_min - 0.5, y_max + 0.5, on_x=False),
     ]
 
     def foreach_block(start: int, end: int, body: str) -> str:
         return f"\\foreach \\i in {{{start},...,{end}}} {{\n{body}\n}}\n"
 
-    x_tick_body = f"\t{command('\\i', '\\i', 0.1, -0.1, '\\i', False)}"
-    y_tick_body = f"\t{command(0.1, -0.1, '\\i', '\\i', '\\i', False)}"
+    x_tick_body = f"\t{command('\\i', '\\i', 0.1, -0.1, False, True)}"
+    y_tick_body = f"\t{command(0.1, -0.1, '\\i', '\\i', False, False)}"
 
     tick_commands = [
         *foreach_block(int(x_min), int(x_max), x_tick_body).splitlines(),
@@ -171,76 +206,62 @@ def _build_axis_elements(bounds: PlotBounds) -> tuple[list[str], list[str]]:
 
 def _build_constraint_elements(
     A: sp.Matrix, b: sp.Matrix, bounds: PlotBounds
-) -> tuple[list[str], list[str]]:
-    constraint_line_commands: list[str] = []
-    constraint_label_commands: list[str] = []
-
-    constraint_label_offset = 0.04 * bounds.max_span
-    constraint_label_margin = 0.02 * bounds.max_span
-
+) -> list[str]:
     A_np = np.array(A.tolist(), dtype=float)
     b_np = np.array(b.tolist(), dtype=float).reshape(-1)
 
-    lower_bounds = bounds.clip_min + constraint_label_margin
-    upper_bounds = bounds.clip_max - constraint_label_margin
+    box_min = np.array([0.5, 0.5])
+    box_max = np.maximum(bounds.maxs, box_min)
+
+    entries: list[tuple[str, str]] = []
 
     for row, (a_vec, b_val) in enumerate(zip(A_np, b_np, strict=True)):
         if np.allclose(a_vec, 0.0, atol=1e-9):
             continue
 
-        if abs(a_vec[1]) >= 1e-9:
-            x_values = np.array([bounds.clip_min[0], bounds.clip_max[0]])
-            y_values = (b_val - a_vec[0] * x_values) / a_vec[1]
-            start_point = np.array([x_values[0], y_values[0]])
-            end_point = np.array([x_values[1], y_values[1]])
-        else:
-            x_val = b_val / a_vec[0]
-            start_point = np.array([x_val, bounds.clip_min[1]])
-            end_point = np.array([x_val, bounds.clip_max[1]])
-
-        constraint_line_commands.append(
-            "\\draw[constraint] "
-            f"{_format_point(start_point)} -- {_format_point(end_point)};"
+        segment = _clip_line_to_box(
+            a_vec, b_val, (box_min[0], box_max[0]), (box_min[1], box_max[1])
         )
-
-        normal_norm = np.linalg.norm(a_vec)
-        if normal_norm < 1e-9:
+        if segment is None:
             continue
+        s0, s1 = map(_format_point, segment)
+        entries.append((f"{s0} -- {s1}", f"$a_{{{row}}}$"))
 
-        midpoint = 0.5 * (start_point + end_point)
-        normal_direction = a_vec / normal_norm
-        label_point = midpoint + normal_direction * constraint_label_offset
-        label_point = np.clip(label_point, lower_bounds, upper_bounds)
+    if not entries:
+        return []
 
-        constraint_label_commands.append(
-            "\\node[constraint-label] "
-            f"at {_format_point(label_point)} {{$a_{{{row}}}$}};"
-        )
+    formatted_entries = []
+    for idx, (segment, label_text) in enumerate(entries):
+        separator = "," if idx < len(entries) - 1 else ""
+        formatted_entries.append(f"\t{{{segment}}}/{{{label_text}}}{separator}")
 
-    return constraint_line_commands, constraint_label_commands
+    constraint_line = (
+        "\t\\draw[constraint] \\segment node[left, constraint-label] {\\labeltext};"
+    )
+
+    return [
+        "%%%%%%%%%% Constraint lines %%%%%%%%%%",
+        "\\foreach \\segment/\\labeltext in {",
+        *formatted_entries,
+        "} {",
+        constraint_line,
+        "}",
+        "",
+    ]
 
 
-def _build_vertex_elements(
-    geometry: GeometryData, bounds: PlotBounds
-) -> tuple[list[str], list[str]]:
-    vertex_circle_commands: list[str] = []
-    vertex_label_commands: list[str] = []
-
+def _build_vertex_elements(geometry: GeometryData, bounds: PlotBounds) -> list[str]:
     vertex_label_offset = 0.05 * bounds.max_span
     vertex_label_margin = 0.02 * bounds.max_span
 
     lower_vertex_bounds = bounds.clip_min + vertex_label_margin
     upper_vertex_bounds = bounds.clip_max - vertex_label_margin
 
+    entries: list[tuple[str, str, str]] = []
+
     for idx in geometry.ordered_indices:
         expr_x, expr_y = geometry.point_exprs[idx]
         point = geometry.coords[idx]
-        formatted_x = _format_number(expr_x)
-        formatted_y = _format_number(expr_y)
-
-        vertex_circle_commands.append(
-            f"\\filldraw[vertex] ({formatted_x},{formatted_y}) circle (3pt);"
-        )
 
         direction = point - geometry.centroid
         direction_norm = np.linalg.norm(direction)
@@ -250,13 +271,35 @@ def _build_vertex_elements(
 
         label_point = point + (direction / direction_norm) * vertex_label_offset
         label_point = np.clip(label_point, lower_vertex_bounds, upper_vertex_bounds)
-        label_text = f"$({formatted_x}, {formatted_y})$"
 
-        vertex_label_commands.append(
-            f"\\node[vertex-label] at {_format_point(label_point)} {{{label_text}}};"
+        f_x = _format_number(expr_x)
+        f_y = _format_number(expr_y)
+        f_label = _format_point(label_point)
+        label_text = f"$({f_x}, {f_y})$"
+
+        entries.append((f"({f_x},{f_y})", f_label, label_text))
+
+    if not entries:
+        return []
+
+    formatted_entries = []
+    for idx, (vertex_point, label_point, label_text) in enumerate(entries):
+        separator = "," if idx < len(entries) - 1 else ""
+        formatted_entries.append(
+            f"\t{{{vertex_point}}}/{{{label_point}}}/{{{label_text}}}{separator}"
         )
 
-    return vertex_circle_commands, vertex_label_commands
+    return [
+        "\\def\\VertexRadius{1.5pt}",
+        "%%%%%%%%%% Vertices %%%%%%%%%%",
+        "\\foreach \\vertexpos/\\labelpos/\\labeltext in {",
+        *formatted_entries,
+        "} {",
+        "\t\\filldraw[vertex] \\vertexpos circle (\\VertexRadius);",
+        "\t\\node[vertex-label] at \\labelpos {\\labeltext};",
+        "}",
+        "",
+    ]
 
 
 def _tikz_style_block() -> str:
@@ -272,22 +315,11 @@ def _tikz_style_block() -> str:
         "vertex/.style={color=vertex_point, fill=white, line width=0.9pt}",
         "vertex-label/.style={color=vertex_point, font=\\scriptsize}",
     ]
-    style = [
+    return [
         "\\begin{tikzpicture}[",
         *[f"\t\t{arg}," for arg in args],
         "\t]",
     ]
-    # print(style)
-
-    return style
-
-
-def _tikz_clip_command(bounds: PlotBounds) -> str:
-    return (
-        "\\clip "
-        f"{_format_point(bounds.clip_min)} "
-        f"rectangle {_format_point(bounds.clip_max)};"
-    )
 
 
 def _tikz_fill_command(polygon_points: str) -> list[str]:
@@ -318,31 +350,24 @@ def write_tikz_figure(
 
     tikz_lines = _tikz_style_block()
 
+    main_block = []
+
     geometry = _gather_geometry(extreme_pts)
     polygon_points = _build_feasible_region_polygon(geometry)
-    tikz_lines.extend([f"\t{cmd}" for cmd in _tikz_fill_command(polygon_points)])
+    main_block.extend(_tikz_fill_command(polygon_points))
 
     bounds = _compute_plot_bounds(geometry)
-    tikz_lines.extend([f"\t{cmd}" for cmd in _build_axis_elements(bounds)])
+    main_block.extend(_build_axis_elements(bounds))
+    main_block.append(f"\\draw[vertex-line] {polygon_points} -- cycle;")
+    main_block.extend(_build_constraint_elements(A, b, bounds))
+    main_block.extend(_build_vertex_elements(geometry, bounds))
 
-    constraint_line_commands, constraint_label_commands = _build_constraint_elements(
-        A, b, bounds
-    )
-    vertex_circle_commands, vertex_label_commands = _build_vertex_elements(
-        geometry, bounds
-    )
+    main_block = [f"\t{line}" for line in main_block]
 
-    tikz_lines.append(f"  \\draw[vertex-line] {polygon_points} -- cycle;")
+    all_lines = "\n".join(tikz_lines + main_block + ["\\end{tikzpicture}"])
+    all_lines = all_lines.replace("\t", " " * 2)
 
-    for command in constraint_line_commands + constraint_label_commands:
-        tikz_lines.append(f"  {command}")
-
-    for command in vertex_circle_commands + vertex_label_commands:
-        tikz_lines.append(f"  {command}")
-
-    tikz_lines.append("\\end{tikzpicture}")
-
-    path.write_text("\n".join(tikz_lines) + "\n", encoding="utf-8")
+    path.write_text(all_lines + "\n", encoding="utf-8")
     return path
 
 
