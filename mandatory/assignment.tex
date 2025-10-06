@@ -1,0 +1,236 @@
+\documentclass[
+  a4paper,
+  12pt,
+]{article}
+\usepackage{amsmath, amsthm, amsfonts, amssymb}
+\usepackage{microtype}
+\usepackage{geometry}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{caption, subcaption}
+% \usepackage{subcaption}
+\usepackage{comment}
+
+\usepackage{tikz}
+\usetikzlibrary{3d, calc}
+
+\usepackage{hyperref}
+\usepackage[capitalise]{cleveref}
+\usepackage{xcolor}
+\hypersetup{ % this is just my personal choice, feel free to change things
+  colorlinks,
+  linkcolor={red!50!black},
+  citecolor={blue!50!black},
+  urlcolor={blue!80!black},
+}
+\input{colours.tex}
+
+\usepackage{cancel}
+\usepackage{mathtools}
+
+\usepackage{enumerate}
+\usepackage{enumitem}
+
+\input{mathops.tex}
+\input{exer_sol.tex}
+
+\numberwithin{equation}{section}
+
+\title{
+  MAT4120\\
+  \small{Mandatory assignment for Mathematical Optimization}
+}
+\author{August Femtehjell}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+
+\begin{abstract}
+  This document contains my solutions to the mandatory assignment for the course MAT4120--Mathematical Optimization, taught at the University of Oslo in the autumn of 2024.
+  The code for everything, as well as this document, can be found at my GitHub repository: \url{https://github.com/augustfe/MAT4120}.
+\end{abstract}
+
+\setcounter{section}{2}
+\setexsol{6}
+
+\begin{exercise}
+  If $S$ is convex, then $\conv(S) = S$.
+  Show this!
+\end{exercise}
+
+\begin{solution}
+  Since $S$ is convex, for any $u, v \in S$ and any $0 \leq \lambda \leq 1$, we have $\lambda u + (1 - \lambda) v \in S$.
+  By the definition of convex hull, $\conv(S)$ is the smallest convex set containing $S$.
+  Since $S$ is already convex and contains itself, it follows that $\conv(S) = S$.
+\end{solution}
+
+\setexsol{38}
+
+\begin{exercise}
+  Prove Theorem 2.4.3.
+  (%
+    Hint: To prove that $\rint(C)$ is convex, use Theorem 2.4.2.
+    Concerning $\intr(C)$, use Exercise~2.37.
+    Finally, to show that $\cl(C)$ is convex, let $x, y \in \cl(C)$ and consider the two point sequences that converge to $x$ and $y$ respectively.
+    Then, look at a convex combination of $x$ and $y$ and construct a suitable sequence!%
+  )
+\end{exercise}
+
+\begin{solution}
+  Theorem 2.4.2 states that a convex set has a ``thin boundary'', i.e., for $C \subseteq \mathbb{R}^n$ non-empty and convex, and $x_1 \in \rint(C)$, $x_2 \in \cl(C)$, we have
+  \begin{equation}
+    (1 - \lambda) x_1 + \lambda x_2 \in \rint(C)
+  \end{equation}
+  for all $0 \leq \lambda < 1$.
+
+  Theorem 2.4.3 on the other hand states as follows:
+  If $C \subseteq \mathbb{R}^n$ is a convex set, then all sets $\rint(C)$, $\intr(C)$ and $\cl(C)$ are convex.
+  Therefore, assume $C \subseteq \mathbb{R}^n$ is convex.
+
+  Let $x, y \in \rint(C)$.
+  As $\rint(C) \subseteq C \subseteq \cl(C)$, we can simply apply Theorem 2.4.2 to show that $\rint(C)$ is convex.
+  By Exercise~2.37, we have that either $\intr(C) = \rint(C)$ or $\intr(C) = \emptyset$.
+  In both cases, $\intr(C)$ is convex.
+
+  Finally, let $x, y \in \cl(C)$,
+  and let $x^k, y^k \in C$ be sequences such that $x^k \to x$ and $y^k \to y$.
+  As $C$ is convex, $(1 - \lambda) x^k + \lambda y^k \in C$ for all $0 \leq \lambda \leq 1$, which converges to $(1 - \lambda) x + \lambda y$.
+  Thus, $(1 - \lambda) x + \lambda y \in \cl(C)$, showing that $\cl(C)$ is convex.
+\end{solution}
+
+\setcounter{section}{3}
+\setexsol{6}
+
+\begin{exercise}
+  Let $L$ be a line in $\mathbb{R}^n$.
+  Find the nearest point in $L$ to a point $x \in \mathbb{R}^n$.
+  Use your result to find the nearest point on the line $L = \{ (x, y) : x + 3y = 5 \}$ to the point $(1, 2)$.
+\end{exercise}
+
+\begin{solution}
+  Let $L$ be the defined by the line $\{ b + t d : t \in \mathbb{R} \}$, where $b$ is a point on the line and $d$ is a direction vector.
+  The nearest point on $L$ to a point $x \in \mathbb{R}^n$ can be found by projecting the vector $x - b$ onto the direction vector $d$.
+  The projection is given by
+  \begin{equation}
+    \mathrm{proj}_d (x - b) = b + \frac{(x - b)^T d}{\norm{d}^2} d.
+  \end{equation}
+
+  With $b = (5, 0)$, we note that $(1, 3)$ is orthogonal to the line, so we choose the direction vector to be $d = (-3, 1)$.
+  Then, the nearest point on the line $L$ to the point $(1, 2)$ is given by
+  \begin{equation}
+    \begin{split}
+      \mathrm{proj}_d ((1, 2) - (5, 0)) &= \mathrm{proj}_d ((-4, 2))
+      = (5, 0) + \frac{(-4, 2)^T (-3, 1)}{\norm{(-3, 1)}^2} (-3, 1) \\
+      &= (5, 0) + \frac{14}{10} (-3, 1)
+      =\left(\frac{25}{5}, 0\right) + \left(-\frac{21}{5}, \frac{7}{5}\right) \\
+      &= \left(\frac{4}{5}, \frac{7}{5}\right).
+    \end{split}
+  \end{equation}
+  Therefore, the nearest point on the line $L$ to the point $(1, 2)$ is $\left(\frac{4}{5}, \frac{7}{5}\right)$.
+\end{solution}
+
+\setexsol{18}
+\begin{exercise}
+  Consider the outer description of closed convex sets given in Corollary~3.2.4.
+  What is this description for each of the following sets:
+  \begin{enumerate}[label = (\emph{\roman*})]
+    \item $C_1 = \{ x \in \mathbb{R}^n : \norm{x} \leq 1 \}$,
+    \item $C_2 = \conv(\{0, 1\}^n)$,
+    \item $C_3$ is the convex hull of the points $(1,1)$, $(1,-1)$, $(-1,1)$, and $(-1,-1)$ in $\mathbb{R}^2$.
+    \item $C_4$ is the convex hull of all vectors in $\mathbb{R}^n$ having components that are either $1$ or $-1$.
+  \end{enumerate}
+\end{exercise}
+
+\begin{solution}
+  I don't quite see the point of having almost identical subproblems, but alright.
+  \begin{enumerate}[label = (\emph{\roman*})]
+    \item The half-planes are the tangents to the unit ball, as used in a previous exercise.
+    \item One half of the half-planes are given by $x_i = 0$ for $i = 1, \ldots, n$, and the other half by $x_i = 1$ for $i = 1, \ldots, n$.
+    \item Similarly, here the half-planes are given by $x_1 = 1$, $x_1 = -1$, $x_2 = 1$, and $x_2 = -1$, almost equivalently to (\emph{ii}).
+    \item Again, the half-planes are given by $x_i = 1$ and $x_i = -1$ for $i = 1, \ldots, n$, almost equivalently to (\emph{ii}) and (\emph{iii}).
+  \end{enumerate}
+\end{solution}
+
+\setcounter{section}{4}
+\setexsol{17}
+
+\begin{exercise}
+  Consider a polyhedral cone $C = \{x \in \mathbb{R}^n : Ax \leq 0\}$ (where, as usual $A$ is a real $m \times n$-matrix).
+  Show that $0$ is the unique vertex of $C$.
+\end{exercise}
+
+\begin{solution}
+  Assume that $\rank(A) < n$.
+  Then, there exists a non-zero vector $z$ such that $Az = 0$.
+  As such, we have that for any $x \in C$ and any $\lambda \in \mathbb{R}$,
+  \begin{align*}
+    A(x + \lambda z) = Ax + \lambda Az = Ax \leq 0,
+  \end{align*}
+  showing that $x + \lambda z \in C$.
+  Therefore, if $\rank(A) < n$, then $C$ has no vertices.
+  As such, the exercise is missing information, as it is not necessarily true that $0$ is the unique vertex of $C$.
+
+  As a simple counterexample, consider
+  \begin{equation}
+    C = \{ (x_0, x_1) \in \mathbb{R}^2 : x_0 \leq 0 \},
+  \end{equation}
+  which contains the line $\{ (0, x_1) : x_1 \in \mathbb{R} \}$, and thus has no vertices.
+\end{solution}
+
+\setexsol{22}
+
+\begin{exercise}
+  Let $P \subset \mathbb{R}^2$ be the polyhedron being the solution set of the linear system
+  \begin{equation}
+    \begin{array}{rcrcl}
+      x & - & y & \leq & 0 \\
+      -x & + & y & \leq & 1 \\
+      & & 2y & \geq & 5 \\
+      8x & - & y & \leq & 16 \\
+      x & + & y & \geq & 4
+    \end{array}
+  \end{equation}
+  Find all the extreme points of P.
+\end{exercise}
+
+\begin{solution}
+  Written in matrix form, we have
+  \begin{equation}
+    A =
+    \begin{bmatrix}
+      1 & -1 \\
+      -1 & 1 \\
+      0 & -2 \\
+      8 & -1 \\
+      -1 & -1
+    \end{bmatrix}
+    \quad\text{and}\quad
+    b =
+    \begin{bmatrix}
+      0 \\
+      1 \\
+      -5 \\
+      16 \\
+      -4
+    \end{bmatrix}.
+  \end{equation}
+  I chose to solve this using Python, with the library SymPy.
+  The code is freely available at \href{https://github.com/augustfe/MAT4120/blob/main/mandatory/extreme_points.py}{\texttt{mandatory/extreme\_points.py}}.
+  With this approach I found the extreme points to be
+  \begin{equation}
+    \left\{
+      \begin{bmatrix} \dfrac{3}{2} \\ \dfrac{5}{2}
+      \end{bmatrix},
+      \begin{bmatrix} \dfrac{17}{7} \\ \dfrac{24}{7}
+      \end{bmatrix},
+      \begin{bmatrix} \dfrac{37}{16} \\ \dfrac{5}{2}
+      \end{bmatrix}
+    \right\}.
+  \end{equation}
+\end{solution}
+
+\end{document} % chktex 17

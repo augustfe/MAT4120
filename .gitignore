@@ -31,7 +31,7 @@ ipython_config.py
 .*.lb
 doc/main.pdf
 */main.pdf
-exam/exam.pdf
+mandatory/assignment.pdf
 
 ## Intermediate documents:
 *.dvi
