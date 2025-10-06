@@ -1,0 +1,45 @@
+\begin{tikzpicture}[
+  scale=1.2,
+  axis/.style={color=axis_line, line width=0.8pt},
+  tick/.style={axis, line width=0.6pt},
+  axis-label/.style={color=axis_text, font=\scriptsize},
+  constraint/.style={color=constraint_line, line width=0.8pt},
+  constraint-label/.style={constraint, font=\scriptsize},
+  vertex-line/.style={color=vertex_point, line width=1pt},
+  vertex/.style={color=vertex_point, fill=white, line width=0.9pt},
+  vertex-label/.style={color=vertex_point, font=\scriptsize}
+]
+  \clip (1.3000,2.3000) rectangle (2.6286,3.6286);
+  \fill[feasible_region] (3/2,5/2) -- (37/16,5/2) -- (17/7,24/7) -- cycle;
+  \draw[axis, ->] (1.3000,2.4063) -- (2.6286,2.4063) node[axis-label, anchor=west] {$x$};
+  \draw[axis, ->] (1.4063,2.3000) -- (1.4063,3.6286) node[axis-label, anchor=south] {$y$};
+  \draw[tick] (1.5000,2.4063) -- (1.5000,2.4461);
+  \node[axis-label, anchor=south] at (1.5000,2.4993) {$3/2$};
+  \draw[tick] (2.0000,2.4063) -- (2.0000,2.4461);
+  \node[axis-label, anchor=south] at (2.0000,2.4993) {$2$};
+  \draw[tick] (2.4286,2.4063) -- (2.4286,2.4461);
+  \node[axis-label, anchor=south] at (2.4286,2.4993) {$17/7$};
+  \draw[tick] (1.4063,2.5000) -- (1.4461,2.5000);
+  \node[axis-label, anchor=west] at (1.4993,2.5000) {$5/2$};
+  \draw[tick] (1.4063,3.0000) -- (1.4461,3.0000);
+  \node[axis-label, anchor=west] at (1.4993,3.0000) {$3$};
+  \draw[tick] (1.4063,3.4286) -- (1.4461,3.4286);
+  \node[axis-label, anchor=west] at (1.4993,3.4286) {$24/7$};
+  \draw[vertex-line] (3/2,5/2) -- (37/16,5/2) -- (17/7,24/7) -- cycle;
+  \draw[constraint] (1.3000,1.3000) -- (2.6286,2.6286);
+  \draw[constraint] (1.3000,2.3000) -- (2.6286,3.6286);
+  \draw[constraint] (1.3000,2.5000) -- (2.6286,2.5000);
+  \draw[constraint] (1.3000,-5.6000) -- (2.6286,5.0286);
+  \draw[constraint] (1.3000,2.7000) -- (2.6286,1.3714);
+  \node[constraint-label] at (2.0019,2.3266) {$a_{0}$};
+  \node[constraint-label] at (1.9267,3.0019) {$a_{1}$};
+  \node[constraint-label] at (1.9643,2.4469) {$a_{2}$};
+  \node[constraint-label] at (2.0170,2.3266) {$a_{3}$};
+  \node[constraint-label] at (1.9267,2.3266) {$a_{4}$};
+  \filldraw[vertex] (3/2,5/2) circle (3pt);
+  \filldraw[vertex] (37/16,5/2) circle (3pt);
+  \filldraw[vertex] (17/7,24/7) circle (3pt);
+  \node[vertex-label] at (1.4414,2.4687) {$(3/2, 5/2)$};
+  \node[vertex-label] at (2.3524,2.4469) {$(37/16, 5/2)$};
+  \node[vertex-label] at (2.4611,3.4865) {$(17/7, 24/7)$};
+\end{tikzpicture}
