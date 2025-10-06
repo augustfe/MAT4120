@@ -2,6 +2,7 @@ import math
 from itertools import combinations
 from pathlib import Path
 
+import numpy as np
 import sympy as sp
 
 
@@ -43,37 +44,29 @@ def _format_number(value: sp.Expr) -> str:
     return f"{float(sp.N(value)):.4f}"
 
 
-def _order_points_counterclockwise(points: list[tuple[float, float]]) -> list[int]:
+def _order_points_counterclockwise(points: np.ndarray) -> np.ndarray:
     if len(points) <= 1:
-        return list(range(len(points)))
+        return np.arange(points.shape[0])
 
-    cx = sum(point[0] for point in points) / len(points)
-    cy = sum(point[1] for point in points) / len(points)
+    cx = np.mean(points[:, 0])
+    cy = np.mean(points[:, 1])
 
     indexed_points = list(enumerate(points))
     indexed_points.sort(key=lambda item: math.atan2(item[1][1] - cy, item[1][0] - cx))
-    return [index for index, _ in indexed_points]
-
-
-def _clamp(value: float, lower: float, upper: float) -> float:
-    return max(lower, min(value, upper))
+    return np.array([index for index, _ in indexed_points])
 
 
 def _axis_tick_values(min_val: float, max_val: float) -> list[float]:
     if max_val < min_val:
         min_val, max_val = max_val, min_val
 
-    if math.isclose(max_val, min_val, rel_tol=1e-9, abs_tol=1e-9):
-        return [min_val]
+    if np.isclose(max_val, min_val, atol=1e-9):
+        return np.array([min_val])
 
     start = math.floor(min_val)
     end = math.ceil(max_val)
-    tick_values = {min_val, max_val}
-    tick_values.update(float(value) for value in range(start, end + 1))
-    filtered = [
-        tick for tick in tick_values if min_val - 1e-9 <= tick <= max_val + 1e-9
-    ]
-    return sorted(filtered)
+    ticks = list(range(start, end + 1))
+    return ticks
 
 
 def write_tikz_figure(
@@ -95,152 +88,161 @@ def write_tikz_figure(
     )
 
     point_exprs = [(pt[0], pt[1]) for pt in extreme_pts]
-    point_coords = [(float(sp.N(pt[0])), float(sp.N(pt[1]))) for pt in extreme_pts]
+    coords = np.array(
+        [[sp.N(pt[0]), sp.N(pt[1])] for pt in extreme_pts],
+        dtype=float,
+    )
 
-    xs = [coord[0] for coord in point_coords]
-    ys = [coord[1] for coord in point_coords]
+    mins = np.minimum(coords.min(axis=0), np.zeros(2))
+    maxs = np.maximum(coords.max(axis=0), np.zeros(2))
+    spans = maxs - mins
 
-    x_min = min(xs)
-    x_max = max(xs)
-    y_min = min(ys)
-    y_max = max(ys)
+    margin = 0.2 * max(spans.max(), 1.0)
 
-    span_x = x_max - x_min
-    span_y = y_max - y_min
-    margin = 0.2 * max(span_x, span_y, 1.0)
+    clip_min = mins - margin
+    clip_max = maxs + margin
+    ranges = clip_max - clip_min
+    max_span = max(ranges.max(), 1.0)
 
-    clip_x_min = x_min - margin
-    clip_x_max = x_max + margin
-    clip_y_min = y_min - margin
-    clip_y_max = y_max + margin
-
-    range_x = clip_x_max - clip_x_min
-    range_y = clip_y_max - clip_y_min
-    max_span = max(range_x, range_y, 1.0)
-
-    ordered_indices = _order_points_counterclockwise(point_coords)
+    ordered_indices = _order_points_counterclockwise(coords)
     polygon_points = " -- ".join(
         f"({_format_number(point_exprs[idx][0])},{_format_number(point_exprs[idx][1])})"
         for idx in ordered_indices
     )
 
-    centroid_x = sum(xs) / len(xs)
-    centroid_y = sum(ys) / len(ys)
+    centroid = coords.mean(axis=0)
 
     axis_offset = 0.08 * max_span
-    x_axis_y = clip_y_min + min(axis_offset, max(0.0, 0.25 * range_y))
-    y_axis_x = clip_x_min + min(axis_offset, max(0.0, 0.25 * range_x))
+    axis_base = clip_min + np.clip(axis_offset, 0.0, 0.25 * ranges)
+    available = np.maximum(0.0, clip_max - axis_base)
+    tick_length = np.minimum(0.03 * max_span, 0.5 * available)
+    label_gap = np.minimum(0.04 * max_span, 0.9 * available)
 
-    x_available = max(0.0, clip_y_max - x_axis_y)
-    y_available = max(0.0, clip_x_max - y_axis_x)
-    x_tick_length = min(0.03 * max_span, x_available * 0.5)
-    y_tick_length = min(0.03 * max_span, y_available * 0.5)
-    x_label_gap = min(0.04 * max_span, x_available * 0.9)
-    y_label_gap = min(0.04 * max_span, y_available * 0.9)
+    def _fmt_point(point: np.ndarray) -> str:
+        return f"({point[0]:.4f},{point[1]:.4f})"
 
-    axis_commands = [
-        (
-            "\\draw[axis, ->] "
-            f"({clip_x_min:.4f},{x_axis_y:.4f}) -- "
-            f"({clip_x_max:.4f},{x_axis_y:.4f}) "
-            "node[axis-label, anchor=west] {$x$};"
-        ),
-        (
-            "\\draw[axis, ->] "
-            f"({y_axis_x:.4f},{clip_y_min:.4f}) -- "
-            f"({y_axis_x:.4f},{clip_y_max:.4f}) "
-            "node[axis-label, anchor=south] {$y$};"
-        ),
+    axis_configs = [
+        {
+            "label": "{$x$}",
+            "var_idx": 0,
+            "const_idx": 1,
+            "line_pos": axis_base[1],
+            "tick_length": tick_length[1],
+            "label_gap": label_gap[1],
+            "ticks": _axis_tick_values(mins[0], maxs[0]),
+            "tick_anchor": "south",
+            "axis_label_anchor": "west",
+        },
+        {
+            "label": "{$y$}",
+            "var_idx": 1,
+            "const_idx": 0,
+            "line_pos": axis_base[0],
+            "tick_length": tick_length[0],
+            "label_gap": label_gap[0],
+            "ticks": _axis_tick_values(mins[1], maxs[1]),
+            "tick_anchor": "west",
+            "axis_label_anchor": "south",
+        },
     ]
 
-    x_tick_commands: list[str] = []
-    for tick in _axis_tick_values(x_min, x_max):
-        tick_expr = sp.nsimplify(tick)
-        label_text = f"${_format_number(tick_expr)}$"
-        x_tick_commands.append(
-            "\\draw[tick] "
-            f"({tick:.4f},{x_axis_y:.4f}) -- "
-            f"({tick:.4f},{x_axis_y + x_tick_length:.4f});"
-        )
-        x_tick_commands.append(
-            "\\node[axis-label, anchor=south] "
-            f"at ({tick:.4f},{x_axis_y + x_tick_length + x_label_gap:.4f}) "
-            f"{{{label_text}}};"
+    axis_commands: list[str] = []
+    tick_commands: list[str] = []
+
+    for config in axis_configs:
+        var_idx = config["var_idx"]
+        const_idx = config["const_idx"]
+        line_pos = config["line_pos"]
+
+        start = clip_min.copy()
+        end = clip_min.copy()
+        end[var_idx] = clip_max[var_idx]
+        start[const_idx] = line_pos
+        end[const_idx] = line_pos
+
+        axis_commands.append(
+            "\\draw[axis, ->] "
+            f"{_fmt_point(start)} -- {_fmt_point(end)} "
+            f"node[axis-label, anchor={config['axis_label_anchor']}] {config['label']};"
         )
 
-    y_tick_commands: list[str] = []
-    for tick in _axis_tick_values(y_min, y_max):
-        tick_expr = sp.nsimplify(tick)
-        label_text = f"${_format_number(tick_expr)}$"
-        y_tick_commands.append(
-            "\\draw[tick] "
-            f"({y_axis_x:.4f},{tick:.4f}) -- "
-            f"({y_axis_x + y_tick_length:.4f},{tick:.4f});"
-        )
-        y_tick_commands.append(
-            "\\node[axis-label, anchor=west] "
-            f"at ({y_axis_x + y_tick_length + y_label_gap:.4f},{tick:.4f}) "
-            f"{{{label_text}}};"
-        )
+        tick_len = config["tick_length"]
+        label_gap_val = config["label_gap"]
+
+        for tick in config["ticks"]:
+            base_point = np.zeros(2)
+            base_point[var_idx] = tick
+            base_point[const_idx] = line_pos
+
+            tick_end = base_point.copy()
+            tick_end[const_idx] += tick_len
+
+            label_point = base_point.copy()
+            label_point[const_idx] += tick_len + label_gap_val
+
+            tick_commands.append(
+                f"\\draw[tick] {_fmt_point(base_point)} -- {_fmt_point(tick_end)};"
+            )
+
+            tick_expr = sp.nsimplify(tick)
+            tick_label = f"${_format_number(tick_expr)}$"
+            tick_commands.append(
+                f"\\node[axis-label, anchor={config['tick_anchor']}] "
+                f"at {_fmt_point(label_point)} {{{tick_label}}};"
+            )
 
     constraint_line_commands: list[str] = []
     constraint_label_commands: list[str] = []
     constraint_label_offset = 0.04 * max_span
     constraint_label_margin = 0.02 * max_span
-    for row in range(A.rows):
-        a1 = float(sp.N(A[row, 0]))
-        a2 = float(sp.N(A[row, 1]))
-        b_val = float(sp.N(b[row]))
 
-        if abs(a1) < 1e-9 and abs(a2) < 1e-9:
+    A_np = np.array(A.tolist(), dtype=float)
+    b_np = np.array(b.tolist(), dtype=float).reshape(-1)
+
+    for row, (a_vec, b_val) in enumerate(zip(A_np, b_np, strict=True)):
+        if np.allclose(a_vec, 0.0, atol=1e-9):
             continue
 
-        if abs(a2) >= 1e-9:
-            start_point = (clip_x_min, (b_val - a1 * clip_x_min) / a2)
-            end_point = (clip_x_max, (b_val - a1 * clip_x_max) / a2)
+        if abs(a_vec[1]) >= 1e-9:
+            x_values = np.array([clip_min[0], clip_max[0]])
+            y_values = (b_val - a_vec[0] * x_values) / a_vec[1]
+            start_point = np.array([x_values[0], y_values[0]])
+            end_point = np.array([x_values[1], y_values[1]])
         else:
-            x_val = b_val / a1
-            start_point = (x_val, clip_y_min)
-            end_point = (x_val, clip_y_max)
+            x_val = b_val / a_vec[0]
+            start_point = np.array([x_val, clip_min[1]])
+            end_point = np.array([x_val, clip_max[1]])
 
-        line_command = (
-            "\\draw[constraint] "
-            f"({start_point[0]:.4f},{start_point[1]:.4f}) -- "
-            f"({end_point[0]:.4f},{end_point[1]:.4f});"
+        constraint_line_commands.append(
+            f"\\draw[constraint] {_fmt_point(start_point)} -- {_fmt_point(end_point)};"
         )
-        constraint_line_commands.append(line_command)
 
-        normal_norm = math.hypot(a1, a2)
+        normal_norm = np.linalg.norm(a_vec)
         if normal_norm < 1e-9:
             continue
 
-        mid_x = 0.5 * (start_point[0] + end_point[0])
-        mid_y = 0.5 * (start_point[1] + end_point[1])
-        offset_x = (a1 / normal_norm) * constraint_label_offset
-        offset_y = (a2 / normal_norm) * constraint_label_offset
-        label_x = _clamp(
-            mid_x + offset_x,
-            clip_x_min + constraint_label_margin,
-            clip_x_max - constraint_label_margin,
-        )
-        label_y = _clamp(
-            mid_y + offset_y,
-            clip_y_min + constraint_label_margin,
-            clip_y_max - constraint_label_margin,
-        )
-        label_text = f"$a_{{{row}}}$"
+        midpoint = 0.5 * (start_point + end_point)
+        normal_direction = a_vec / normal_norm
+        label_point = midpoint + normal_direction * constraint_label_offset
+        lower_bounds = clip_min + constraint_label_margin
+        upper_bounds = clip_max - constraint_label_margin
+        label_point = np.clip(label_point, lower_bounds, upper_bounds)
+
         constraint_label_commands.append(
-            "\\node[constraint-label] "
-            f"at ({label_x:.4f},{label_y:.4f}) {{{label_text}}};"
+            f"\\node[constraint-label] at {_fmt_point(label_point)} {{$a_{{{row}}}$}};"
         )
 
     vertex_circle_commands: list[str] = []
     vertex_label_commands: list[str] = []
     vertex_label_offset = 0.05 * max_span
     vertex_label_margin = 0.02 * max_span
+
+    lower_vertex_bounds = clip_min + vertex_label_margin
+    upper_vertex_bounds = clip_max - vertex_label_margin
+
     for idx in ordered_indices:
         expr_x, expr_y = point_exprs[idx]
-        coord_x, coord_y = point_coords[idx]
+        point = coords[idx]
         formatted_x = _format_number(expr_x)
         formatted_y = _format_number(expr_y)
 
@@ -248,27 +250,18 @@ def write_tikz_figure(
             f"\\filldraw[vertex] ({formatted_x},{formatted_y}) circle (3pt);"
         )
 
-        direction_x = coord_x - centroid_x
-        direction_y = coord_y - centroid_y
-        direction_norm = math.hypot(direction_x, direction_y)
+        direction = point - centroid
+        direction_norm = np.linalg.norm(direction)
         if direction_norm < 1e-9:
-            direction_x, direction_y, direction_norm = 1.0, 1.0, math.sqrt(2.0)
+            direction = np.array([1.0, 1.0])
+            direction_norm = math.sqrt(2.0)
 
-        label_x = coord_x + (direction_x / direction_norm) * vertex_label_offset
-        label_y = coord_y + (direction_y / direction_norm) * vertex_label_offset
-        label_x = _clamp(
-            label_x,
-            clip_x_min + vertex_label_margin,
-            clip_x_max - vertex_label_margin,
-        )
-        label_y = _clamp(
-            label_y,
-            clip_y_min + vertex_label_margin,
-            clip_y_max - vertex_label_margin,
-        )
+        label_point = point + (direction / direction_norm) * vertex_label_offset
+        label_point = np.clip(label_point, lower_vertex_bounds, upper_vertex_bounds)
         label_text = f"$({formatted_x}, {formatted_y})$"
+
         vertex_label_commands.append(
-            f"\\node[vertex-label] at ({label_x:.4f},{label_y:.4f}) {{{label_text}}};"
+            f"\\node[vertex-label] at {_fmt_point(label_point)} {{{label_text}}};"
         )
 
     style_block = (
@@ -287,15 +280,15 @@ def write_tikz_figure(
 
     clip_command = (
         "  \\clip "
-        f"({clip_x_min:.4f},{clip_y_min:.4f}) "
-        f"rectangle ({clip_x_max:.4f},{clip_y_max:.4f});"
+        f"({clip_min[0]:.4f},{clip_min[1]:.4f}) "
+        f"rectangle ({clip_max[0]:.4f},{clip_max[1]:.4f});"
     )
 
     fill_command = f"  \\fill[feasible_region] {polygon_points} -- cycle;"
 
     tikz_lines = [style_block, clip_command, fill_command]
 
-    for command in axis_commands + x_tick_commands + y_tick_commands:
+    for command in axis_commands + tick_commands:
         tikz_lines.append(f"  {command}")
 
     tikz_lines.append(f"  \\draw[vertex-line] {polygon_points} -- cycle;")
