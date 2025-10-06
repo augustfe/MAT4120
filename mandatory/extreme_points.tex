@@ -1,36 +1,30 @@
 \begin{tikzpicture}[
-  scale=1.2,
-  axis/.style={color=axis_line, line width=0.8pt},
-  tick/.style={axis, line width=0.6pt},
-  axis-label/.style={color=axis_text, font=\scriptsize},
-  constraint/.style={color=constraint_line, line width=0.8pt},
-  constraint-label/.style={constraint, font=\scriptsize},
-  vertex-line/.style={color=vertex_point, line width=1pt},
-  vertex/.style={color=vertex_point, fill=white, line width=0.9pt},
-  vertex-label/.style={color=vertex_point, font=\scriptsize}
-]
-  \clip (-0.6857,-0.6857) rectangle (3.1143,4.1143);
+    scale=1.2,
+    >=stealth,
+    axis/.style={color=axis_line, line width=0.8pt},
+    tick/.style={axis, line width=0.6pt},
+    axis-label/.style={color=axis_text, font=\scriptsize},
+    constraint/.style={color=constraint_line, line width=0.8pt},
+    constraint-label/.style={constraint, font=\scriptsize},
+    vertex-line/.style={color=vertex_point, line width=1pt},
+    vertex/.style={color=vertex_point, fill=white, line width=0.9pt},
+    vertex-label/.style={color=vertex_point, font=\scriptsize},
+  ]
+  %%%%%%%%%% Feasible region %%%%%%%%%%
   \fill[feasible_region] (3/2,5/2) -- (37/16,5/2) -- (17/7,24/7) -- cycle;
-  \draw[axis, ->] (-0.6857,-0.3017) -- (3.1143,-0.3017) node[axis-label, anchor=east] {$x$};
-  \draw[axis, ->] (-0.3017,-0.6857) -- (-0.3017,4.1143) node[axis-label, anchor=south] {$y$};
-  \draw[tick] (0.0000,-0.3017) -- (0.0000,-0.1577);
-  \node[axis-label, anchor=north] at (0.0000,0.0343) {$0$};
-  \draw[tick] (1.0000,-0.3017) -- (1.0000,-0.1577);
-  \node[axis-label, anchor=north] at (1.0000,0.0343) {$1$};
-  \draw[tick] (2.0000,-0.3017) -- (2.0000,-0.1577);
-  \node[axis-label, anchor=north] at (2.0000,0.0343) {$2$};
-  \draw[tick] (3.0000,-0.3017) -- (3.0000,-0.1577);
-  \node[axis-label, anchor=north] at (3.0000,0.0343) {$3$};
-  \draw[tick] (-0.3017,0.0000) -- (-0.1577,0.0000);
-  \node[axis-label, anchor=west] at (0.0343,0.0000) {$0$};
-  \draw[tick] (-0.3017,1.0000) -- (-0.1577,1.0000);
-  \node[axis-label, anchor=west] at (0.0343,1.0000) {$1$};
-  \draw[tick] (-0.3017,2.0000) -- (-0.1577,2.0000);
-  \node[axis-label, anchor=west] at (0.0343,2.0000) {$2$};
-  \draw[tick] (-0.3017,3.0000) -- (-0.1577,3.0000);
-  \node[axis-label, anchor=west] at (0.0343,3.0000) {$3$};
-  \draw[tick] (-0.3017,4.0000) -- (-0.1577,4.0000);
-  \node[axis-label, anchor=west] at (0.0343,4.0000) {$4$};
+
+  %%%%%%%%%% Axis lines %%%%%%%%%%
+  \draw[axis, ->] (-0.5,0) -- (3.5,0) node[axis-label, below right] {$x$};
+  \draw[axis, ->] (0,-0.5) -- (0,4.5) node[axis-label, above left] {$y$};
+
+  %%%%%%%%%% Axis ticks %%%%%%%%%%
+  \foreach \i in {0,...,3} {
+    \draw[tick] (\i,0.1) -- (\i,-0.1) node[axis-label, left] {$\i$};
+  }
+  \foreach \i in {0,...,4} {
+    \draw[tick] (0.1,\i) -- (-0.1,\i) node[axis-label, left] {$\i$};
+  }
+
   \draw[vertex-line] (3/2,5/2) -- (37/16,5/2) -- (17/7,24/7) -- cycle;
   \draw[constraint] (-0.6857,-0.6857) -- (3.1143,3.1143);
   \draw[constraint] (-0.6857,0.3143) -- (3.1143,4.1143);
