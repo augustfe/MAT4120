@@ -15,7 +15,7 @@
 \usetikzlibrary{3d, calc}
 
 \usepackage{hyperref}
-\usepackage[capitalise]{cleveref}
+\usepackage[capitalise,nameinlink,noabbrev]{cleveref}
 \usepackage{xcolor}
 \hypersetup{ % this is just my personal choice, feel free to change things
   colorlinks,
@@ -179,6 +179,10 @@
     C = \{ (x_0, x_1) \in \mathbb{R}^2 : x_0 \leq 0 \},
   \end{equation}
   which contains the line $\{ (0, x_1) : x_1 \in \mathbb{R} \}$, and thus has no vertices.
+
+  If on the other hand $\rank(A) = n$, then there exists an $n \times n$ submatrix $A'$ of $A$ such that $\det(A') \neq 0$.
+  Then, the only solution to $A'x = 0$ is $x = 0$, regardless of which such submatrix we choose.
+  Therefore, $0$ is the only point that can be a vertex of $C$.
 \end{solution}
 
 \setexsol{22}
@@ -219,7 +223,7 @@
     \end{bmatrix}.
   \end{equation}
   I chose to solve this using Python, with the library SymPy.
-  The code is freely available at \href{https://github.com/augustfe/MAT4120/blob/main/mandatory/extreme_points.py}{\texttt{mandatory/extreme\_points.py}}.
+  The code is freely available at \href{https://github.com/augustfe/MAT4120/blob/main/mandatory/extreme_points.py}{\texttt{mandatory/extreme\_points.py}}, and briefly works by iterating over all $2 \times 2$ submatrices of $A$ and checking if the corresponding equations yield a point in the feasible region.
   With this approach I found the extreme points to be
   \begin{equation}
     \left\{
@@ -238,6 +242,79 @@
     \input{extreme_points.tex}
     \caption{Feasible region of Exercise~4.22 with the constraint boundaries and extreme points.}\label{fig:exercise422-feasible-region}
   \end{figure}
+\end{solution}
+
+\setcounter{section}{5}
+\setexsol{10}
+
+\begin{exercise}
+  By the result above we have that if $f$ and $g$ are convex functions, then the function $\max\{f,g\}$ is also convex.
+  Prove this result directly from the definition of a convex function.
+\end{exercise}
+
+\begin{solution}
+  Let $f, g : \mathbb{R}^n \to \mathbb{R}$ be convex functions, and define $h(x) = \max\{f(x), g(x)\}$.
+  Then, for any $x, y \in \mathbb{R}^n$ and any $0 \leq \lambda \leq 1$, we have
+  \begin{align*}
+    h(\lambda x + (1 - \lambda) y)
+    &= \max\{f(\lambda x + (1 - \lambda) y), g(\lambda x + (1 - \lambda) y)\} \\
+    &\leq \max\{\lambda f(x) + (1 - \lambda) f(y), \lambda g(x) + (1 - \lambda) g(y)\} \\
+    &\leq \lambda \max\{f(x), g(x)\} + (1 - \lambda) \max\{f(y), g(y)\} \\
+    &= \lambda h(x) + (1 - \lambda) h(y),
+  \end{align*}
+  showing that $h$ is convex.
+\end{solution}
+
+\setexsol{22}
+
+\begin{manualprop}{5.1.2}[Increasing slopes]\label{prop:increasing-slopes}
+  A function $f : \mathbb{R} \to \mathbb{R}$ is convex if and only if for each $x_0 \in \mathbb{R}$ the slope function
+  \begin{equation}
+    x \mapsto \frac{f(x)-f(x_0)}{x-x_0}
+  \end{equation}
+  is increasing on $\mathbb{R} \setminus \{x_0\}$.
+\end{manualprop}
+
+\begin{exercise}
+  Let $f : (0, \infty) \to \mathbb{R}$ and define the function $g : (0, \infty) \to \mathbb{R}$ by $g(x) = x f(\frac{1}{x})$.
+  Prove that $f$ is convex if and only if $g$ is convex.
+  Hint: Prove that
+  \begin{equation}
+    \frac{g(x) - g(x_0)}{x - x_0} = f(\tfrac{1}{x_0}) - \frac{1}{x_0} \cdot \frac{f(\frac{1}{x}) - f(\frac{1}{x_0})}{\frac{1}{x} - \frac{1}{x_0}}
+    \label{eq:exercise522-hint}
+  \end{equation}
+  and use \cref{prop:increasing-slopes}.
+  Why is the function $x \mapsto x e^{1/x}$ convex?
+\end{exercise}
+
+\begin{solution}
+  We have that
+  \begin{align*}
+    \frac{g(x) - g(x_0)}{x - x_0}
+    &= \frac{x f(\frac{1}{x}) - x_0 f(\frac{1}{x_0})}{x - x_0} \\
+    &= \frac{x f(\frac{1}{x}) - x f(\frac{1}{x_0}) + x f(\frac{1}{x_0}) - x_0 f(\frac{1}{x_0})}{x - x_0} \\
+    &= \frac{x (f(\frac{1}{x}) - f(\frac{1}{x_0}))}{x - x_0} + \frac{(x - x_0) f(\frac{1}{x_0})}{x - x_0} \\
+    &= f(\tfrac{1}{x_0}) + \frac{x (f(\frac{1}{x}) - f(\frac{1}{x_0}))}{x - x_0} \\
+    &= f(\tfrac{1}{x_0}) + \frac{1}{x_0} \frac{x x_0 (f(\frac{1}{x}) - f(\frac{1}{x_0}))}{x - x_0}.
+  \end{align*}
+  Then, as
+  \begin{equation*}
+    \frac{x x_0}{x - x_0}
+    = \frac{1}{\frac{x}{x x_0} - \frac{x_0}{x x_0}}
+    = \frac{1}{\frac{1}{x_0} - \frac{1}{x}},
+  \end{equation*}
+  \cref{eq:exercise522-hint} follows.
+
+  Assume $f$ is convex.
+  Let $h$ be the slope function of $f$ at $x_0$, i.e.,
+  \begin{equation}
+    h(x) = \frac{f(x) - f(x_0)}{x - x_0}.
+  \end{equation}
+  As $1/x$ decreases as $x$ increases, we have that $h(1/x)$ is decreasing.
+  Therefore, $-h(1/x)$ is increasing, and offsetting this with the constant $f(1/x_0)$ maintains the increasing property.
+  Thus, by \cref{prop:increasing-slopes}, $g$ is convex, as it's slope function is increasing.
+
+  With $f(x) = e^x$, we have $g(x) = x f(1/x) = x e^{1/x}$, which is therefore convex, as $e^x$ is convex.
 \end{solution}
 
 \end{document} % chktex 17

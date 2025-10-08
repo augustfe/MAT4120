@@ -26,3 +26,11 @@
   \setcounter{exercise}{\numexpr#1-1\relax}% chktex 8
   \setcounter{solution}{\numexpr#1-1\relax}% chktex 8
 }
+
+\newtheorem{innermanualprop}{Proposition}
+
+\usepackage{xparse}
+\NewDocumentEnvironment{manualprop}{m o}{%
+  \renewcommand\theinnermanualprop{#1}%
+  \innermanualprop\IfNoValueF{#2}{(#2)}%
+}{\endinnermanualprop}
