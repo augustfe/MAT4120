@@ -1,7 +1,7 @@
 \section{The basic concepts}
 
 \begin{exercise}
-  Let \( x_1, x_2, y_1, y_2 \in \mathbb{R}^n \) and assume that $x_1 \leq x_2$ and $y_1 \leq y_2$.
+  Let \( x_1, x_2, y_1, y_2 \in \R^n \) and assume that $x_1 \leq x_2$ and $y_1 \leq y_2$.
   Verify that the inequality $x_1 + y_1 \leq x_2 + y_2$ holds.
   Let now $\lambda$ be a non-negative real number.
   Explain why $\lambda x_1 \leq \lambda x_2$ holds.
@@ -35,36 +35,36 @@
 The sum of two non-negative numbers is again a non-negative number.
 Similarly, we see that the sum of two non-negative vectors is a non-negative vector.
 Moreover, if we multiply a non-negative vector by a non-negative number, we get another non-negative vector.
-These two properties may be summarized by saying that $\mathbb{R}^n_+$ is closed under addition and multiplication by non-negative scalars.
-We shall see that this means that $\mathbb{R}^n_+$ is a convex cone, a special type of convex set.
+These two properties may be summarized by saying that $\R^n_+$ is closed under addition and multiplication by non-negative scalars.
+We shall see that this means that $\R^n_+$ is a convex cone, a special type of convex set.
 
 \begin{exercise}
   Think about the question in Exercise 1.1 again, now in light of the properties explained in Example 1.2.1.
 \end{exercise}
 
 \begin{solution}
-  We can now rewrite $x_1 \leq x_2$ as $x_2 - x_1 \in \mathbb{R}^n_+$.
+  We can now rewrite $x_1 \leq x_2$ as $x_2 - x_1 \in \R^n_+$.
   We can now easily consider the first question as
   \begin{equation}
-    (x_2 + y_2) - (x_1 + y_1) = (x_2 - x_1) + (y_2 - y_1) \in \mathbb{R}^n_+,
+    (x_2 + y_2) - (x_1 + y_1) = (x_2 - x_1) + (y_2 - y_1) \in \R^n_+,
   \end{equation}
-  as $\mathbb{R}^n_+$ is closed under addition.
-  Similarly, we can use the fact that $\mathbb{R}^n_+$ is closed under multiplication by non-negative scalars to see that
+  as $\R^n_+$ is closed under addition.
+  Similarly, we can use the fact that $\R^n_+$ is closed under multiplication by non-negative scalars to see that
   \begin{equation}
-    (\lambda x_2 - \lambda x_1) = \lambda (x_2 - x_1) \in \mathbb{R}^n_+,
+    (\lambda x_2 - \lambda x_1) = \lambda (x_2 - x_1) \in \R^n_+,
   \end{equation}
   for $\lambda \geq 0$.
-  As $\mathbb{R}^n_+$ is not closed under multiplication by negative scalars, we cannot conclude that $\lambda x_1 \leq \lambda x_2$ for $\lambda < 0$.
+  As $\R^n_+$ is not closed under multiplication by negative scalars, we cannot conclude that $\lambda x_1 \leq \lambda x_2$ for $\lambda < 0$.
 \end{solution}
 
 \begin{exercise}
-  Let $a \in \mathbb{R}^n_+$ and assume that $x \leq y$.
+  Let $a \in \R^n_+$ and assume that $x \leq y$.
   Show that $a^T x \leq a^T y$.
   What happens if we do not require $a$ to be non-negative here?
 \end{exercise}
 
 \begin{solution}
-  With $a \in \mathbb{R}^n_+$ and $x \leq y$, we have that
+  With $a \in \R^n_+$ and $x \leq y$, we have that
   \begin{equation}
     x_i \leq y_i \qquad \forall i = 1, \ldots, n,
   \end{equation}
@@ -81,11 +81,11 @@ We shall see that this means that $\mathbb{R}^n_+$ is a convex cone, a special t
 \end{solution}
 
 \begin{exercise}
-  Show that every ball $B(a, r): = \{ x \in \mathbb{R}^n : \norm{x - a} \leq r \}$ is convex (where $a \in \mathbb{R}^n$ and $r \geq 0$).
+  Show that every ball $B(a, r): = \{ x \in \R^n : \norm{x - a} \leq r \}$ is convex (where $a \in \R^n$ and $r \geq 0$).
 \end{exercise}
 
 \begin{solution}
-  Let $x, y \in B(a, r)$ for some $a \in \mathbb{R}^n$ and $r \geq 0$.
+  Let $x, y \in B(a, r)$ for some $a \in \R^n$ and $r \geq 0$.
   Then, let $0 \leq \lambda \leq 1$ and consider $z = \lambda x + (1 - \lambda) y$.
   We then have
   \begin{equation}
@@ -104,7 +104,7 @@ We shall see that this means that $\mathbb{R}^n_+$ is a convex cone, a special t
 \end{exercise}
 
 \begin{solution}
-  We introduce new slack variables $w \in \mathbb{R}^m_+$, where $m$ is the number of rows/inequalities in $A$, defined by
+  We introduce new slack variables $w \in \R^m_+$, where $m$ is the number of rows/inequalities in $A$, defined by
   \begin{equation}
     w_j = b_j - (Ax)_j \quad \forall j = 1, \ldots, m.
   \end{equation}
@@ -178,12 +178,12 @@ We shall see that this means that $\mathbb{R}^n_+$ is a convex cone, a special t
 \end{solution}
 
 \begin{exercise}
-  Let $A \in \mathbb{R}^{m \times n}$ and consider the set $C = \{ x \in \mathbb{R}^n : Ax \leq O \}$.
+  Let $A \in \R^{m \times n}$ and consider the set $C = \{ x \in \R^n : Ax \leq O \}$.
   Prove that $C$ is a convex cone.
 \end{exercise}
 
 \begin{solution}
-  Let $x_1, x_2 \in C$ and $\lambda_1, \lambda_2 \in \mathbb{R}_+$.
+  Let $x_1, x_2 \in C$ and $\lambda_1, \lambda_2 \in \R_+$.
   We then have
   \begin{equation}
     A(\lambda_1 x_1 + \lambda_2 x_2) = \lambda_1 Ax_1 + \lambda_2 Ax_2 \leq \lambda_1 O + \lambda_2 O = O,
@@ -192,8 +192,8 @@ We shall see that this means that $\mathbb{R}^n_+$ is a convex cone, a special t
 \end{solution}
 
 \paragraph{Polyhedral cone}
-A convex cone of the form $\{x \in \mathbb{R}^n : Ax \leq O \}$ where $A \in \mathbb{R}^{m \times n}$ is called a \emph{polyhedral cone}.
-Let $x_1, \ldots, x_t \in \mathbb{R}^n$ and let $C(x_1, \ldots, x_t)$ be the set of vectors of the form
+A convex cone of the form $\{x \in \R^n : Ax \leq O \}$ where $A \in \R^{m \times n}$ is called a \emph{polyhedral cone}.
+Let $x_1, \ldots, x_t \in \R^n$ and let $C(x_1, \ldots, x_t)$ be the set of vectors of the form
 \begin{equation}
   u = \sum_{j = 1}^{t} \lambda_j x_j,
 \end{equation}
@@ -218,7 +218,7 @@ where $\lambda_j \geq 0$ for each $j = 1, \ldots, t$.
 \end{solution}
 
 \begin{exercise}
-  Let $S = \{ (x, y, z) : z \geq x^2 + y^2 \} \subset \mathbb{R}^3$.
+  Let $S = \{ (x, y, z) : z \geq x^2 + y^2 \} \subset \R^3$.
   Sketch the set and verify that it is a convex set.
   Is $S$ a finitely generated cone?
 \end{exercise}
@@ -314,12 +314,12 @@ where $\lambda_j \geq 0$ for each $j = 1, \ldots, t$.
   More enumerated exercises\dots
 
   \begin{enumerate}[label = (\emph{\roman*})]
-    \item Prove that, for every $\lambda \in \mathbb{R}$ and $A, B \subseteq \mathbb{R}^n$, it holds that $\lambda(A + B) = \lambda A + \lambda B$.
+    \item Prove that, for every $\lambda \in \R$ and $A, B \subseteq \R^n$, it holds that $\lambda(A + B) = \lambda A + \lambda B$.
 
-    \item Is it true that $(\lambda + \mu) A = \lambda A + \mu A$ for every $\lambda, \mu \in \mathbb{R}$ and $A \subseteq \mathbb{R}^n$?
+    \item Is it true that $(\lambda + \mu) A = \lambda A + \mu A$ for every $\lambda, \mu \in \R$ and $A \subseteq \R^n$?
       If not, find a counterexample.
 
-    \item Show that, if $\lambda, \mu \geq 0$ and $A \subseteq \mathbb{R}^n$ is convex, then $(\lambda + \mu) A = \lambda A + \mu A$.
+    \item Show that, if $\lambda, \mu \geq 0$ and $A \subseteq \R^n$ is convex, then $(\lambda + \mu) A = \lambda A + \mu A$.
   \end{enumerate}
 \end{exercise}
 
@@ -366,7 +366,7 @@ where $\lambda_j \geq 0$ for each $j = 1, \ldots, t$.
 \end{solution}
 
 \begin{exercise}
-  Show that if $C_1, \dots, C_t \subseteq \mathbb{R}^n$ are all convex sets, then $C_1 \cap \dots \cap C_t$ is convex.
+  Show that if $C_1, \dots, C_t \subseteq \R^n$ are all convex sets, then $C_1 \cap \dots \cap C_t$ is convex.
   Do the same when all sets are affine (or linear subspaces, or convex cones).
   In fact, a similar result for the intersection of any family of convex sets.
   Explain this.
@@ -383,10 +383,10 @@ where $\lambda_j \geq 0$ for each $j = 1, \ldots, t$.
   \end{equation}
   proving that the intersection is convex.
 
-  Suppose there is a matrix $A \in \mathbb{R}^{m \times n}$ and a vector $b \in \mathbb{R}^m$.
+  Suppose there is a matrix $A \in \R^{m \times n}$ and a vector $b \in \R^m$.
   Then the set
   \begin{equation}
-    C = \{ x \in \mathbb{R}^n : Ax = b \}
+    C = \{ x \in \R^n : Ax = b \}
   \end{equation}
   is an affine set.
   Then let $x \in \bigcap_{i = 1}^t C_i$, meaning that $A_i x = b_i$ for all $i = 1, \dots, t$.
@@ -414,12 +414,12 @@ where $\lambda_j \geq 0$ for each $j = 1, \ldots, t$.
 \end{solution}
 
 \begin{exercise}
-  Consider the unit disc $S = \{ (x_1, x_2) \in \mathbb{R}^2 : x_1^2 + x_2^2 \leq 1 \}$ in $\mathbb{R}^2$.
+  Consider the unit disc $S = \{ (x_1, x_2) \in \R^2 : x_1^2 + x_2^2 \leq 1 \}$ in $\R^2$.
   Find a family of linear inequalities as in the previous problem with solution set $S$.
 \end{exercise}
 
 \begin{solution}
-  Let $U = \{ (\cos\theta, \sin\theta) : 0 \leq \theta < 2\pi \}$ be the unit circle in $\mathbb{R}^2$.
+  Let $U = \{ (\cos\theta, \sin\theta) : 0 \leq \theta < 2\pi \}$ be the unit circle in $\R^2$.
   Then, for each $(u, v) \in U$, we have the linear inequalities
   \begin{equation}
     u x_1 + v x_2 \leq 1.
@@ -428,7 +428,7 @@ where $\lambda_j \geq 0$ for each $j = 1, \ldots, t$.
 \end{solution}
 
 \begin{exercise}
-  Is the unit ball $B = \{ x \in \mathbb{R}^n : \norm{x}_2 \leq 1 \}$ a polyhedron?
+  Is the unit ball $B = \{ x \in \R^n : \norm{x}_2 \leq 1 \}$ a polyhedron?
 \end{exercise}
 
 \begin{solution}
@@ -438,7 +438,7 @@ where $\lambda_j \geq 0$ for each $j = 1, \ldots, t$.
 \end{solution}
 
 \begin{exercise}
-  Show that the unit ball $B_\infty = \{ x \in \mathbb{R}^n : \norm{x}_\infty \leq 1 \}$ is convex.
+  Show that the unit ball $B_\infty = \{ x \in \R^n : \norm{x}_\infty \leq 1 \}$ is convex.
   Here $\norm{x}_\infty = \max_j \abs{x_j}$ is the max norm of $x$.
   Show that $B_\infty$ is a polyhedron.
   Illustrate when $n = 2$.
@@ -472,7 +472,7 @@ where $\lambda_j \geq 0$ for each $j = 1, \ldots, t$.
 \end{solution}
 
 \begin{exercise}
-  Show that the unit ball $B_1 = \{ x \in \mathbb{R}^n : \norm{x}_1 \leq 1 \}$ is convex.
+  Show that the unit ball $B_1 = \{ x \in \R^n : \norm{x}_1 \leq 1 \}$ is convex.
   Here $\norm{x}_1 = \sum_{j=1}^n \abs{x_j}$ is the absolute norm of $x$.
   Show that $B_1$ is a polyhedron.
   Illustrate when $n = 2$.
@@ -508,12 +508,12 @@ where $\lambda_j \geq 0$ for each $j = 1, \ldots, t$.
 \end{solution}
 
 \paragraph{Proposition 1.5.1} (\emph{Affine sets}).
-Let $C$ be a non-empty subset of $\mathbb{R}^n$.
-Then $C$ is an affine set if an only if there is a matrix $A \in \mathbb{R}^{m \times n}$ and a vector $b \in \mathbb{R}^m$ for some $m$ such that
+Let $C$ be a non-empty subset of $\R^n$.
+Then $C$ is an affine set if an only if there is a matrix $A \in \R^{m \times n}$ and a vector $b \in \R^m$ for some $m$ such that
 \begin{equation}
-  C = \{ x \in \mathbb{R}^n : Ax = b \}.
+  C = \{ x \in \R^n : Ax = b \}.
 \end{equation}
-Moreover, $C$ may be written as $C = L + x_0 = \{ x + x_0 : x \in L \}$ for some linear subspace $L$ of $\mathbb{R}^n$.
+Moreover, $C$ may be written as $C = L + x_0 = \{ x + x_0 : x \in L \}$ for some linear subspace $L$ of $\R^n$.
 The subspace $L$ is unique.
 
 \begin{exercise}
@@ -530,7 +530,7 @@ The subspace $L$ is unique.
 \end{solution}
 
 \begin{exercise}
-  Let $C$ be a non-empty affine set in $\mathbb{R}^n$.
+  Let $C$ be a non-empty affine set in $\R^n$.
   Define $L = C - C$.
   Show that $L$ is a subspace and that $C = L + x_0$ for some vector $x_0$.
 \end{exercise}

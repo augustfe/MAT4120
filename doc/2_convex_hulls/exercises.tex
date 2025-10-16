@@ -1,7 +1,7 @@
 \section{Convex hulls and Carathéodory's theorem}
 
 \begin{exercise}
-  Illustrate some combinations (linear, convex, non-negative) of two vectors in $\mathbb{R}^2$.
+  Illustrate some combinations (linear, convex, non-negative) of two vectors in $\R^2$.
 \end{exercise}
 
 \begin{solution}
@@ -11,15 +11,15 @@
   \begin{pmatrix} 0 \\ 1
   \end{pmatrix}$.
   \begin{itemize}
-    \item Linear combinations: $\alpha \mathbf{u} + \beta \mathbf{v}$ for $\alpha, \beta \in \mathbb{R}$.
+    \item Linear combinations: $\alpha \mathbf{u} + \beta \mathbf{v}$ for $\alpha, \beta \in \R$.
     \item Convex combinations: $\alpha \mathbf{u} + \beta \mathbf{v}$ for $\alpha, \beta \geq 0$ and $\alpha + \beta = 1$.
     \item Non-negative combinations: $\alpha \mathbf{u} + \beta \mathbf{v}$ for $\alpha, \beta \geq 0$.
   \end{itemize}
-  The linear combinations fill the entire $\mathbb{R}^2$ plane, the convex combinations fill the line segment between $\mathbf{u}$ and $\mathbf{v}$, and the non-negative combinations fill the first quadrant of the plane.
+  The linear combinations fill the entire $\R^2$ plane, the convex combinations fill the line segment between $\mathbf{u}$ and $\mathbf{v}$, and the non-negative combinations fill the first quadrant of the plane.
 \end{solution}
 
 \begin{exercise}
-  Choose your favourite three points $x_1$, $x_2$, $x_3$ in $\mathbb{R}^2$, but make sure that they do not all lie on the same line.
+  Choose your favourite three points $x_1$, $x_2$, $x_3$ in $\R^2$, but make sure that they do not all lie on the same line.
   Thus, the three points form the corners of a triangle $C$.
   Describe those points that are convex combinations of two of the three points.
   What about the interior of the triangle $C$, i.e., those points that lie in $C$ but not on the boundary (the three sides): can these points be written as convex combinations of $x_1$, $x_2$ and $x_3$? If so, how?
@@ -46,7 +46,7 @@
 \end{solution}
 
 \begin{exercise}
-  Show that $\conv(S)$ is convex for all $S \subseteq \mathbb{R}^n$.
+  Show that $\conv(S)$ is convex for all $S \subseteq \R^n$.
   (Hint: look at two convex combinations $\sum_j \lambda_j x_j$ and $\sum_j \mu_j y_j$, and note that both these points may be written as a convex combination of the same set of vectors.)
 \end{exercise}
 
@@ -113,16 +113,16 @@
 \end{solution}
 
 \begin{exercise}
-  Let $S = \{ x \in \mathbb{R}^2 : \norm{x}_2 = 1 \}$, this is the unit circle in $\mathbb{R}^2$.
+  Let $S = \{ x \in \R^2 : \norm{x}_2 = 1 \}$, this is the unit circle in $\R^2$.
   Determine $\conv(S)$ and $\cone(S)$.
 \end{exercise}
 
 \begin{solution}
-  The convex hull $\conv(S)$ of the unit circle is the unit disk, i.e., the set $\{ x \in \mathbb{R}^2 : \norm{x}_2 \leq 1 \}$.
+  The convex hull $\conv(S)$ of the unit circle is the unit disk, i.e., the set $\{ x \in \R^2 : \norm{x}_2 \leq 1 \}$.
   This is because any point inside the unit circle can be expressed as a convex combination of points on the unit circle.
 
-  The conical hull $\cone(S)$ of the unit circle is the entire $\mathbb{R}^2$ plane.
-  This is because any point in $\mathbb{R}^2$ can be expressed as a non-negative combination of points on the unit circle, scaled appropriately.
+  The conical hull $\cone(S)$ of the unit circle is the entire $\R^2$ plane.
+  This is because any point in $\R^2$ can be expressed as a non-negative combination of points on the unit circle, scaled appropriately.
   This can be seen simply by looking at the problem in polar coordinates.
 \end{solution}
 
@@ -134,7 +134,7 @@
 
 \begin{solution}
   Affine independence does not imply linear independence.
-  Consider a set of linearly independent vectors $x_2, \ldots, x_t \in \mathbb{R}^n$ and let $x_1 = 0$.
+  Consider a set of linearly independent vectors $x_2, \ldots, x_t \in \R^n$ and let $x_1 = 0$.
   Then clearly the set $\{x_1, x_2, \ldots, x_t\}$ is affinely independent, but not linearly independent since $x_1$ is the zero vector.
 
   Linear independence does imply affine independence.
@@ -149,7 +149,7 @@
 \end{solution}
 
 \begin{exercise}
-  Let $x_1, \ldots, x_t \in \mathbb{R}^n$ be affinely independent and let $w \in \mathbb{R}^n$.
+  Let $x_1, \ldots, x_t \in \R^n$ be affinely independent and let $w \in \R^n$.
   Show that $x_1 + w, \ldots, x_t + w$ are also affinely independent.
 \end{exercise}
 
@@ -169,8 +169,8 @@
 \end{solution}
 
 \paragraph{Dimension of a set.}
-The \emph{dimension} of a set $S \subseteq \mathbb{R}^n$, denoted by $\dim(S)$, is the maximal number of affinely independent points in $S$ minus 1.
-So, for example in $\mathbb{R}^3$, the dimension of a point and a lines is $0$ and $1$ respectively, and the dimension of the plane $x_3 = 0$ is $2$.
+The \emph{dimension} of a set $S \subseteq \R^n$, denoted by $\dim(S)$, is the maximal number of affinely independent points in $S$ minus 1.
+So, for example in $\R^3$, the dimension of a point and a lines is $0$ and $1$ respectively, and the dimension of the plane $x_3 = 0$ is $2$.
 
 \begin{exercise}
   Let $L$ be a linear subspace of dimension (in the usual linear algebra sense) $t$.
@@ -210,7 +210,7 @@ So, for example in $\mathbb{R}^3$, the dimension of a point and a lines is $0$ a
     (1 - \theta)u + \theta v
     = \sum_{j = 1}^{t} ((1 - \theta) \lambda_j + \theta \mu_j) x_j \in A
   \end{equation}
-  for any $\theta \in \mathbb{R}$ as the coefficients still sum to $1$.
+  for any $\theta \in \R$ as the coefficients still sum to $1$.
   $A$ is therefore affine.
   Choosing $\lambda_j = \delta_{ij}$ (the Kronecker delta) shows that $x_i \in A$ for all $i$, and thus $\conv(C) = C \subseteq A$.
 \end{solution}
@@ -220,7 +220,7 @@ So, for example in $\mathbb{R}^3$, the dimension of a point and a lines is $0$ a
 \end{exercise}
 
 \begin{solution}
-  Consider the interval $S = (0, 1]$ in $\mathbb{R}$. % chktex 9
+  Consider the interval $S = (0, 1]$ in $\R$. % chktex 9
   This set is not open because it contains the point $1$, which is a limit point of the set.
   It is not closed because it does not contain the point $0$, which is also a limit point of the set.
   Therefore, $S$ is neither open nor closed.
@@ -253,7 +253,7 @@ So, for example in $\mathbb{R}^3$, the dimension of a point and a lines is $0$ a
 \end{exercise}
 
 \begin{solution}
-  Let $x_1, \ldots, x_t \in \mathbb{R}^n$ be linearly independent vectors, and consider the simplex cone spanned by these vectors.
+  Let $x_1, \ldots, x_t \in \R^n$ be linearly independent vectors, and consider the simplex cone spanned by these vectors.
   Let $X$ be the matrix with columns $x_1, \ldots, x_t$.
   Then any point in the simplex cone can be written as $X \boldsymbol{\lambda}$ for some $\boldsymbol{\lambda} \geq 0$.
   $X$ then has full column rank, and thus $X^T X$ is invertible, so we define the pseudo-inverse $X^\dagger = (X^T X)^{-1} X^T$.
@@ -263,7 +263,7 @@ So, for example in $\mathbb{R}^3$, the dimension of a point and a lines is $0$ a
 
 \paragraph{Boundary of a set.}
 The \emph{boundary} $\bd(S)$ of $S$ is defined by $\bd(S) = \cl(S) \setminus \intr(S)$.
-For instance, we have that $\bd(B(a, r)) = \{ x \in \mathbb{R}^n : \norm{x - a} = r \}$.
+For instance, we have that $\bd(B(a, r)) = \{ x \in \R^n : \norm{x - a} = r \}$.
 
 \begin{exercise}
   Prove that $x \in \bd(S)$ if and only if each ball with center $x$ intersects both $S$ and the complement of $S$.
@@ -288,15 +288,15 @@ We let the \emph{relative interior} of $S$, denoted by $\intr(S)$, be the set of
 Similarly, we define the \emph{relative boundary} of $S$ by $\rbd(S) = \cl(S) \setminus \rint(S)$.
 
 \begin{exercise}
-  Consider again the set $C = \{ (x_1, x_2, 0) \in \mathbb{R}^3 : x_1^2 + x_2^2 \leq 1 \}$.
+  Consider again the set $C = \{ (x_1, x_2, 0) \in \R^3 : x_1^2 + x_2^2 \leq 1 \}$.
   Verify that:
   \begin{enumerate}[label = (\emph{\roman*})]
     \item $C$ is closed,
     \item $\dim(C) = 2$,
     \item $\intr(C) = \emptyset$,
     \item $\bd(C) = C$,
-    \item $\rint(C) = \{ (x_1, x_2, 0) \in \mathbb{R}^3 : x_1^2 + x_2^2 < 1 \}$,
-    \item $\rbd(C) = \{ (x_1, x_2, 0) \in \mathbb{R}^3 : x_1^2 + x_2^2 = 1 \}$.
+    \item $\rint(C) = \{ (x_1, x_2, 0) \in \R^3 : x_1^2 + x_2^2 < 1 \}$,
+    \item $\rbd(C) = \{ (x_1, x_2, 0) \in \R^3 : x_1^2 + x_2^2 = 1 \}$.
   \end{enumerate}
 \end{exercise}
 
@@ -325,21 +325,21 @@ Similarly, we define the \emph{relative boundary} of $S$ by $\rbd(S) = \cl(S) \s
       &= (B^\circ((x_1, x_2), r), 0) \subseteq C,
     \end{split}
   \end{equation}
-  so $\{ (x_1, x_2, 0) \in \mathbb{R}^3 : x_1^2 + x_2^2 < 1 \} \subseteq \rint(C)$.
+  so $\{ (x_1, x_2, 0) \in \R^3 : x_1^2 + x_2^2 < 1 \} \subseteq \rint(C)$.
   If we have a point $x = (x_1, x_2, 0)$ with $x_1^2 + x_2^2 = 1$, any ball centred at $x$ will contain points of the form $(x_1, x_2, \varepsilon)$ for $\varepsilon > 0$, which are not in $C$.
-  Thus, $\rint(C) = \{ (x_1, x_2, 0) \in \mathbb{R}^3 : x_1^2 + x_2^2 < 1 \}$.
+  Thus, $\rint(C) = \{ (x_1, x_2, 0) \in \R^3 : x_1^2 + x_2^2 < 1 \}$.
 
   (\textit{v}): We have simply
   \begin{equation}
     \begin{split}
-      \rbd(C) &= \cl(C) \setminus \rint(C) = C \setminus \{ (x_1, x_2, 0) \in \mathbb{R}^3 : x_1^2 + x_2^2 < 1 \} \\
-      &= \{ (x_1, x_2, 0) \in \mathbb{R}^3 : x_1^2 + x_2^2 = 1 \}.
+      \rbd(C) &= \cl(C) \setminus \rint(C) = C \setminus \{ (x_1, x_2, 0) \in \R^3 : x_1^2 + x_2^2 < 1 \} \\
+      &= \{ (x_1, x_2, 0) \in \R^3 : x_1^2 + x_2^2 = 1 \}.
     \end{split}
   \end{equation}
 \end{solution}
 
 \begin{exercise}
-  Show that every polytope in $\mathbb{R}^n$ is bounded.
+  Show that every polytope in $\R^n$ is bounded.
   (Hint: use the properties of the norm: $\norm{x + y} \leq \norm{x} + \norm{y}$ and $\norm{\lambda x} = \lambda \norm{x}$ for $\lambda \geq 0$.)
 \end{exercise}
 
@@ -368,9 +368,9 @@ Similarly, we define the \emph{relative boundary} of $S$ by $\rbd(S) = \cl(S) \s
 \begin{solution}
   The standard simplex $S_t$ is given by
   \begin{equation}
-    S_t = \{ x \in \mathbb{R}^t : x_i \geq 0, \sum_{i=1}^t x_i = 1 \},
+    S_t = \{ x \in \R^t : x_i \geq 0, \sum_{i=1}^t x_i = 1 \},
   \end{equation}
-  or equivalently, $S_t = \conv(\{e_1, e_2, \ldots, e_t\})$ where $e_i$ are the standard basis vectors in $\mathbb{R}^t$.
+  or equivalently, $S_t = \conv(\{e_1, e_2, \ldots, e_t\})$ where $e_i$ are the standard basis vectors in $\R^t$.
   As $S_t$ is a polytope, it is bounded by the previous exercise.
   It is closed as it is the inverse of the closed set $\{1\}$ under the continuous map $x \mapsto \sum_{i=1}^t x_i$ intersected with the closed set $\{ x : x_i \geq 0 \text{ for all } i \}$.
   Thus, $S_t$ is compact.
@@ -381,14 +381,14 @@ Similarly, we define the \emph{relative boundary} of $S$ by $\rbd(S) = \cl(S) \s
 \end{exercise}
 
 \begin{solution}
-  Consider the set $C = \{ (x_1, x_2) \in \mathbb{R}^2 : x_2 > 0 \}$.
+  Consider the set $C = \{ (x_1, x_2) \in \R^2 : x_2 > 0 \}$.
   This set is a convex cone because for any $x, y \in C$ and any $\alpha, \beta \geq 0$, we have $\alpha x + \beta y \in C$.
   However, $C$ is not closed because it does not contain the boundary line $x_2 = 0$.
   Thus, $C$ is a convex cone that is not closed.
 \end{solution}
 
 \begin{exercise}
-  Let $S \subseteq \mathbb{R}^2$ and let $W$ be the set of all convex combinations of points in $S$.
+  Let $S \subseteq \R^2$ and let $W$ be the set of all convex combinations of points in $S$.
   Prove that $W$ is convex.
 \end{exercise}
 
@@ -419,8 +419,8 @@ Similarly, we define the \emph{relative boundary} of $S$ by $\rbd(S) = \cl(S) \s
 \end{solution}
 
 \paragraph{Proposition 2.1.1 (Convex sets).}
-A set $C \subseteq \mathbb{R}^n$ is convex if and only if it contains all convex combinations of its points.
-A set $C \subseteq \mathbb{R}^n$ is a convex cone if and only if it contains all non-negative combinations of its points.
+A set $C \subseteq \R^n$ is convex if and only if it contains all convex combinations of its points.
+A set $C \subseteq \R^n$ is a convex cone if and only if it contains all non-negative combinations of its points.
 
 \begin{exercise}
   Prove the second statement of Proposition~2.1.1.
@@ -440,7 +440,7 @@ A set $C \subseteq \mathbb{R}^n$ is a convex cone if and only if it contains all
 
 \begin{exercise}
   Let $S = \{ (0, 0), (1, 0), (0, 1) \}$.
-  Show that $\conv(S) = \{ (x_1, x_2) \in \mathbb{R}^2 : x_1 \geq 0, x_2 \geq 0, x_1 + x_2 \leq 1 \}$.
+  Show that $\conv(S) = \{ (x_1, x_2) \in \R^2 : x_1 \geq 0, x_2 \geq 0, x_1 + x_2 \leq 1 \}$.
 \end{exercise}
 
 \begin{solution}
@@ -451,18 +451,18 @@ A set $C \subseteq \mathbb{R}^n$ is a convex cone if and only if it contains all
     = (\lambda_2, \lambda_3),
   \end{equation}
   where $\lambda_i \geq 0$ and $\lambda_1 + \lambda_2 + \lambda_3 = 1$.
-  Thus, we have that $\lambda_2, \lambda_3 \geq 0$ and $\lambda_2 + \lambda_3 \leq 1$, showing that $\conv(S) = \{ (x_1, x_2) \in \mathbb{R}^2 : x_1 \geq 0, x_2 \geq 0, x_1 + x_2 \leq 1 \}$.
+  Thus, we have that $\lambda_2, \lambda_3 \geq 0$ and $\lambda_2 + \lambda_3 \leq 1$, showing that $\conv(S) = \{ (x_1, x_2) \in \R^2 : x_1 \geq 0, x_2 \geq 0, x_1 + x_2 \leq 1 \}$.
 \end{solution}
 
 \begin{exercise}
   Let $S$ consist of the points $(0, 0, 0)$, $(1, 0, 0)$, $(0, 1, 0)$, $(0, 0, 1)$, $(1, 1, 0)$, $(1, 0, 1)$, $(0, 1, 1)$, and $(1, 1, 1)$.
-  Show that $\conv(S) = \{ (x_1, x_2, x_3) \in \mathbb{R}^3 : 0 \leq x_i \leq 1 \text{ for } i = 1, 2, 3 \}$.
+  Show that $\conv(S) = \{ (x_1, x_2, x_3) \in \R^3 : 0 \leq x_i \leq 1 \text{ for } i = 1, 2, 3 \}$.
   Also determine $\conv(S \setminus \{(1, 1, 1)\})$ as the solution set of a system of linear inequalities.
   Illustrate these cases geometrically.
 \end{exercise}
 
 \begin{solution}
-  Consider instead the points $(0, 0)$, $(1, 0)$, $(0, 1)$, and $(1, 1)$ in $\mathbb{R}^2$, as the argument is similar and easier to visualize.
+  Consider instead the points $(0, 0)$, $(1, 0)$, $(0, 1)$, and $(1, 1)$ in $\R^2$, as the argument is similar and easier to visualize.
   A point in $\conv(S)$ can be written as
   \begin{equation}
     x
@@ -475,13 +475,13 @@ A set $C \subseteq \mathbb{R}^n$ is a convex cone if and only if it contains all
     0 \leq x_1 &= \lambda_2 + \lambda_4 \leq 1, \\
     0 \leq x_2 &= \lambda_3 + \lambda_4 \leq 1,
   \end{align*}
-  showing that $\conv(S) = \{ (x_1, x_2) \in \mathbb{R}^2 : 0 \leq x_i \leq 1 \text{ for } i = 1, 2 \}$.
-  The same argument holds in $\mathbb{R}^3$, where we end up with the unit cube.
+  showing that $\conv(S) = \{ (x_1, x_2) \in \R^2 : 0 \leq x_i \leq 1 \text{ for } i = 1, 2 \}$.
+  The same argument holds in $\R^3$, where we end up with the unit cube.
   For $\conv(S \setminus \{(1, 1)\})$, we end up in the same scenario as the previous exercise, spanning out the unit triangle, as in \cref{fig:unit_triangle}
 \end{solution}
 
 \begin{exercise}
-  Let $A, B \subseteq \mathbb{R}^n$.
+  Let $A, B \subseteq \R^n$.
   Prove that $\conv(A + B) = \conv(A) + \conv(B)$.
   (Hint: it is useful to consider the sum $\sum_{j,k} \lambda_j \mu_k (a_j + b_k)$ where $a_j \in A$, $b_k \in B$ and $\lambda_j, \mu_k \geq 0$ with $\sum_j \lambda_j = 1$ and $\sum_k \mu_k = 1$.)
 \end{exercise}
@@ -505,7 +505,7 @@ A set $C \subseteq \mathbb{R}^n$ is a convex cone if and only if it contains all
 \setexsol{37}
 
 \begin{exercise}\label{ex:intr_equals_rint}
-  Let $S \subseteq \mathbb{R}^n$.
+  Let $S \subseteq \R^n$.
   Show that either $\intr(S) = \rint(S)$ or $\intr(S) = \emptyset$.
 \end{exercise}
 
@@ -533,15 +533,15 @@ A set $C \subseteq \mathbb{R}^n$ is a convex cone if and only if it contains all
 \end{exercise}
 
 \begin{solution}
-  Theorem 2.4.2 states that a convex set has a ``thin boundary'', i.e., for $C \subseteq \mathbb{R}^n$ non-empty and convex, and $x_1 \in \rint(C)$, $x_2 \in \cl(C)$, we have
+  Theorem 2.4.2 states that a convex set has a ``thin boundary'', i.e., for $C \subseteq \R^n$ non-empty and convex, and $x_1 \in \rint(C)$, $x_2 \in \cl(C)$, we have
   \begin{equation}
     (1 - \lambda) x_1 + \lambda x_2 \in \rint(C)
   \end{equation}
   for all $0 \leq \lambda < 1$.
 
   Theorem 2.4.3 on the other hand states as follows:
-  If $C \subseteq \mathbb{R}^n$ is a convex set, then all sets $\rint(C)$, $\intr(C)$ and $\cl(C)$ are convex.
-  Therefore, assume $C \subseteq \mathbb{R}^n$ is convex.
+  If $C \subseteq \R^n$ is a convex set, then all sets $\rint(C)$, $\intr(C)$ and $\cl(C)$ are convex.
+  Therefore, assume $C \subseteq \R^n$ is convex.
 
   Let $x, y \in \rint(C)$.
   As $\rint(C) \subseteq C \subseteq \cl(C)$, we can simply apply Theorem 2.4.2 to show that $\rint(C)$ is convex.
