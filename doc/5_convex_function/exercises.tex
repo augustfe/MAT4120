@@ -1,0 +1,49 @@
+\section{Convex functions}
+
+\begin{manuallemma}{5.1.1}
+  Let $x_1 < x_2 < x_3$.
+  Then the following statements are equivalent:
+ \begin{enumerate}
+   \item $P_{x_2}$ is below the line segment $P_{x_1}, P_{x_3}$.
+
+    \item $\slope( P_{x_1}, P_{x_2} ) \leq \slope( P_{x_2}, P_{x_3} )$.
+
+    \item $\slope( P_{x_1}, P_{x_3} ) \leq \slope( P_{x_2}, P_{x_3} )$.
+  \end{enumerate} 
+\end{manuallemma}
+
+\begin{exercise}
+  Prove this lemma.
+\end{exercise}
+
+\begin{solution}
+  For the first point, we have that
+  \begin{equation}
+    f(x_2)
+    \leq
+    \frac{f(x_3) - f(x_1)}{x_3 - x_1}
+    + f(x_1)
+  \end{equation}
+  which is equivalent to
+  \begin{equation}
+    \frac{f(x_2) - f(x_1)}{x_2 - x_1}
+    \leq
+    \frac{f(x_3) - f(x_1)}{x_3 - x_1}.
+  \end{equation}
+  This shows the equivalence of the first two points.
+  The first point is also equivalent to
+  \begin{equation}
+    f(x_2)
+    \leq
+    \frac{f(x_3) - f(x_1)}{x_3 - x_1}
+    + f(x_3),
+  \end{equation}
+  which is again equivalent to
+  \begin{equation}
+    \frac{f(x_3) - f(x_1)}{x_3 - x_1}
+    \leq
+    \frac{f(x_3) - f(x_2)}{x_3 - x_2},
+  \end{equation}
+  exactly the third point.
+\end{solution}
+
