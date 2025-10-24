@@ -146,12 +146,12 @@
 \end{exercise}
 
 \begin{solution}
-  I don't quite see the point of having almost identical subproblems, but alright.
+  We find the outer descriptions as follows:
   \begin{enumerate}[label = (\emph{\roman*})]
     \item The half-planes are the tangents to the unit ball, as used in a previous exercise.
-    \item One half of the half-planes are given by $x_i = 0$ for $i = 1, \ldots, n$, and the other half by $x_i = 1$ for $i = 1, \ldots, n$.
+    \item With $e_i$ being the $i$th standard basis vector in $\mathbb{R}^n$, the half-planes are given by $e_i^T x = 0$ and $e_i^T x = 1$ for $i = 1, \ldots, n$.
     \item Similarly, here the half-planes are given by $x_1 = 1$, $x_1 = -1$, $x_2 = 1$, and $x_2 = -1$, almost equivalently to (\emph{ii}).
-    \item Again, the half-planes are given by $x_i = 1$ and $x_i = -1$ for $i = 1, \ldots, n$, almost equivalently to (\emph{ii}) and (\emph{iii}).
+    \item Again, the half-planes are given by $e_i^T x = 1$ and $e_i^T x = -1$ for $i = 1, \ldots, n$, almost equivalently to (\emph{ii}) and (\emph{iii}).
   \end{enumerate}
 \end{solution}
 
@@ -227,11 +227,14 @@
   With this approach I found the extreme points to be
   \begin{equation}
     \left\{
-      \begin{bmatrix} \dfrac{3}{2} \\ \dfrac{5}{2}
+      \frac{1}{2}
+      \begin{bmatrix} 3 \\ 5
       \end{bmatrix},
-      \begin{bmatrix} \dfrac{17}{7} \\ \dfrac{24}{7}
+      \frac{1}{7}
+      \begin{bmatrix} 17 \\ 24
       \end{bmatrix},
-      \begin{bmatrix} \dfrac{37}{16} \\ \dfrac{5}{2}
+      \frac{1}{16}
+      \begin{bmatrix} 37 \\ 40
       \end{bmatrix}
     \right\}.
   \end{equation}
