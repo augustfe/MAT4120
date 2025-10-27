@@ -3,13 +3,13 @@
 \begin{manuallemma}{5.1.1}
   Let $x_1 < x_2 < x_3$.
   Then the following statements are equivalent:
- \begin{enumerate}
-   \item $P_{x_2}$ is below the line segment $P_{x_1}, P_{x_3}$.
+  \begin{enumerate}
+    \item $P_{x_2}$ is below the line segment $P_{x_1}, P_{x_3}$.
 
     \item $\slope( P_{x_1}, P_{x_2} ) \leq \slope( P_{x_2}, P_{x_3} )$.
 
     \item $\slope( P_{x_1}, P_{x_3} ) \leq \slope( P_{x_2}, P_{x_3} )$.
-  \end{enumerate} 
+  \end{enumerate}
 \end{manuallemma}
 
 \begin{exercise}
@@ -47,3 +47,381 @@
   exactly the third point.
 \end{solution}
 
+\begin{exercise}\label{ex:5.2}
+  Show that the sum of convex functions is a convex function, and that $\lambda f$ is convex if $f$ is convex and $\lambda \geq 0$.
+\end{exercise}
+
+\begin{solution}\label{sol:5.2}
+  Let $f_i: \R \to \R$ be convex functions for $i = 1, \ldots, n$.
+  Then, for $f = \sum_{i=1}^n f_i$, we have
+  \begin{align*}
+    f( \lambda x + (1 - \lambda) y )
+    &= \sum_{i=1}^n f_i( \lambda x + (1 - \lambda) y ) \\
+    &\leq \sum_{i=1}^n \left( \lambda f_i(x) + (1 - \lambda) f_i(y) \right) \\
+    &= \lambda f(x) + (1 - \lambda) f(y),
+  \end{align*}
+  showing that $f$ is convex.
+  For $\lambda \geq 0$ and $f$ convex, we have
+  \begin{align*}
+    (\lambda f)( \alpha x + (1 - \alpha) y )
+    &= \lambda f( \alpha x + (1 - \alpha) y ) \\
+    &\leq \lambda \left( \alpha f(x) + (1 - \alpha) f(y) \right) \\
+    &= \alpha (\lambda f)(x) + (1 - \alpha) (\lambda f)(y),
+  \end{align*}
+  showing that $\lambda f$ is convex.
+\end{solution}
+
+\begin{exercise}\label{ex:5.3}
+  Prove that the following functions are convex:
+  \begin{enumerate}[label = (\emph{\roman*})]
+    \item $f(x) = x^2$,
+    \item $f(x) = \abs{x}$,
+    \item $f(x) = x^p$ where $p \geq 1$,
+    \item $f(x) = e^x$,
+    \item $f(x) = -\ln(x)$ on $\R_+$.
+  \end{enumerate}
+\end{exercise}
+
+\begin{solution}\label{sol:5.3}
+  We show convexity as follow:
+  \begin{enumerate}[label = (\emph{\roman*})]
+    \item As $f''(x) = 2 > 0$ for all $x \in \R$, the function is convex.
+
+    \item For $x, y \in \R$ and $\lambda \in [0, 1]$, we have by the triangle inequality that
+      \begin{equation}
+        \abs{ \lambda x + (1 - \lambda) y }
+        \leq
+        \lambda \abs{x} + (1 - \lambda) \abs{y},
+      \end{equation}
+      showing that $f$ is convex.
+
+    \item We have that $f''(x) = p (p - 1) x^{p - 2}$, which for even $p$ is non-negative for all $x \in \R$, and for odd $p$ is non-negative for all $x \geq 0$.
+
+    \item As $f''(x) = e^x > 0$ for all $x \in \R$, the function is convex.
+
+    \item We have that $f''(x) = 1 / x^2 > 0$ for all $x \neq 0$, so the function is convex on $\R_+$.
+  \end{enumerate}
+\end{solution}
+
+\begin{exercise}
+  Consider Example 5.1.2 again.
+  Use the same technique as in the proof of arithmetic-geometric inequality except that you consider general weights $\lambda_1, \ldots, \lambda_r$ (non-negative with sum one).
+  Which inequality do you obtain?
+  It involves the so-called weighted arithmetic mean and the weighted geometric mean.
+\end{exercise}
+
+\begin{solution}
+  By convexity of $-\ln(x)$, we have for $\lambda_1, \ldots, \lambda_r \geq 0$ with $\sum_{i=1}^r \lambda_i = 1$ that
+  \begin{equation}
+    -\ln\left( \sum_{i=1}^r \lambda_i x_i \right)
+    \leq
+    \sum_{i=1}^r \lambda_i (-\ln(x_i))
+    = -\ln\left( \prod_{i=1}^r x_i^{\lambda_i} \right),
+  \end{equation}
+  which is equivalent to
+  \begin{equation}
+    \ln\left( \sum_{i=1}^r \lambda_i x_i \right)
+    \geq
+    \ln\left( \prod_{i=1}^r x_i^{\lambda_i} \right).
+  \end{equation}
+  Exponentiating both sides gives the inequality
+  \begin{equation}
+    \sum_{i=1}^r \lambda_i x_i
+    \geq
+    \prod_{i=1}^r x_i^{\lambda_i}.
+  \end{equation}
+\end{solution}
+
+\begin{exercise}
+  Repeat \cref{ex:5.2}, but now for convex functions defined on some convex set in $\R^n$.
+\end{exercise}
+
+\begin{solution}
+  I don't see what differs from \cref{sol:5.2}.
+\end{solution}
+
+\begin{exercise}
+  Verify that every linear function from $\R^n$ to $\R$ is convex.
+\end{exercise}
+
+\begin{solution}
+  Let $f: \R^n \to \R$ be a linear function.
+  Then, for $x, y \in \R^n$ and $\lambda \in [0, 1]$, we have
+  \begin{align*}
+    f( \lambda x + (1 - \lambda) y )
+    &= \lambda f(x) + (1 - \lambda) f(y),
+  \end{align*}
+  showing that $f$ is convex.
+\end{solution}
+
+\begin{manualprop}{5.2.1}[Composition]\label{prop:comp}
+  Assume that $f : \R^m \to \R$ is convex and $h : \R^m \to \R^n$ is affine.
+  Then the composition $f \circ h$ is convex (where $(f \circ h)(x) = f(h(x))$).
+\end{manualprop}
+
+\begin{exercise}
+  Prove \cref{prop:comp}.
+\end{exercise}
+
+\begin{solution}
+  As $h$ is affine, we have for $x, y \in \R^n$ and $\lambda \in [0, 1]$ that
+  \begin{equation}
+    h( \lambda x + (1 - \lambda) y )
+    = \lambda h(x) + (1 - \lambda) h(y).
+  \end{equation}
+  By convexity of $f$, we then have
+  \begin{align*}
+    (f \circ h)( \lambda x + (1 - \lambda) y )
+    &= f( h( \lambda x + (1 - \lambda) y ) ) \\
+    &= f( \lambda h(x) + (1 - \lambda) h(y) ) \\
+    &\leq \lambda f( h(x) ) + (1 - \lambda) f( h(y) ) \\
+    &= \lambda (f \circ h)(x) + (1 - \lambda) (f \circ h)(y),
+  \end{align*}
+  showing that $f \circ h$ is convex.
+\end{solution}
+
+\begin{exercise}
+  Let $f : C \to \R$ be convex and let $w \in \R^n$.
+  Show that the function $x \mapsto f(x + w)$ is convex.
+\end{exercise}
+
+\begin{solution}
+  Let $g(x) = f(x + w)$.
+  Then, for $x, y \in C$ and $\lambda \in [0, 1]$, we have
+  \begin{align*}
+    g(\lambda x + (1 - \lambda) y)
+    &= f( \lambda x + (1 - \lambda) y + w ) \\
+    &= f( \lambda (x + w) + (1 - \lambda) (y + w) ) \\
+    &\leq \lambda f(x + w) + (1 - \lambda) f(y + w) \\
+    &= \lambda g(x) + (1 - \lambda) g(y),
+  \end{align*}
+  showing that $g$ is convex.
+\end{solution}
+
+\begin{manualtheorem}{5.2.3}[Epigraph]\label{thm:epi}
+  Let $f : C \to \R$ where $C \subseteq \R^n$ is a convex set.
+  Then $f$ is a convex function if and only if $\epi(f)$ is a convex set.
+\end{manualtheorem}
+
+\begin{exercise}
+  Prove \cref{thm:epi} (just apply the definitions).
+\end{exercise}
+
+\begin{solution}
+  Assume that $f$ is convex.
+  Let $(x, a), (y, b) \in \epi(f)$ and $\lambda \in [0, 1]$.
+  Then, by definition of the epigraph, we have that $f(x) \leq a$ and $f(y) \leq b$.
+  As $f$ is convex, we have
+  \begin{align*}
+    f( \lambda x + (1 - \lambda) y )
+    &\leq \lambda f(x) + (1 - \lambda) f(y) \\
+    &\leq \lambda a + (1 - \lambda) b,
+  \end{align*}
+  showing that $\lambda (x, a) + (1 - \lambda) (y, b) \in \epi(f)$.
+  Thus, $\epi(f)$ is convex.
+
+  Similarly, assume that $\epi(f)$ is convex.
+  As $(x, f(x)), (y, f(y)) \in \epi(f)$ for all $x, y \in C$, we have for $\lambda \in [0, 1]$ that
+  \begin{equation}
+    \lambda (x, f(x)) + (1 - \lambda) (y, f(y)) \in \epi(f),
+  \end{equation}
+  implying that
+  \begin{equation}
+    f( \lambda x + (1 - \lambda) y )
+    \leq \lambda f(x) + (1 - \lambda) f(y),
+  \end{equation}
+  showing that $f$ is convex.
+\end{solution}
+
+\begin{exercise}
+  By the result above we have that if $f$ and $g$ are convex functions, then the function $\max\{f, g\}$ is also convex.
+  Prove this result directly from the definition of a convex function.
+\end{exercise}
+
+\begin{solution}
+  Let $f, g : \mathbb{R}^n \to \mathbb{R}$ be convex functions, and define $h(x) = \max\{f(x), g(x)\}$.
+  Then, for any $x, y \in \mathbb{R}^n$ and any $0 \leq \lambda \leq 1$, we have
+  \begin{align*}
+    h(\lambda x + (1 - \lambda) y)
+    &= \max\{f(\lambda x + (1 - \lambda) y), g(\lambda x + (1 - \lambda) y)\} \\
+    &\leq \max\{\lambda f(x) + (1 - \lambda) f(y), \lambda g(x) + (1 - \lambda) g(y)\} \\
+    &\leq \lambda \max\{f(x), g(x)\} + (1 - \lambda) \max\{f(y), g(y)\} \\
+    &= \lambda h(x) + (1 - \lambda) h(y),
+  \end{align*}
+  showing that $h$ is convex.
+\end{solution}
+
+\begin{exercise}
+  Let $f : \R^n \to \R$ be a convex function and let $\alpha \in \R$.
+  Show that the set $\{ x \in \R^n : f(x) \leq \alpha \}$ is a convex set.
+  Each such set is called a sublevel set.
+\end{exercise}
+
+\begin{solution}
+  Let $S = \{ x \in \R^n : f(x) \leq \alpha \}$.
+  For $x, y \in S$ and $\lambda \in [0, 1]$, we have by convexity of $f$ that
+  \begin{align*}
+    f( \lambda x + (1 - \lambda) y )
+    &\leq \lambda f(x) + (1 - \lambda) f(y) \\
+    &\leq \lambda \alpha + (1 - \lambda) \alpha = \alpha,
+  \end{align*}
+  showing that $\lambda x + (1 - \lambda) y \in S$.
+  Thus, $S$ is a convex set.
+\end{solution}
+
+\begin{exercise}
+  Verify that the function $x \mapsto \norm{x}_p$ is positively homogenous.
+\end{exercise}
+
+\begin{solution}
+  Let $x \in \R^n$ and $\lambda \geq 0$.
+  Then, we have
+  \begin{equation}
+    \norm{\lambda x}_p
+    = \left( \sum_{i=1}^n \abs{\lambda x_i}^p \right)^{1/p}
+    = \left( \sum_{i=1}^n \lambda^p \abs{x_i}^p \right)^{1/p}
+    = \lambda \left( \sum_{i=1}^n \abs{x_i}^p \right)^{1/p}
+    = \lambda \norm{x}_p,
+  \end{equation}
+  showing that the function is indeed positively homogenous.
+\end{solution}
+
+\begin{exercise}
+  Consider the support function of an optimization problem with a linear objective function, i.e., let $f(c) \coloneq \max\{ c^T x : x \in S \}$ where $S \subseteq \R^n$ is a given non-empty set.
+  Show that $f$ is positively homogenous.
+  Therefore (due to Example 5.2.2), the support function is convex and positively homogeneous when $S$ is a compact convex set.
+\end{exercise}
+
+\begin{solution}
+  Let $c \in \R^n$ and $\lambda \geq 0$.
+  Then, we have
+  \begin{align*}
+    f(\lambda c)
+    &= \max\{ (\lambda c)^T x : x \in S \}
+    = \max\{ \lambda (c^T x) : x \in S \} \\
+    &= \lambda \max\{ c^T x : x \in S \}
+    = \lambda f(c),
+  \end{align*}
+  showing that $f$ is positively homogenous.
+\end{solution}
+
+\begin{exercise}
+  Let $f(x) = x^T x = \norm{x}^2$ for $x \in \R^n$.
+  Show that the directional derivative $f'(x_0; z)$ exists for all $x_0$ and non-zero $z$ and that $f'(x_0; z) = 2 z^T x_0$.
+\end{exercise}
+
+\begin{solution}
+  We have
+  \begin{align*}
+    \lim_{t \to 0} \frac{f(x_0 + t z) - f(x_0)}{t}
+    &= \lim_{t \to 0} \frac{(x_0 + t z)^T (x_0 + t z) - x_0^T x_0}{t} \\
+    &= \lim_{t \to 0} \frac{t z^T x_0 + t x_0^T z + t^2 z^T z}{t} \\
+    &= \lim_{t \to 0} 2 z^T x_0 + t z^T z \\
+    &= 2 z^T x_0,
+  \end{align*}
+  showing that the directional derivative $f'(x_0; z)$ exists and equals $2 z^T x_0$.
+\end{solution}
+
+\begin{exercise}
+  A quadratic function is a function of the form
+  \begin{equation}
+    f(x) = x^T A x + c^T x + \alpha
+  \end{equation}
+  for some (symmetric) matrix $A \in \R^{n \times n}$, a vector $c \in \R^n$, and a scalar $\alpha \in \R$.
+  Discuss whether $f$ is convex.
+\end{exercise}
+
+\begin{solution}
+  By Example~5.3.1, the hessian of $x^T A x$ is $2A$.
+  As the other terms are linear or constant, we have that the hessian of $f$ is also $2A$.
+  Therefore, $f$ is convex if and only if $A$ is positive semidefinite.
+\end{solution}
+
+\begin{exercise}
+  Assume that $f$ and $g$ are convex functions defined on an interval $I$.
+  Determine which of the following functions that are convex or concave:
+  \begin{enumerate}[label = (\emph{\roman*})]
+    \item $\lambda f$ where $\lambda \in \R$,
+    \item $\min\{f, g\}$,
+    \item $\abs{f}$.
+  \end{enumerate}
+\end{exercise}
+
+\begin{solution}
+  The answers are as follows:
+  \begin{enumerate}[label = (\emph{\roman*})]
+    \item If $\lambda \geq 0$, then $\lambda f$ is convex by \cref{sol:5.2}.
+      If $\lambda \leq 0$, then $\lambda f$ is concave.
+
+    \item The function $\min\{f, g\}$ is in general neither convex nor concave.
+      For example, let $f(x) = x$ and $g(x) = -x$ for $x \in \R$.
+      Then, we have that $\min\{f, g\} = -\abs{x}$, which is concave but not convex.
+      On the other hand, let $f(x) = g(x) = x^2$ for $x \in \R$.
+      Then, we have that $\min\{f, g\} = x^2$, which is convex but not concave.
+
+    \item The function $\abs{f}$ is in general neither convex nor concave.
+      For example, let $f(x) = x^2 - 1$ for $x \in \R$.
+      Then, we have
+      \begin{align*}
+        \abs{f(0)} &= \abs{-1} = 1 \\
+        \frac{1}{2} \abs{f(-1)} + \frac{1}{2} \abs{f(1)} &= \frac{1}{2} \abs{0} + \frac{1}{2} \abs{0} = 0,
+      \end{align*}
+      showing that $\abs{f}$ is not convex.
+      On the other hand, with $f(x) = x$, we have $\abs{f(x)} = \abs{x}$, which is convex but not concave.
+  \end{enumerate}
+\end{solution}
+
+\begin{exercise}
+  Let $f, g : I \to \R$ where $I$ is an interval.
+  Assume that $f$ and $f + g$ are both convex.
+  Does this imply that $g$ is convex?
+  Or concave?
+  What if $f + g$ is convex and $f$ is concave?
+\end{exercise}
+
+\begin{solution}
+  Not generally, no.
+  If $g = -f$, then $f + g = 0$ is convex, but $g$ is concave.
+  On the other hand, if $g = f$, then $f + g = 2f$ is convex, and $g$ is convex.
+  For the final question, let $h = f + g$.
+  Then, we have $g = h - f$, showing that $g$ is the sum of two convex functions, showing that $g$ is convex.
+\end{solution}
+
+\begin{exercise}
+  Let $f : [a, b] \to \R$ be a convex function.
+  Show that
+  \begin{equation}
+    \max\{ f(x) : x \in [a, b] \} = \max\{ f(a), f(b) \},
+  \end{equation}
+  i.e., a convex function defined on a closed real interval attains its maximum in one of the endpoints.
+\end{exercise}
+
+\begin{solution}
+  Assume for contradiction that there exists some $x^* \in (a, b)$ such that $f(x^*) > \max\{ f(a), f(b) \}$.
+  By convexity of $f$, we have for $\lambda \in [0, 1]$ that
+  \begin{equation}
+    f( \lambda a + (1 - \lambda) b )
+    \leq
+    \lambda f(a) + (1 - \lambda) f(b).
+  \end{equation}
+  Choosing $\lambda$ such that $\lambda a + (1 - \lambda) b = x^*$ gives
+  \begin{equation}
+    f(x^*)
+    \leq
+    \lambda f(a) + (1 - \lambda) f(b)
+    \leq
+    \max\{ f(a), f(b) \},
+  \end{equation}
+  a contradiction.
+  Thus, the maximum is attained at one of the endpoints.
+\end{solution}
+
+\begin{exercise}
+  Let $f : I \to \R$ be a convex function defined on a bounded interval $I$.
+  Prove that $f$ must be bounded below (i.e., there is a number $L$ such that $f(x) \geq L$ for all $x \in I$).
+  Is $f$ also bounded above?
+\end{exercise}
+
+\begin{solution}
+  TBD
+\end{solution}

@@ -1,7 +1,13 @@
+% chktex-file 15
+% chktex-file 1
+% chktex-file 8
+
+\usepackage{xparse}
+
 \newtheoremstyle{exerciseStyle}
 { } % Space above
 { } % Space below
-{\normalfont} % Body font % chktex 1
+{\normalfont} % Body font
 { } % Indent amount
 {\bfseries} % Theorem head font
 {.} % Punctuation after theorem head
@@ -13,7 +19,7 @@
 \newtheoremstyle{solutionStyle}
 { } % Space above
 { } % Space below
-{\normalfont} % Body font % chktex 1
+{\normalfont} % Body font
 { } % Indent amount
 {\bfseries} % Theorem head font
 {.} % Punctuation after theorem head
@@ -23,23 +29,41 @@
 \newtheorem{solution}{Solution}[section]
 
 \newcommand{\setexsol}[1]{%
-  \setcounter{exercise}{\numexpr#1-1\relax}% chktex 8
-  \setcounter{solution}{\numexpr#1-1\relax}% chktex 8
+  \setcounter{exercise}{\numexpr#1-1\relax}%
+  \setcounter{solution}{\numexpr#1-1\relax}%
 }
 
-\newtheorem{innermanualprop}{Proposition}
+\newtheoremstyle{manualStyle}
+{ }{ }{\normalfont}{ }{\bfseries}{}{ }% no punctuation here
+{\thmname{#1}\thmnumber{ #2}{\normalfont\thmnote{ (#3)}}.}
 
-\usepackage{xparse}
-\NewDocumentEnvironment{manualprop}{m o}{%
-  \renewcommand\theinnermanualprop{#1}%
-  \innermanualprop\IfNoValueF{#2}{(#2)}%
-}{\endinnermanualprop}
+\theoremstyle{manualStyle}
 
-\newtheorem{innermanuallemma}{Lemma}
+\makeatletter
+% \DeclareManualTheorem{<shortname>}{<Printed Heading>}
+% -> defines:
+%    - innermanual<shortname> (the actual theorem env)
+%    - manual<shortname>  (wrapper with manual number + optional note)
+% tex-fmt: off
+\NewDocumentCommand{\DeclareManualTheorem}{mm}{%
+  \newtheorem{innermanual#1}{#2}%
+  \NewDocumentEnvironment{manual#1}{m o}
+  {%
+    \@namedef{theinnermanual#1}{##1}%
+    \IfNoValueTF{##2}%
+    {%
+      \begin{innermanual#1}%
+    }{%
+      \begin{innermanual#1}[##2]%
+    }%
+  }{%
+    \end{innermanual#1}%
+  }%
+}
+% tex-fmt: on
+\makeatother
 
-\usepackage{xparse}
-\NewDocumentEnvironment{manuallemma}{m o}{%
-  \renewcommand\theinnermanuallemma{#1}%
-  \innermanuallemma\IfNoValueF{#2}{(#2)}%
-}{\endinnermanuallemma}
-
+% Instantiate your three:
+\DeclareManualTheorem{prop}{Proposition}
+\DeclareManualTheorem{lemma}{Lemma}
+\DeclareManualTheorem{theorem}{Theorem}
