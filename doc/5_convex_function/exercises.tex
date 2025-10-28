@@ -322,7 +322,7 @@
   showing that the directional derivative $f'(x_0; z)$ exists and equals $2 z^T x_0$.
 \end{solution}
 
-\begin{exercise}
+\begin{exercise}\label{ex:5.15}
   A quadratic function is a function of the form
   \begin{equation}
     f(x) = x^T A x + c^T x + \alpha
@@ -387,7 +387,7 @@
   Then, we have $g = h - f$, showing that $g$ is the sum of two convex functions, showing that $g$ is convex.
 \end{solution}
 
-\begin{exercise}
+\begin{exercise}\label{ex:5.18}
   Let $f : [a, b] \to \R$ be a convex function.
   Show that
   \begin{equation}
@@ -416,6 +416,11 @@
   Thus, the maximum is attained at one of the endpoints.
 \end{solution}
 
+\begin{manualtheorem}{5.3.1}[Continuity]\label{thm:cont}
+  Let $f : C \to \R$ be a convex function defined on an open convex set $C \subseteq \R^n$.
+  Then $f$ is continuous on $C$.
+\end{manualtheorem}
+
 \begin{exercise}
   Let $f : I \to \R$ be a convex function defined on a bounded interval $I$.
   Prove that $f$ must be bounded below (i.e., there is a number $L$ such that $f(x) \geq L$ for all $x \in I$).
@@ -423,5 +428,289 @@
 \end{exercise}
 
 \begin{solution}
-  TBD
+  As $f$ is convex on the bounded interval $I = [a, b]$, we have by \cref{thm:cont} that $f$ is continuous on $I$.
+  By the extreme value theorem, $f$ attains its minimum on $I$, i.e., there exists some $x^*\in I$ such that $f(x^*) \leq f(x)$ for all $x \in I$.
+  Thus, $f$ is bounded below by $L = f(x^*)$.
+  By \cref{ex:5.18}, we have that $f$ attains its maximum at one of the endpoints, so $f$ is also bounded above.
 \end{solution}
+
+\begin{exercise}\label{ex:5.20}
+  Let $f, g : \R \to \R$ be convex functions and assume that $f$ is increasing.
+  Prove that the composition $f \circ g$ is convex.
+\end{exercise}
+
+\begin{solution}
+  For $x, y \in \R$ and $\lambda \in [0, 1]$, we have by convexity of $g$ that
+  \begin{equation}
+    g( \lambda x + (1 - \lambda) y )
+    \leq
+    \lambda g(x) + (1 - \lambda) g(y).
+  \end{equation}
+  As $f$ is increasing, we then have
+  \begin{align*}
+    (f \circ g)( \lambda x + (1 - \lambda) y )
+    &= f( g( \lambda x + (1 - \lambda) y ) ) \\
+    &\leq f( \lambda g(x) + (1 - \lambda) g(y) ) \\
+    &\leq \lambda f( g(x) ) + (1 - \lambda) f( g(y) ) \\
+    &= \lambda (f \circ g)(x) + (1 - \lambda) (f \circ g)(y),
+  \end{align*}
+  showing that $f \circ g$ is convex.
+\end{solution}
+
+\begin{exercise}
+  Find the optimal solutions of the problem
+  \begin{equation}
+    \min\{ f(x) : a \leq x \leq b \}
+  \end{equation}
+  where $a < b$ and $f : \R \to \R$ is a differentiable convex function.
+\end{exercise}
+
+\begin{solution}
+  If there exists some $x^* \in [a, b]$ such that $f'(x^*) = 0$, then $x^*$ is a global minimizer.
+  Otherwise, if $f'(x) > 0$ for all $x \in [a, b]$, then $f$ is strictly increasing on $[a, b]$ and the minimum is attained at $x = a$.
+  If $f'(x) < 0$ for all $x \in [a, b]$, then $f$ is strictly decreasing on $[a, b]$ and the minimum is attained at $x = b$.
+\end{solution}
+
+\begin{manualprop}{5.1.2}[Increasing slopes]\label{prop:increasing-slopes}
+  A function $f : \mathbb{R} \to \mathbb{R}$ is convex if and only if for each $x_0 \in \mathbb{R}$ the slope function
+  \begin{equation}
+    x \mapsto \frac{f(x)-f(x_0)}{x-x_0}
+  \end{equation}
+  is increasing on $\mathbb{R} \setminus \{x_0\}$.
+\end{manualprop}
+
+\begin{exercise}
+  Let $f : (0, \infty) \to \R$ and define the function $g : (0, \infty) \to \R$ by $g(x) = x f(1 / x)$.
+  Prove that $f$ is convex if and only if $g$ is convex.
+  Hint: Prove that
+  \begin{equation}\label{eq:exercise522-hint}
+    \frac{g(x) - g(x_0)}{x - x_0}
+    = f(1 / x_0) - \frac{1}{x_0} \cdot \frac{f(1 / x) - f(1 / x_0)}{(1 / x) - (1 / x_0)},
+  \end{equation}
+  and use \cref{prop:increasing-slopes}.
+  Why is the function $x \mapsto x e^{1/x}$ convex?
+\end{exercise}
+
+\begin{solution}
+  We have that
+  \begin{align*}
+    \frac{g(x) - g(x_0)}{x - x_0}
+    &= \frac{x f(\frac{1}{x}) - x_0 f(\frac{1}{x_0})}{x - x_0} \\
+    &= \frac{x f(\frac{1}{x}) - x f(\frac{1}{x_0}) + x f(\frac{1}{x_0}) - x_0 f(\frac{1}{x_0})}{x - x_0} \\
+    &= \frac{x (f(\frac{1}{x}) - f(\frac{1}{x_0}))}{x - x_0} + \frac{(x - x_0) f(\frac{1}{x_0})}{x - x_0} \\
+    &= f(\tfrac{1}{x_0}) + \frac{x (f(\frac{1}{x}) - f(\frac{1}{x_0}))}{x - x_0} \\
+    &= f(\tfrac{1}{x_0}) + \frac{1}{x_0} \frac{x x_0 (f(\frac{1}{x}) - f(\frac{1}{x_0}))}{x - x_0}.
+  \end{align*}
+  Then, as
+  \begin{equation*}
+    \frac{x x_0}{x - x_0}
+    = \frac{1}{\frac{x}{x x_0} - \frac{x_0}{x x_0}}
+    = \frac{1}{\frac{1}{x_0} - \frac{1}{x}},
+  \end{equation*}
+  \cref{eq:exercise522-hint} follows.
+
+  Assume $f$ is convex.
+  Let $h$ be the slope function of $f$ at $x_0$, i.e.,
+  \begin{equation}
+    h(x) = \frac{f(x) - f(x_0)}{x - x_0}.
+  \end{equation}
+  As $1/x$ decreases as $x$ increases, we have that $h(1/x)$ is decreasing.
+  Therefore, $-h(1/x)$ is increasing, and offsetting this with the constant $f(1/x_0)$ maintains the increasing property.
+  Thus, by \cref{prop:increasing-slopes}, $g$ is convex, as it's slope function is increasing.
+
+  With $f(x) = e^x$, we have $g(x) = x f(1/x) = x e^{1/x}$, which is therefore convex, as $e^x$ is convex.
+\end{solution}
+
+\begin{manualcorollary}{5.1.8}\label{cor:local-global-min}
+  Let $f : \R \to \R$ be a convex function and let $x_0 \in \R$.
+  Then the following three statements are equivalent:
+  \begin{enumerate}[label = (\emph{\roman*})]
+    \item $x_0$ is a local minimum for $f$,
+    \item $x_0$ is a global minimum for $f$,
+    \item $0 \in \partial f(x_0)$.
+  \end{enumerate}
+\end{manualcorollary}
+
+\begin{manualtheorem}{5.1.9}[Mean value theorem]\label{thm:mvt}
+  Let $f : [a, b] \to \R$ be a convex function.
+  Then there exists a $c \in (a, b)$ such that
+  \begin{equation}
+    \frac{f(b) - f(a)}{b - a} \in \partial f(c).
+  \end{equation}
+\end{manualtheorem}
+
+\begin{exercise}
+  Prove \cref{thm:mvt} as follows.
+  Consider the function
+  \begin{equation}
+    g(x) = f(x) - f(a) - \frac{f(b) - f(a)}{b - a} (x - a).
+  \end{equation}
+  Explain why $g$ is convex and that it has a minimum point at some $c \in (a, b)$ (note that $g(a) = g(b) = 0$ and $g$ is not constant).
+  Then verify that
+  \begin{equation}
+    \partial g(c) = \partial f(c) - \frac{f(b) - f(a)}{b - a}
+  \end{equation}
+  and use \cref{cor:local-global-min}.
+\end{exercise}
+
+\begin{solution}
+  The function $g$ is convex as it is the sum of a convex function and an affine function.
+  As $g$ is convex on the closed interval $[a, b]$, it attains its minimum at some point $c \in [a, b]$ by the extreme value theorem.
+  As $g(a) = g(b) = 0$ and $g$ is not constant, the minimum must be attained at some $c \in (a, b)$, as
+  \begin{equation}
+    g(\lambda a + (1 - \lambda) b) \leq \lambda g(a) + (1 - \lambda) g(b) = 0
+  \end{equation}
+  for all $\lambda \in [0, 1]$.
+
+  For each $x \in (a, b)$, we have
+  \begin{equation}
+    g'_{\pm}(x) = f'_{\pm}(x) - \frac{f(b) - f(a)}{b - a},
+  \end{equation}
+  showing that
+  \begin{equation}
+    \partial g(c) = \partial f(c) - \frac{f(b) - f(a)}{b - a}.
+  \end{equation}
+  As there then exists a minimizer $c \in (a, b)$ of $g$, we have by \cref{cor:local-global-min} that $0 \in \partial g(c)$, implying that
+  \begin{equation}
+    \frac{f(b) - f(a)}{b - a} \in \partial f(c),
+  \end{equation}
+  exactly the statement of the theorem.
+\end{solution}
+
+\begin{exercise}
+  Let $f : \R \to \R$ be an increasing convex function and let $g : C \to \R$ be a convex function defined on a convex set $C$ in $\R^n$.
+  Prove that the composition $f \circ g$ is convex.
+\end{exercise}
+
+\begin{solution}
+  This is essentially \cref{ex:5.20} restricted to convex functions defined on convex sets in $\R^n$.
+  The proof is identical, just replacing $\R$ with $C$ where appropriate.
+\end{solution}
+
+\begin{exercise}
+  Prove that the function given by $h(x) = e^{x^T A x}$ is convex when $A$ is positive definite.
+\end{exercise}
+
+\begin{solution}
+  Let $f(x) = e^x$ and $g(x) = x^T A x$.
+  As $A$ is positive definite, we have by \cref{ex:5.15} that $g$ is convex.
+  As $f$ is increasing and convex, we have by \cref{ex:5.20} that the composition $f \circ g$ is convex, i.e., $h$ is convex.
+\end{solution}
+
+\begin{manualcorollary}{4.3.4}[Minkowski's theorem]\label{cor:minkowski}
+  If $C \subseteq \R^n$ is a compact convex set, then $C$ is the convex hull of its extreme points, i.e., $C = \conv(\ext(C))$.
+\end{manualcorollary}
+
+\begin{exercise}
+  Let $f : C \to \R$ be a convex function defined on a compact convex set $C \subseteq \R^n$.
+  Show that $f$ attains its maximum in an extreme point.
+  Hint: use Minkowski's theorem (\cref{cor:minkowski}).
+\end{exercise}
+
+\begin{solution}
+  As $C$ is a compact convex set, we have by \cref{cor:minkowski} that $C = \conv(\ext(C))$.
+  Let $x^* \in C$ be a maximizer of $f$ on $C$.
+  Then, by Minkowski's theorem, we can write $x^*$ as a convex combination of extreme points, i.e., there exist $r \in \N$, $\lambda_1, \ldots, \lambda_r \geq 0$ with $\sum_{i=1}^r \lambda_i = 1$ and $x_1, \ldots, x_r \in \ext(C)$ such that
+  \begin{equation}
+    x^* = \sum_{i=1}^r \lambda_i x_i.
+  \end{equation}
+  By convexity of $f$, we then have
+  \begin{equation}
+    f(x^*)
+    \leq
+    \sum_{i=1}^r \lambda_i f(x_i)
+    \leq
+    \max_{1 \leq i \leq r} f(x_i).
+  \end{equation}
+  As $x^*$ is a maximizer of $f$ on $C$, we must have equality throughout as each $x_i \in C$, showing that $f$ attains its maximum at one of the extreme points $x_1, \ldots, x_r$.
+\end{solution}
+
+\begin{exercise}
+  Let $C \subseteq \R^n$ be a convex set and consider the distance function $d_C$ defined by
+  \begin{equation}
+    d_C(x) = \inf\{ \norm{x - c} : c \in C \}.
+  \end{equation}
+  Show that $d_C$ is a convex function.
+\end{exercise}
+
+\begin{solution}
+  Let $x, y \in \R^n$ and $\lambda \in [0, 1]$.
+  For any $\varepsilon > 0$, there exist $c_x, c_y \in C$ such that
+  \begin{equation}
+    \norm{x - c_x}\leq d_C(x) + \varepsilon
+    \quad\text{and}\quad
+    \norm{y - c_y}\leq d_C(y) + \varepsilon.
+  \end{equation}
+  As $C$ is convex, we have that $c = \lambda c_x + (1 - \lambda) c_y \in C$.
+  Therefore, we have
+  \begin{align*}
+    d_C( \lambda x + (1 - \lambda) y )
+    &= \inf\{ \norm{ \lambda x + (1 - \lambda) y - c } : c \in C \} \\
+    &\leq \norm{ \lambda (x - c_x) + (1 - \lambda) (y - c_y) } \\
+    &\leq \lambda \norm{x - c_x} + (1 - \lambda) \norm{y - c_y} \\
+    &\leq \lambda (d_C(x) + \varepsilon) + (1 - \lambda) (d_C(y) + \varepsilon) \\
+    &= \lambda d_C(x) + (1 - \lambda) d_C(y) + \varepsilon.
+  \end{align*}
+  As $\varepsilon > 0$ was arbitrary, we have
+  \begin{equation}
+    d_C( \lambda x + (1 - \lambda) y )
+    \leq \lambda d_C(x) + (1 - \lambda) d_C(y),
+  \end{equation}
+  showing that $d_C$ is convex.
+\end{solution}
+
+\begin{manualtheorem}{5.3.5}[Charachterization via gradients]\label{thm:grad-char}
+  Let $f : C \to \R$ be a differentiable function defined on an open convex set $C \subseteq \R^n$.
+  Then the following conditions are equivalent:
+  \begin{enumerate}[label = (\emph{\roman*})]
+    \item $f$ is convex,
+    \item $f(x) \geq f(x_0) + \nabla f(x_0)^T (x - x_0)$ for all $x, x_0 \in C$,
+    \item $(\nabla f(x) - \nabla f(x_0))^T (x - x_0) \geq 0$ for all $x, x_0 \in C$.
+  \end{enumerate}
+\end{manualtheorem}
+
+\begin{manualcorollary}{6.1.1}[Global minimum]\label{cor:global-min}
+  Let $f : C \to \R$ be a differentiable convex function defined on an open convex set $C \subseteq \R^n$.
+  Let $x^* \in C$.
+  Then the following three statements are equivalent:
+  \begin{enumerate}[label = (\emph{\roman*})]
+    \item $x^*$ is a local minimum for $f$,
+    \item $x^*$ is a global minimum for $f$,
+    \item $\nabla f(x^*) = 0$ (i.e., all partial derivatives at $x^*$ are zero).
+  \end{enumerate}
+\end{manualcorollary}
+
+\begin{exercise}
+  Prove \cref{cor:global-min} using \cref{thm:grad-char}.
+\end{exercise}
+
+\begin{solution}
+  If $x^*$ is a local minimum for $f$, then we have by \cref{thm:grad-char}~(ii) that
+  \begin{equation}
+    f(x) \geq f(x^*) + \nabla f(x^*)^T (x - x^*)
+  \end{equation}
+  for all $x \in C$.
+  If then $\nabla f(x^*) = 0$, we have that $f(x) \geq f(x^*)$ for all $x \in C$, showing that $x^*$ is a global minimum.
+
+  Assume now that $x^*$ is a local minimum for $f$.
+  Consider any $y \in C$ and define the function $g : [0, 1] \to \R$ by
+  \begin{equation}
+    g(\lambda) = f( x^* + \lambda (y - x^*) ).
+  \end{equation}
+  As $f$ is convex and $\lambda \mapsto x^* + \lambda (y - x^*)$ is affine, we have by \cref{prop:comp} that $g$ is convex.
+  As $x^*$ is a local minimum for $f$, we have that $\lambda = 0$ is a local minimum for $g$, and $g'(0) = 0$ by \cref{cor:local-global-min}.
+  Therefore, we have that
+  \begin{equation}
+    0 = g'(0) = \nabla f(x^*)^T (y - x^*)
+  \end{equation}
+  for all $y \in C$, showing that $\nabla f(x^*) = 0$.
+
+  We have thus shown that (iii) implies (ii) implies (i) implies (iii), and the statements are equivalent.
+\end{solution}
+
+\begin{exercise}
+  Compare the notion of support for a convex function to the notion of supporting hyperplane of a convex set (see Section~3.2).
+  Have in mind that $f$ is convex if and only if $\epi(f)$ is a convex set.
+  Let $f : \R^n \to \R$ be convex and consider a supporting hyperplane of $\epi(f)$.
+  Interpret the hyperplane in terms of functions, and derive a result saying that every convex function has a support at every point.
+\end{exercise}
