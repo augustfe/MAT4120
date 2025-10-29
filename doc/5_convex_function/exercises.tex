@@ -714,3 +714,24 @@
   Let $f : \R^n \to \R$ be convex and consider a supporting hyperplane of $\epi(f)$.
   Interpret the hyperplane in terms of functions, and derive a result saying that every convex function has a support at every point.
 \end{exercise}
+
+\begin{solution}
+  Let $a^T x + t = \alpha$ be a supporting hyperplane of $\epi(f)$ at the point $(y, f(y))$.
+  The hyperplane is then given by
+  \begin{equation}
+    a^T x + t = a^T y + f(y),
+  \end{equation}
+  which we can rewrite as
+  \begin{equation}
+    t = a^T (y - x) + f(y).
+  \end{equation}
+  As $\epi(f)$ lies above the hyperplane, we have that
+  \begin{equation}
+    a^T x + f(x) \geq a^T y + f(y),
+  \end{equation}
+  such that
+  \begin{equation}
+    f(x) \geq a^T (x - y) + f(y).
+  \end{equation}
+  Thus, the hyperplane corresponds to the affine function $x \mapsto a^T (x - y) + f(y)$ which supports $f$ at the point $y$.
+\end{solution}
