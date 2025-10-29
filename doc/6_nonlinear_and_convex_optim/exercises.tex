@@ -1,0 +1,356 @@
+\section{Nonlinear and convex optimization}
+
+\begin{exercise}
+  Consider the least squares problem minimize $\norm{A x - b}$ over all $x \in \R^n$.
+  From linear algebra we know that the optimal solutions to this problem are precisely the solutions to the linear system (called the normal equations)
+  \begin{equation}
+    A^T A x = A^T b.
+  \end{equation}
+  Show this using optimization theory by considering the function $f(x) = \norm{A x - b}^2$.
+\end{exercise}
+
+\begin{solution}
+  We have that the function $f$ can be written as
+  \begin{equation}
+    f(x) = (A x - b)^T (A x - b) = x^T A^T A x - 2 b^T A x + b^T b,
+  \end{equation}
+  and we note that $f$ is differentiable with gradient
+  \begin{equation}
+    \nabla f(x) = 2 A^T A x - 2 A^T b.
+  \end{equation}
+  $f$ is convex, as the Hessian $A^T A$ is positive semidefinite for any matrix $A$ (as $x^T A^T A x = \norm{A x}^2 \geq 0$ for all $x$).
+  Since $f$ is convex we know that a point $x^*$ is a global minimizer if and only if
+  \begin{equation}
+    \nabla f(x^*) = 0,
+  \end{equation}
+  which is equivalent to
+  \begin{equation}
+    A^T A x^* = A^T b.
+  \end{equation}
+  Thus, the optimal solutions to the least squares problem are precisely the solutions to the normal equations.
+\end{solution}
+
+\begin{manualtheorem}{6.2.1}[Optimality condition]\label{thm:optim-cond}
+  Let $x^* \in C$.
+  Then $x^*$ is a (local and therefore global) minimum of $f$ over $C$ if and only if
+  \begin{equation}\label{eq:optim-cond}
+    \nabla f(x^*)^T (x - x^*) \geq 0 \quad \text{for all } x \in C.
+  \end{equation}
+\end{manualtheorem}
+
+\begin{exercise}
+  Prove the optimality condition is correct in Example~6.2.1.
+\end{exercise}
+
+\begin{solution}
+  Let's consider \cref{thm:optim-cond} in the case where $C = \R^n_+$.
+  If $x^* \in \intr(R^n_+)$, then the condition is clearly satisfied only when $\nabla f(x^*) = 0$, which is the standard unconstrained optimality condition.
+  If $x^* \in \bd(\R^n_+)$, let $I = \{i : x^*_i = 0\}$ be the set of indices where $x^*$ is on the boundary.
+  Then \cref{eq:optim-cond} is reduces to
+  \begin{gather*}
+    \nabla f(x^*)^T (x - x^*) \geq 0 \\
+    \sum_{i=1}^n \frac{\partial f(x^*)}{\partial x_i} (x_i - x^*_i) \geq 0 \\
+    \sum_{i \in I} \frac{\partial f(x^*)}{\partial x_i} x_i + \sum_{i \notin I} \frac{\partial f(x^*)}{\partial x_i} (x_i - x^*_i) \geq 0.
+  \end{gather*}
+  Considering the sums separately, we see that the first sum is nonnegative for all $x \in \R^n_+$ if and only if $\frac{\partial f(x^*)}{\partial x_i} \geq 0$ for all $i \in I$.
+  The second sum is nonnegative for all $x \in \R^n_+$ if and only if $\frac{\partial f(x^*)}{\partial x_i} = 0$ for all $i \notin I$.
+  This is equivalent to the conditions stated in Example~6.2.1.
+\end{solution}
+
+\begin{exercise}
+  Consider the problem to minimize a (continuously differentiable) convex function $f$ subject to $x \in C = \{ x \in \R^n : 0 \leq x \leq p \}$ where $p$ is some nonnegative vector.
+  Find the optimality conditions for this problem.
+  Suggest a numerical algorithm for solving this problem.
+\end{exercise}
+
+\begin{solution}
+  We proceed similarly to the previous exercise.
+  First, let
+  \begin{equation}
+    A = \{ i : x^*_i = 0 \}, \quad B = \{ i : x^*_i = p_i \}, \quad C = \{ i : 0 < x^*_i < p_i \},
+  \end{equation}
+  for an optimal point $x^*$.
+  Then, the optimality condition from \cref{thm:optim-cond} reduces to
+  \begin{equation}
+    \sum_{i \in A} \frac{\partial f(x^*)}{\partial x_i} x_i + \sum_{i \in B} \frac{\partial f(x^*)}{\partial x_i} (x_i - p_i) + \sum_{i \in C} \frac{\partial f(x^*)}{\partial x_i} (x_i - x^*_i) \geq 0.
+  \end{equation}
+  The sum over $A$ is nonnegative for all $x \in C$ if and only if $\frac{\partial f(x^*)}{\partial x_i} \geq 0$ for all $i \in A$.
+  As $x_i - p_i < 0$ for all $i \in B$, the sum over $B$ is nonnegative for all $x \in C$ if and only if $\frac{\partial f(x^*)}{\partial x_i} \leq 0$ for all $i \in B$.
+  Finally, the sum over $C$ is nonnegative for all $x \in C$ if and only if $\frac{\partial f(x^*)}{\partial x_i} = 0$ for all $i \in C$.
+
+  In order to solve this numerically, we can use the Frank-Wolfe method.
+\end{solution}
+
+\begin{exercise}
+  Consider the optimization problem minimize $f(x)$ subject to $x \geq 0$, where $f : \R^n \to \R$ is a differentiable convex function.
+  Show that the KKT conditions for this problem are
+  \begin{equation}
+    \begin{split}
+      x &\geq 0, \\
+      \nabla f(x) &\geq 0, \\
+      x_k \cdot \frac{\partial f(x)}{\partial x_k}  &= 0, \quad k = 1, \ldots, n.
+    \end{split}
+  \end{equation}
+  Discuss the consequences of these conditions for optimal solutions.
+\end{exercise}
+
+\begin{solution}
+  The problem can be written as
+  \begin{equation}
+    \begin{array}{rll}
+      \text{minimize} & f(x) \\
+      \text{subject to} & g_j(x) \leq 0 & j = 1, \ldots, n,
+    \end{array}
+  \end{equation}
+  where $g_j(x) = -x_j$.
+  This gives the Lagrangian
+  \begin{equation}
+    \mathcal{L}(x, \mu) = f(x) + \sum_{j=1}^n \mu_j g_j(x) = f(x) - \sum_{j=1}^n \mu_j x_j.
+  \end{equation}
+  The KKT conditions are then
+  \begin{equation}
+    \begin{split}
+      \nabla_x \mathcal{L}(x^*, \mu^*) &= \nabla f(x^*) - \mu^* = 0, \\
+      \mu_j^* &\geq 0, \quad j = 1, \ldots, n, \\
+      \mu_j^* &= 0, \quad j \in J(x^*),
+    \end{split}
+  \end{equation}
+  for a feasible point $x^*$, where $J(x^*) = \{ j \leq n : g_j(x^*) = x^* = 0 \}$ is the set of active constraints at $x^*$.
+
+  If $j \notin J(x^*)$, then $x_j^* > 0$ and thus $\mu_j^* = 0$ by complementary slackness, giving $\frac{\partial f(x^*)}{\partial x_j} = 0$.
+  If $j \in J(x^*)$, then $x_j^* = 0$ and $\mu_j^* \geq 0$, giving $\frac{\partial f(x^*)}{\partial x_j} \geq 0$.
+  In both cases we have that $x_j^* \cdot \frac{\partial f(x^*)}{\partial x_j} = 0$, $\frac{\partial f(x)}{\partial x_j} \geq 0$ and $x^* \geq 0$ by feasibility of $x^*$.
+\end{solution}
+
+\begin{exercise}
+  Solve the problems
+  \begin{equation}
+    \begin{array}{rl}
+      \text{minimize} & (x + 2y - 3)^2 \\
+      \text{subject to} & (x, y) \in \R^2,
+    \end{array}
+  \end{equation}
+  and
+  \begin{equation}
+    \begin{array}{rl}
+      \text{minimize} & (x + 2y - 3)^2 \\
+      \text{subject to} & (x - 2)^2 + (y - 1)^2 \leq 1.
+    \end{array}
+  \end{equation}
+\end{exercise}
+
+\begin{solution}
+  The first problem is unconstrained, and we find
+  \begin{equation}
+    \nabla f(x, y) =
+    \begin{pmatrix}
+      2 (x + 2y - 3) \\
+      4 (x + 2y - 3)
+    \end{pmatrix},
+  \end{equation}
+  which is zero when $x + 2y - 3 = 0$.
+  Thus, the optimal solutions are all points on the line $x + 2y = 3$.
+
+  For the second problem, we get the gradient equation
+  \begin{equation}
+    \nabla f(x, y) + \mu \nabla g(x, y) =
+    \begin{pmatrix}
+      2 (x + 2y - 3) \\
+      4 (x + 2y - 3)
+    \end{pmatrix} -
+    \mu
+    \begin{pmatrix}
+      2 (x - 2) \\
+      2 (y - 1)
+    \end{pmatrix} = 0.
+  \end{equation}
+  The gradient of the constraint is zero at $(2, 1)$, which gives the candidate solution $f(2, 1) = 1$.
+  Alternatively, we see by close inspection that $(1, 1)$ also satisfies the constraint with $f(1, 1) = 0$, the global minimum we found previously.
+\end{solution}
+
+\begin{exercise}
+  Solve the problem
+  \begin{equation}
+    \begin{array}{rl}
+      \text{minimize} & x^2 + y^2 - 14x - 6y \\
+      \text{subject to} & x + y \leq 2 \\
+      & x + 2y \leq 3.
+    \end{array}
+  \end{equation}
+\end{exercise}
+
+\begin{solution}
+  We consider first the unconstrained problem.
+  Here, we have
+  \begin{equation}
+    \nabla f(x, y) =
+    \begin{pmatrix}
+      2x - 14 \\
+      2y - 6
+    \end{pmatrix},
+  \end{equation}
+  which is zero at $(7, 3)$, with $f(7, 3) = -58$.
+  This point is not feasible, so we must consider the constraints.
+
+  We then get the gradient equation
+  \begin{equation}
+    \begin{pmatrix}
+      2x - 14 \\
+      2y - 6
+    \end{pmatrix}
+    + \mu_1
+    \begin{pmatrix}
+      1 \\
+      1
+    \end{pmatrix}
+    + \mu_2
+    \begin{pmatrix}
+      1 \\
+      2
+    \end{pmatrix} = 0.
+  \end{equation}
+  With both constraints active, we have
+  \begin{equation}
+    \begin{bmatrix}
+      1 & 1 \\
+      1 & 2
+    \end{bmatrix}
+    \begin{pmatrix}
+      x \\
+      y
+    \end{pmatrix} =
+    \begin{pmatrix}
+      2 \\
+      3
+    \end{pmatrix},
+  \end{equation}
+  giving $(x, y) = (1, 1)$ with $f(1, 1) = -18$.
+
+  If only the first is active, we have $\nabla f(x, y) - \mu_1 (1, 1)^T = 0$ and $x + y = 2$, giving
+  \begin{equation}
+    \begin{bmatrix}
+      1 & 1 \\
+      2 & -2
+    \end{bmatrix}
+    \begin{pmatrix}
+      x \\
+      y
+    \end{pmatrix} =
+    \begin{pmatrix}
+      2 \\
+      8
+    \end{pmatrix},
+  \end{equation}
+  which yields
+  \begin{equation}
+    \begin{pmatrix}
+      x \\ y
+    \end{pmatrix} =
+    \frac{1}{4}
+    \begin{bmatrix}
+      2 & 1
+      \\ 2 & -1
+    \end{bmatrix}
+    \begin{pmatrix}
+      2 \\ 8
+    \end{pmatrix} =
+    \frac{1}{4}
+    \begin{pmatrix}
+      12 \\ 4
+    \end{pmatrix} =
+    \begin{pmatrix} 3 \\-1
+    \end{pmatrix},
+  \end{equation}
+  which gives $f(3, -1) = -26$.
+
+  If only the second is active, we have $\nabla f(x, y) - \mu_2 (1, 2)^T = 0$ and $x + 2y = 3$, giving
+  \begin{equation}
+    \begin{bmatrix}
+      1 & 2 \\
+      4 & -2
+    \end{bmatrix}
+    \begin{pmatrix}
+      x \\ y
+    \end{pmatrix} =
+    \begin{pmatrix}
+      3 \\ 22
+    \end{pmatrix},
+  \end{equation}
+  which yields
+  \begin{equation}
+    \begin{pmatrix} x \\ y
+    \end{pmatrix} =
+    \frac{1}{10}
+    \begin{bmatrix}
+      2 & 2 \\ 4 & -1
+    \end{bmatrix}
+    \begin{pmatrix}
+      3 \\ 22
+    \end{pmatrix} =
+    \frac{1}{10}
+    \begin{pmatrix}
+      50 \\ -10
+    \end{pmatrix} =
+    \begin{pmatrix}
+      5 \\ -1
+    \end{pmatrix},
+  \end{equation}
+  which gives $f(5, -1) = -38$.
+  This however violates the first constraint, so it is not feasible.
+
+  The optimal solution is thus $(3, -1)$ with objective value $-26$.
+\end{solution}
+
+\begin{exercise}
+  Solve the problem
+  \begin{equation}
+    \begin{array}{rrl}
+      \text{minimize} & x^2 - y \\
+      \text{subject to} & y - x &\geq -2 \\
+      & y^2 &\leq x \\
+      & y &\geq 0.
+    \end{array}
+  \end{equation}
+\end{exercise}
+
+\begin{solution}
+  Considering the unconstrained problem firstly, have
+  \begin{equation}
+    \nabla f(x, y) =
+    \begin{pmatrix}
+      2x \\
+      -1
+    \end{pmatrix},
+  \end{equation}
+  which is never zero.
+
+  Let's then consider the constraints closer.
+  We have
+  \begin{equation}
+    \begin{split}
+      x \leq y + 2, \\
+      y^2 \leq x, \\
+      0 \leq y.
+    \end{split}
+  \end{equation}
+  Combining the first two, we see that we must have $y^2 \leq y + 2$, or equivalently $y^2 - y - 2 \leq 0$.
+  This factors as $(y - 2)(y + 1) \leq 0$, so we have $-1 \leq y \leq 2$.
+  Together with the third constraint, we have $0 \leq y \leq 2$.
+  We wish to choose the smallest possible $x$, so we set $x = y^2$.
+  The problem then becomes
+  \begin{equation}
+    \begin{array}{rrl}
+      \text{minimize} & y^4 - y \\
+      \text{subject to} & 0 \leq y \leq 2.
+    \end{array}
+  \end{equation}
+  The derivative is $g'(y) = 4y^3 - 1$, which is zero at $y = 4^{-1/3}$.
+  As $g''(y) = 12 y^2 \geq 0$, this is a minimum.
+  This yields the optimal solution $(x, y) = (4^{-2/3}, 4^{-1/3})$ with objective value
+  \begin{equation}
+    f(4^{-2/3}, 4^{-1/3})
+    = 4^{-4/3} - 4^{-1/3}
+    = 4^{-1/3} (4^{-1} - 1)
+    = -\frac{3}{4} 4^{-1/3}.
+  \end{equation}
+\end{solution}
