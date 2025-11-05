@@ -148,3 +148,59 @@
   Consider the degree-constrained spanning tree problem.
   Find a valid integer linear programming formulation of this problem.
 \end{exercise}
+
+\begin{solution}
+  The \emph{degree-constrained spanning tree problem} (DCST) is the problem of finding a minimum weight spanning tree satisfying degree constraint on the vertices.
+  Let $w$ be a non-negative weight function defined on the edges of a graph $G = (V, E)$, with the degree constraints given by $b_v$ for each vertex $v \in V$.
+  The goal is to find a spanning tree $T = (V, F)$ such that the total weight $w(T) = \sum_{e \in T} w(e)$ is minimized and the degree $d_T(v)$ of each vertex $v$ in $T$ does not exceed $b_v$.
+
+  We can formulate the DCST as an integer linear program as follows:
+  \begin{equation}
+    \begin{array}{rl}
+      \text{max} & \sum_{e \in E} -w_e x_e \\
+      \text{subject to} & \\
+      &
+      \begin{array}{rcll}
+        \sum_{e \in E} x_e & = & \abs{V} - 1 \\
+        \sum_{e \in \delta(v)} x_e & \leq & b_v & \forall v \in V \\
+        \sum_{e \in E(S)} x_e & \leq & \abs{S} - 1 & \forall \emptyset \neq S \subset V \\
+        x_e & \in & \{0, 1\} & \forall e \in E
+      \end{array}
+    \end{array}
+  \end{equation}
+  The first constraint ensures that we have the required number of edges in order to form a spanning tree, while the second constraint enforces the degree constraints on each vertex.
+  The third constraint prevents the formation of cycles by ensuring that any subset of vertices $S$ does not contain more than $\abs{S} - 1$ edges.
+\end{solution}
+
+\begin{exercise}
+  Consider the following problem.
+  We shall decide location of service centers among a finite set of possible locations $I$.
+  There is given a (finite) set $J$ of customers, and each shall be connected to exactly one service centre.
+  The cost of building a service centre at location $i \in I$ is $c_i$ and the cost of connecting customer $j$ to centre location $i$ is $d_{i,j}$.
+  The simple plant location problem is to decide in which locations service centres should be built and the connection of customers to centres as to minimize the total cost (design + connection cost).
+  Model this problem as an integer linear programming problem.
+  Figure out some data for a small example and solve the LP relaxation as well as the ILP on a computer using an optimization package (e.g. CPLEX).
+\end{exercise}
+
+\begin{solution}
+  We introduce binary variables $y_i$ for each location $i \in I$ to indicate whether a service center is built at that location, and binary variables $x_{i,j}$ for each customer $j \in J$ and location $i \in I$ to indicate whether customer $j$ is connected to the service center at location $i$.
+
+  The integer linear programming formulation of the simple plant location problem is as follows:
+  \begin{equation}
+    \begin{array}{rl}
+      \text{minimize} & \displaystyle\sum_{i \in I} c_i y_i + \sum_{\substack{j \in J \\ i \in I}} d_{i,j} x_{i,j} \\
+      \text{subject to} & \\
+      &
+      \begin{array}{rcll}
+        \sum_{i \in I} x_{i,j} & = & 1 & \forall j \in J \\
+        x_{i,j} & \leq & y_i & \forall i \in I, j \in J \\
+        x_{i,j} & \in & \{0, 1\} & \forall i \in I, j \in J \\
+        y_i & \in & \{0, 1\} & \forall i \in I
+      \end{array}
+    \end{array}
+  \end{equation}
+  The first constraint ensures that each customer is connected to exactly one service center, while the second ensures that a customer can only be connected to a service center if that center is built.
+  The objective function minimizes the total cost of building service centers and connecting customers to them.
+
+  We find the LP relaxation by allowing the variables $y_i$ and $x_{i,j}$ to take values in the interval $[0, 1]$ instead of being binary.
+\end{solution}
