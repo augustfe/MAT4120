@@ -203,4 +203,16 @@
   The objective function minimizes the total cost of building service centers and connecting customers to them.
 
   We find the LP relaxation by allowing the variables $y_i$ and $x_{i,j}$ to take values in the interval $[0, 1]$ instead of being binary.
+
+  The solver is implemented using the \verb|scipy.optimize| package in Python, and the LP relaxation and ILP are solved using the \verb|linprog| and \verb|milp| functions, respectively, in \href{https://github.com/augustfe/MAT4120/blob/main/doc/combinatorial/customer_service.py}{\texttt{doc/combinatorial/customer\_service.py}}.
+  Both approaches yield the same optimal solution for the dataset generated.
+  In the data, the centres and customers are randomly placed in a $300 \times 300$ domain, and the costs are calculated based on Euclidean distances.
+  The building costs are randomly assigned in the range $[10, 100]$.
+  The solution is visualized in \cref{fig:customer_service_solution}, where red squares represent service centers and blue circles represent customers, with lines indicating connections.
+
+  \begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.7\textwidth]{combinatorial/customer_service_solution.pdf}
+    \caption{Customer service location problem solution\label{fig:customer_service_solution}}
+  \end{figure}
 \end{solution}

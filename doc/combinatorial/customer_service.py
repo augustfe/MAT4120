@@ -1,5 +1,8 @@
+from pathlib import Path
+
 import matplotlib.pyplot as plt
 import numpy as np
+import scipy.sparse as sp
 from matplotlib.collections import LineCollection
 from numpy.random import Generator, default_rng
 from scipy.optimize import Bounds, LinearConstraint, linprog, milp
@@ -29,30 +32,21 @@ def generate_connection_costs(
 
 def make_constraints(
     connection_costs: np.ndarray, building_costs: np.ndarray
-) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
+) -> tuple[np.ndarray, sp.csr_array, np.ndarray, sp.csr_array, np.ndarray]:
     c = np.concatenate([connection_costs.flatten(), building_costs])
 
-    num_customers, num_centres = connection_costs.shape
-    n_x = num_customers * num_centres
-    n_y = num_centres
+    n_cu, n_ce = connection_costs.shape
+    n_x = n_cu * n_ce
+    n_y = n_ce
 
     # Equality constraints: each customer must be connected to exactly one centre
-    A_eq = np.hstack(
-        [
-            np.kron(np.eye(num_customers), np.ones((1, num_centres))),
-            np.zeros((num_customers, n_y)),
-        ]
-    )
-    b_eq = np.ones(num_customers)
+    eye_x = sp.kron(sp.eye(n_cu), np.ones((1, n_ce)))
+    A_eq = sp.hstack([eye_x, sp.csr_array((n_cu, n_y))])
+    b_eq = np.ones(n_cu)
 
     # Inequality constraints: connection to a centre only if the centre is built
     # x_ij <= y_j -> x_ij - y_j <= 0
-    A_ub = np.hstack(
-        [
-            np.eye(n_x),
-            -np.kron(np.ones((num_customers, 1)), np.eye(num_centres)),
-        ]
-    )
+    A_ub = sp.hstack([sp.eye(n_x), -sp.kron(np.ones((n_cu, 1)), sp.eye(n_ce))])
     b_ub = np.zeros(n_x)
 
     return c, A_eq, b_eq, A_ub, b_ub
@@ -64,6 +58,7 @@ def customer_service_lp(
     c, A_eq, b_eq, A_ub, b_ub = make_constraints(connection_costs, building_costs)
 
     res = linprog(c, A_ub, b_ub, A_eq, b_eq, bounds=(0, 1), method="highs")
+
     if not res.success:
         raise ValueError(
             f"Linear programming failed to find a solution.\nStatus: {res.message}"
@@ -77,18 +72,15 @@ def customer_service_ilp(
 ) -> tuple[np.ndarray, float]:
     c, A_eq, b_eq, A_ub, b_ub = make_constraints(connection_costs, building_costs)
     bounds = Bounds(0, 1)
-    eq_constraint = LinearConstraint(A_eq, b_eq, b_eq)
-    ub_constraint = LinearConstraint(A_ub, ub=b_ub)
+    eq = LinearConstraint(A_eq, b_eq, b_eq)
+    ub = LinearConstraint(A_ub, ub=b_ub)
+    intgr = np.ones_like(c, dtype=int)
 
-    res = milp(
-        c,
-        constraints=(eq_constraint, ub_constraint),
-        bounds=bounds,
-        integrality=np.ones_like(c, dtype=int),
-    )
+    res = milp(c, constraints=(eq, ub), bounds=bounds, integrality=intgr)
+
     if not res.success:
         raise ValueError(
-            f"Mixed integer linear programming failed to find a solution.\n"
+            "Mixed integer linear programming failed to find a solution.\n"
             f"Status: {res.message}"
         )
 
@@ -122,10 +114,8 @@ def plot_solution(
         ax = plt.gca()
     cel = centre_locations
     cul = customer_locations
-    num_customers, num_centres = cul.shape[0], cel.shape[0]
-    connection_vars = solution[: num_customers * num_centres].reshape(
-        (num_customers, num_centres)
-    )
+    n_cu, n_ce = cul.shape[0], cel.shape[0]
+    connection_vars = solution[: n_cu * n_ce].reshape((n_cu, n_ce))
 
     plt.scatter(cel[:, 0], cel[:, 1], c="red", label="Centres", marker="s")
     plt.scatter(cul[:, 0], cul[:, 1], c="blue", label="Customers", marker="o")
@@ -144,13 +134,12 @@ def plot_solution(
     ax = plt.gca()
     ax.add_collection(lc)
 
-    ax.set_xlabel("X Coordinate")
-    ax.set_ylabel("Y Coordinate")
+    ax.set_xlabel("$x$-coordinate")
+    ax.set_ylabel("$y$-coordinate")
     ax.set_title("Customer-Centre Connections")
     ax.set_aspect("equal")
     ax.autoscale_view()
     ax.legend()
-    ax.grid(True)
 
 
 if __name__ == "__main__":
@@ -172,9 +161,9 @@ if __name__ == "__main__":
         sep="\n",
     )
 
+    # Relaxed solution
     solution, total_cost = customer_service_lp(connection_costs, building_costs)
-
-    print(f"{'Total Cost:':<20} {total_cost}")
+    print(f"{'Relaxed Total Cost:':<20} {total_cost}")
     plot_solution(centre_locations, customer_locations, solution)
 
     # Integral solution
@@ -182,4 +171,6 @@ if __name__ == "__main__":
     print(f"{'Integral Total Cost:':<20} {i_total_cost}")
     plot_solution(centre_locations, customer_locations, i_solution)
 
+    save_path = Path(__file__).parent
+    plt.savefig(save_path / "customer_service_solution.pdf")
     plt.show()
