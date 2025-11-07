@@ -216,3 +216,39 @@
     \caption{Customer service location problem solution\label{fig:customer_service_solution}}
   \end{figure}
 \end{solution}
+
+\begin{exercise}
+  Consider again the simple plant location problem from the previous exercise.
+  Suggest a Lagrangian relaxation algorithm for this problem.
+  Discuss its properties (e.g., integrality).
+\end{exercise}
+
+\begin{solution}
+  We can apply Lagrangian relaxation to the simple plant location problem by relaxing the constraints that each customer must be connected to exactly one service center.
+  We introduce Lagrange multipliers $\lambda_j$ for each customer $j \in J$ and form the Lagrangian function:
+  \begin{equation}
+    L(y, x, \lambda) = \sum_{i \in I} c_i y_i + \sum_{\substack{j \in J \\ i \in I}} d_{i,j} x_{i,j} + \sum_{j \in J} \lambda_j \left(1 - \sum_{i \in I} x_{i,j}\right)
+  \end{equation}
+  The Lagrangian dual problem is then to maximize the dual function
+  \begin{equation}
+    g(\lambda) = \min_{y, x} L(y, x, \lambda),
+  \end{equation}
+  subject to the remaining constraints.
+\end{solution}
+
+\begin{exercise}
+  Develop some simple heuristics for the simple plant location problem.
+\end{exercise}
+
+\begin{solution}
+  A simple heuristic is to choose a simple greedy algorithm, where we iteratively select the location that provides the maximum reduction in total cost until no further improvements can be made.
+  We start without any facilities built, and keep track of the customers current best connection costs $a_j$, initialized to infinity.
+  For each facility $i$, we compute the net gain if opened, given by
+  \begin{equation}
+    g_i = c_i + \sum_{j \in J} \min\{ d_{ij}, a_j \} - \sum_{j \in J} a_j.
+  \end{equation}
+  At each pass, we build the facility with the lowest (most negative) gain $g_i$ and update the connection costs $a_j$ accordingly, until no facility has a negative gain.
+
+  We could also consider a genetic algorithm, where we maintain a population of potential solutions (sets of open facilities) and evolve them over generations using selection, crossover, and mutation operations.
+  The fitness of each solution can be evaluated based on the total cost, and we can use selection methods to favor lower-cost solutions.
+\end{solution}
