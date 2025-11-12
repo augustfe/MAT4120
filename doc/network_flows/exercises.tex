@@ -280,3 +280,62 @@
     \val(x'') = x''(\delta^+(s)) = x''(s, a) + x''(s, b) = 2 + 1 = 3.
   \end{equation}
 \end{solution}
+
+\begin{exercise}
+  How can we find a flow $x$ with a given divergence, say $\diver_x = b$, and satisfying capacity constraints $0 \leq x \leq c$?
+  This is an important problem and it can be solved by transforming it into a maximum flow problem (for which several extremely fast a;gorithms exist).
+  The construction is very similar to the one we gave in the proof of Theorem~1.2.
+  Let $D = (V, E)$ be the given graph.
+  Define $V^- = \{ v \in V : b(v) < 0 \}$ and $V^+ = \{ v \in V : b(v) > 0 \}$.
+  Construct a graph $D' = (V', E')$ with vertex set $V' = V \cup \{s, t\}$, so we add \emph{two} new vertices $s$ and $t$.
+  Let the edge set of $D'$ consist of (i) each edge $e \in E$, (ii) an edge $(s, v)$ for each $v \in V^+$, and (iii) an edge $(v, t)$ for each $v \in V^-$.
+  Define a capacity function $c' : E' \to \R$ by $c'(s, v) = b(v)$ for each $v \in V^+$, $c'(v, t) = -b(v)$ for each $v \in V^-$, and $c'(e) = c(e)$ for each $e \in E$.
+
+  The questions are then:
+  \begin{enumerate}[label = (\alph*)]
+    \item Show that the maximum value of an $st$-flow is at most $M \coloneq \sum_{v \in V^+} b(v)$.
+    \item Show that a flow $x$ in $D$ satisfying $\diver_x = b$ and $0 \leq x \leq c$ exists if and only if the value of a maximum $st$-flow in $D'$ equals $M$ (defined in (a)).
+    \item How do you find the desired $x$ from this maximum flow?
+  \end{enumerate}
+\end{exercise}
+
+\begin{solution}
+  (a) Let $x'$ be any $st$-flow in $D'$.
+  Then, by the flow conservation property, we have that
+  \begin{equation}
+    \val(x') = \sum_{e \in \delta^+(s)} x'(e) - \sum_{e \in \delta^-(s)} x'(e) = \sum_{e \in \delta^+(s)} x'(e),
+  \end{equation}
+  since there are no edges entering $s$.
+  Furthermore, for each $v \in V^+$, we have that $x'(s, v) \leq c'(s, v) = b(v)$.
+  Therefore,
+  \begin{equation}
+    \val(x') = \sum_{v \in V^+} x'(s, v) \leq \sum_{v \in V^+} b(v) = M.
+  \end{equation}
+
+  (b) Suppose first that there exists a flow $x$ in $D$ satisfying $\diver_x = b$ and $0 \leq x \leq c$.
+  We can then construct an $st$-flow $x'$ in $D'$ by setting $x'(e) = x(e)$ for each edge $e \in E$, $x'(s, v) = b(v)$ for each $v \in V^+$, and $x'(v, t) = -b(v)$ for each $v \in V^-$.
+  It is straightforward to verify that $x'$ satisfies the capacity constraints in $D'$ and that the flow conservation property holds at all vertices in $V$.
+  The value of this flow is
+  \begin{equation}
+    \val(x') = \sum_{v \in V^+} x'(s, v) = \sum_{v \in V^+} b(v) = M.
+  \end{equation}
+
+  Conversely, suppose that the value of a maximum $st$-flow in $D'$ equals $M$.
+  Let $x'$ be such a maximum flow.
+  We can then define a flow $x$ in $D$ by setting $x(e) = x'(e)$ for each edge $e \in E$.
+  Again, it is straightforward to verify that $x$ satisfies the capacity constraints in $D$.
+  To show that $\diver_x = b$, we consider each vertex $v \in V$.
+  If $v \in V^+$, then the flow conservation property at $v$ in $D'$ gives
+  \begin{equation}
+    \diver_x(v) = \sum_{e \in \delta^+(v)} x(e) - \sum_{e \in \delta^-(v)} x(e) = x'(s, v) = b(v).
+  \end{equation}
+  If $v \in V^-$, then similarly we have
+  \begin{equation}
+    \diver_x(v) = \sum_{e \in \delta^+(v)} x(e) - \sum_{e \in \delta^-(v)} x(e) = -x'(v, t) = b(v).
+  \end{equation}
+  Finally, if $v \in V \setminus (V^+ \cup V^-)$, then the flow conservation property at $v$ in $D'$ gives
+  \begin{equation}
+    \diver_x(v) = \sum_{e \in \delta^+(v)} x(e) - \sum_{e \in \delta^-(v)} x(e) = 0 = b(v).
+  \end{equation}
+  Thus, we have shown that $\diver_x = b$.
+\end{solution}
