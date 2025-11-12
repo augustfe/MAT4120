@@ -1,0 +1,282 @@
+\section{Network flows and combinatorial matrix theory}
+
+\begin{exercise}
+  Let $x$ be a flow in a a graph $D$. Show that $\sum_{v \in V} \diver_x(v) = 0$.
+\end{exercise}
+
+\begin{solution}
+  We have the definition of $\diver_x : V \to \R$ as
+  \begin{equation}
+    \diver_x(v) = \sum_{e \in \delta^+(v)} x_e - \sum_{e \in \delta^-(v)} x_e,
+  \end{equation}
+  where $\delta^+(v)$ and $\delta^-(v)$ are the sets of outgoing and incoming edges of vertex $v$, respectively.
+  Thus, for a graph $D = (V, E)$ we have
+  \begin{align*}
+    \sum_{v \in V} \diver_x(v)
+    &= \sum_{v \in V} \left( \sum_{e \in \delta^+(v)} x_e - \sum_{e \in \delta^-(v)} x_e \right) \\
+    &= \sum_{v \in V} \sum_{e \in \delta^+(v)} x_e - \sum_{v \in V} \sum_{e \in \delta^-(v)} x_e \\
+    &= \sum_{e \in E} x_e - \sum_{e \in E} x_e \\
+    &= 0,
+  \end{align*}
+  as each edge contributes exactly once to the sum of outgoing flows and exactly once to the sum of incoming flows.
+  Therefore, we conclude that $\sum_{v \in V} \diver_x(v) = 0$.
+\end{solution}
+
+\begin{exercise}
+  Let $x$ be a circulation in a graph $D = (V, E)$ and let $S \subseteq V$.
+  Prove that $\sum_{v \in S} \delta^-(v) = \sum_{v \in S} \delta^+(v)$.
+  (Hint:\@ sum the flow balance equations for vertices in S.)
+\end{exercise}
+
+\begin{solution}
+  \textbf{\color{green} TODO:}
+  What is $\delta^-(v)$ and $\delta^+(v)$ in this context?
+  Are they the sets of incoming and outgoing edges, or the total incoming and outgoing flow?
+  In what way are we supposed to sum them?
+\end{solution}
+
+\begin{manualtheorem}{1.1}[Hoffman's circulation theorem]\label{thm:hoffman}
+  Let $l, u : E \to \R$ be edge functions satisfying $l \leq u$.
+  Then there exists a circulation $x$ in $D$ such that
+  \begin{equation}
+    l \leq x \leq u
+  \end{equation}
+  if and only if
+  \begin{equation}
+    \sum_{e \in \delta^-(S)} l(e) \leq \sum_{e \in \delta^+(S)} u(e)
+    \qquad (S \subseteq V).
+  \end{equation}
+  Moreover, if $l$ and $u$ are integral (the function values are integral), then $x$ can be taken to be integral.
+\end{manualtheorem}
+
+\begin{exercise}
+  Consider the problem treated in Hoffmans's circulation theorem (\cref{thm:hoffman}):
+  decide if a circulation $x$ satisfying $l \leq x \leq u$ exists, and if so, find one.
+  Show that this problem may be transformed into a flow problem with zero lower bounds, but with a given divergence.
+  Hint:\@ apply the transformation $x'(e) = x(e) - l(e)$ ($e \in E$).
+\end{exercise}
+
+\begin{solution}
+  Let $\tilde{u}(e) = u(e) - l(e)$ for each edge $e \in E$, and define the divergence vector $b : V \to \R$ as
+  \begin{equation}
+    b(v) = l(\delta^-(v)) - l(\delta^+(v)), \quad (v \in V).
+  \end{equation}
+  Consider the change of variables $x'(e) = x(e) - l(e)$ for each edge $e \in E$.
+  Then, the constraints $l(e) \leq x(e) \leq u(e)$ can be rewritten as
+  \begin{equation}
+    0 \leq x'(e) \leq u(e) - l(e) = \tilde{u}(e) \quad (e \in E).
+  \end{equation}
+  Furthermore, the circulation condition $\diver_x(v) = x(\delta^+(v)) - x(\delta^-(v)) = 0$ for each vertex $v \in V$.
+  Substituting $x = x' + l$ into this condition gives
+  \begin{align*}
+    x'(\delta^+(v)) - x'(\delta^-(v)) &= l(\delta^-(v)) - l(\delta^+(v)) \\
+    \diver_{x'}(v) &= b(v).
+  \end{align*}
+  Therefore, the original problem of finding a circulation $x$ satisfying $l \leq x \leq u$ is equivalent to finding a flow $x'$ with zero lower bounds and upper bounds $\tilde{u}$, such that the divergence of $x'$ equals the vector $b$.
+  Clearly, we must therefore require that $\tilde{u} \geq 0$, i.e., $u \geq l$.
+\end{solution}
+
+\begin{exercise}
+  Show that when $x$ is an $st$-flow, then $\val(x)$ is equal to the total inflow to the sink $t$.
+\end{exercise}
+
+\begin{solution}
+  We have that the value of an $st$-flow $x$ is defined as
+  \begin{equation}
+    \val(x) = \sum_{e \in \delta^+(s)} x(e).
+  \end{equation}
+  Assuming without loss of generality that there are no edges entering the source $s$, we additionally have that $\val(x) = \diver_x(s)$.
+  By the flow conservation property, we know that for any vertex $v \in V \setminus \{s, t\}$, the divergence is zero, i.e., $\diver_x(v) = 0$.
+  Therefore, summing the divergences over all vertices in $V$ gives
+  \begin{align*}
+    \sum_{v \in V} \diver_x(v) &= \diver_x(s) + \diver_x(t) + \sum_{v \in V \setminus \{s, t\}} \diver_x(v) \\
+    &= \diver_x(s) + \diver_x(t) + 0 \\
+    &= \val(x) + \diver_x(t).
+  \end{align*}
+  This gives us that
+  \begin{equation}
+    \val(x) = -\diver_x(t) = \sum_{e \in \delta^-(t)} x(e),
+  \end{equation}
+  which shows that the value of the flow is equal to the total inflow to the sink $t$.
+\end{solution}
+
+\begin{exercise}
+  Explain why the Extreme Value Theorem gives the existence of a maximum flow.
+  Also explain why this following from linear programming theory.
+\end{exercise}
+
+\begin{solution}
+  The Extreme Value Theorem states that a continuous function defined on a compact set attains its maximum and minimum values.
+  In the context of the maximum flow problem, the set of all feasible flows in a network can be represented as a convex polytope defined by linear constraints (capacity constraints and flow conservation constraints).
+  This polytope is closed and bounded, hence compact.
+  The objective function, which is the value of the flow, is a linear function and therefore continuous.
+  By the Extreme Value Theorem, there exists a flow within this feasible region that maximizes the value of the flow.
+
+  From the perspective of linear programming theory, the maximum flow problem can be formulated as a linear program where the objective is to maximize the total flow from the source to the sink subject to capacity and conservation constraints.
+  Linear programming theory guarantees that if there exists an optimal solution to this linear program, it will occur at a vertex of the feasible region.
+  Since the feasible region is non-empty and bounded due to capacity constraints, an optimal solution must exist, thus ensuring the existence of a maximum flow.
+\end{solution}
+
+\begin{manualtheorem}{1.4}[Max-flow min cut theorem]\label{thm:max-flow-min-cut}
+  For any directed graph $D$, edge capacity function $c$, and distinct vertices $s, t$, the value of a maximum $st$-flow equals the minimum $st$-cut capacity, i.e.,
+  \begin{equation}
+    \max \{ \val(x) : x \text{ is }st\text{-flow} \}
+    = \min \{ \capc_c(K) : K \text{ is } st\text{-cut} \}.
+  \end{equation}
+\end{manualtheorem}
+
+\begin{manualtheorem}{1.5}\label{thm:st-flow-max}
+  Let $x$ be an $st$-flow.
+  Then $x$ is a maximum flow if and only if $D_x$ contains no $x$-augmenting paths.
+\end{manualtheorem}
+
+\begin{exercise}
+  Use \cref{thm:st-flow-max} to give a proof of the max-flow min-cut theorem (\cref{thm:max-flow-min-cut}).
+  Hint:\@ consider a maximum flow.
+\end{exercise}
+
+\begin{solution}
+  Recall that an auxillary graph $D_x = (V, E_x)$ is given by
+  \begin{equation}
+    E_x =
+    \{ e \in E : x(e) < u(e) \}
+    \cup
+    \{ e^{-1} : e \in E, \ l(e) < x(e) \},
+  \end{equation}
+  where $e^{-1}$ is the edge $e$ with reversed direction.
+  The intuitive meaning of $D_x$ is that it contains all edges that can still carry more flow (the first set) and all edges where flow can be reduced (the second set).
+
+  Let $x$ be an $st$-flow.
+  For any $S \subseteq V$ with $s \in S$ and $t \notin S$, we have that
+  \begin{equation}
+    \val(x) = x(\delta^+(S)) - x(\delta^-(S)) \leq c(\delta^+(S)),
+  \end{equation}
+  since $x \leq c$ on every edge and $x \geq 0$.
+  Taking the minimum over all such cuts gives
+  \begin{equation}\label{eq:leq_min}
+    \max \{\val(x) : x \text{ is } st\text{-flow} \} \leq \min \{ \capc_c(K) : K \text{ is } st\text{-cut} \}.
+  \end{equation}
+  Now let $x^*$ be a maximum $st$-flow.
+  By \cref{thm:st-flow-max}, its residual graph $D_{x^*}$ contains no $x^*$-augmenting paths from $s$ to $t$.
+  Let
+  \begin{equation}
+    S = \{ v \in V : v \text{ is reachable from } s \text{ in } D_{x^*} \}.
+  \end{equation}
+  Then $s \in S$ and $t \notin S$.
+
+  We now claim that:
+  \begin{align*}
+    \text{(i)} \quad x^*(e) &= c(e) \quad \text{for every }e \in \delta^+(S), \\
+    \text{(ii)} \quad x^*(e) &= 0 \qquad \text{for every }e \in \delta^-(S).
+  \end{align*}
+  To see (i), let $e = (u, v)\in \delta^+(S)$.
+  If $x^*(e) < c(e)$, then $e$ would be in $E_{x^*}$, and hence $v$ would be reachable from $s$ in $D_{x^*}$, a contradiction
+  To see (ii), let $e = (u, v) \in \delta^-(S)$.
+  If $x^*(e) > 0$, then $e^{-1}$ would be in $E_{x^*}$, and hence $u$ would be reachable from $s$ via $u$ in $D_{x^*}$, again contradicting our choice of $S$.
+  Thus, our claim holds.
+
+  Therefore,
+  \begin{equation}
+    x^*(\delta^+(S)) = c(\delta^+(S))
+    \quad\text{and}\quad
+    x^*(\delta^-(S)) = 0,
+  \end{equation}
+  and hence
+  \begin{equation}
+    \val(x^*) = x^*(\delta^+(S)) - x^*(\delta^-(S)) = c(\delta^+(S)) = \capc_c(K).
+  \end{equation}
+  Combining this with \cref{eq:leq_min} gives the desired
+  \begin{equation}
+    \max \{\val(x) : x \text{ is } st\text{-flow} \}
+    = \min \{ \capc_c(K) : K \text{ is } st\text{-cut} \},
+  \end{equation}
+  proving \cref{thm:max-flow-min-cut}.
+\end{solution}
+
+\begin{exercise}
+  Choose an example of $D, s, t, c$ and find a maximum flow and minimum cut using the Ford-Fulkerson algorithm.
+\end{exercise}
+
+\begin{solution}
+  Consider a graph with vertices $V = \{s, a, b, t\}$ and capacities as shown in \cref{fig:ford-fulkerson-example}.
+
+  \begin{figure}[htbp]
+    \centering
+    \input{network_flows/ford_fulkerson.tex}
+    \caption{Graph for Ford-Fulkerson example\label{fig:ford-fulkerson-example}}
+  \end{figure}
+
+  We start with zero flow on all edges, $x = 0$.
+  Initially, we then have that $D_x = D$ as
+  \begin{equation}
+    E_x =
+    \{ e \in E : x(e) < u(e) \}
+    \cup
+    \{ e^{-1} : e \in E, \ l(e) < x(e) \}
+    = E \cup \emptyset = E.
+  \end{equation}
+  We then find an $x$-augmenting path from $s$ to $t$ by applying BFS. % chktex 13
+  As $V_0 = \{s\}$, we add $a$ and $b$ to get $V_1 = \{a, b\}$, and initially discover $t$ in $V_2$ via $a$ (assuming we are going alphabetically).
+  This gives an initial augmenting path $P_1 = (s, a, t)$.
+
+  We then compute the bottleneck by taking the minimum of $c(e) - x(e)$ over all edges $e$ in $P_1^+$ and $x(e)$ over all edges $e$ in $P_1^-$.
+  As $P_1$ only contains forward edges, we have
+  \begin{equation}
+    \varepsilon = \min \{ c(s, a) - x(s, a), \ c(a, t) - x(a, t) \} = \min \{ 2 - 0, \ 2 - 0 \} = 2.
+  \end{equation}
+  This gives us the updated flow $x'$ with $x'(s, a) = x'(a, t) = 2$ and $x'(e) = x(e) = 0$ for all other edges.
+
+  In the next iteration, we construct $D_{x'}$.
+  The edges in $E_{x'}$ are given by
+  \begin{align*}
+    E_{x'} &=
+    \{ e \in E : x'(e) < u(e) \}
+    \cup
+    \{ e^{-1} : e \in E, \ l(e) < x'(e) \} \\
+    &= \{ (s, b), (a, b), (b, t) \} \cup \{ (a, s), (t, a) \} \\
+    &= \{ (s, b), (a, b), (b, t), (a, s), (t, a) \},
+  \end{align*}
+  illustrated in \cref{fig:ford-fulkerson-iteration-2}.
+
+  \begin{figure}[htbp]
+    \centering
+    \input{network_flows/second_iter.tex}
+    \caption{
+      Residual graph $D_{x'}$ after first iteration.
+      The dashed red edges are backward edges, and the edges are labeled with the current flow/capacity.\label{fig:ford-fulkerson-iteration-2}
+    }
+  \end{figure}
+
+  Applying BFS again, we start with $V_0 = \{s\}$, add $b$ to get $V_1 = \{b\}$, and then discover $t$ in $V_2$ via $b$.
+  This gives us the augmenting path $P_2 = (s, b, t)$.
+  Again, we only have forward edges, so the bottleneck is
+  \begin{equation}
+    \varepsilon = \min \{ c(s, b) - x'(s, b), \ c(b, t) - x'(b, t) \} = \min \{ 1 - 0, \ 2 - 0 \} = 1.
+  \end{equation}
+  This gives us the updated flow $x''$ with $x''(s, a) = x''(a, t) = 2$, $x''(s, b) = x''(b, t) = 1$, and $x''(e) = 0$ for all other edges.
+
+  In the next iteration, we construct $D_{x''}$.
+  The edges in $E_{x''}$ are given by
+  \begin{align*}
+    E_{x''}
+    &= \{ (a, b), (b, t) \} \cup \{ (a, s), (t, a), (b, s), (t, b) \} \\
+    &= \{ (a, b), (b, t), (a, s), (t, a), (b, s), (t, b) \},
+  \end{align*}
+  illustrated in \cref{fig:ford-fulkerson-final}.
+
+  \begin{figure}[htbp]
+    \centering
+    \input{network_flows/final_iter.tex}
+    \caption{
+      Residual graph $D_{x''}$ after second iteration.
+      Note that both $(b, t)$ and its reverse $(t, b)$ are present in the residual graph.\label{fig:ford-fulkerson-final}
+    }
+  \end{figure}
+
+  Starting now with $V_0 = \{ s \}$, we see that there are no outgoing edges from $s$ in $D_{x''}$, and hence we cannot reach $t$.
+  Therefore, there are no more $x''$-augmenting paths from $s$ to $t$, and the algorithm terminates.
+  The final flow $x''$ is a maximum flow with value
+  \begin{equation}
+    \val(x'') = x''(\delta^+(s)) = x''(s, a) + x''(s, b) = 2 + 1 = 3.
+  \end{equation}
+\end{solution}

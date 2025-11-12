@@ -1,0 +1,31 @@
+\begin{tikzpicture}[>=Stealth, every node/.style={font=\small, text=axis_text}]
+  % Styles
+  \tikzset{
+    vertex/.style={
+      circle, draw=axis_line, semithick, fill=white,
+      minimum size=18pt, inner sep=0pt
+    },
+    source/.style={vertex, draw=my_blue, fill=my_blue!12},
+    sink/.style={vertex, draw=my_red,  fill=my_red!12},
+    edgeF/.style={->, semithick, draw=axis_line},
+    edgeB/.style={->, semithick, draw=my_red, dashed},
+    flowlab/.style={midway, inner sep=1.5pt, text=axis_text},
+  }
+
+  % Nodes
+  \node[source] (s) at (0, 0) {$s$};
+  \node[vertex] (a) at (3, 1) {$a$};
+  \node[vertex] (b) at (3, -1) {$b$};
+  \node[sink]   (t) at (6, 0) {$t$};
+
+  % Current flow x/c on the original arcs
+  % Highlight forward arcs used in the augmenting path
+  \draw[edgeF] (a) to[bend right=15] node[flowlab, right] {$0/1$} (b);
+  \draw[edgeF] (b) -- node[flowlab, below] {$1/2$} (t);
+
+  % Highlight backward arcs used in the augmenting path
+  \draw[edgeB] (a) -- node[flowlab, above] {$2/2$} (s);
+  \draw[edgeB] (t) -- node[flowlab, above] {$2/2$} (a);
+  \draw[edgeB] (b) -- node[flowlab, below] {$1/1$} (s);
+  \draw[edgeB] (t) -- (b);
+\end{tikzpicture}
