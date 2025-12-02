@@ -21,13 +21,15 @@ jobs:
           root_file: |
             doc/main.tex
             mandatory/assignment.tex
+            exam/exam.tex
           work_in_root_file_dir: true
 
       - name: Collect PDFs
         run: |
           mkdir -p out
-          cp doc/main.pdf   out/main.pdf
+          cp doc/main.pdf               out/main.pdf
           cp mandatory/assignment.pdf   out/assignment.pdf
+          cp exam/exam.pdf              out/exam.pdf
 
       - name: Upload PDFs artifact
         uses: actions/upload-artifact@v4

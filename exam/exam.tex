@@ -1,0 +1,70 @@
+\documentclass[
+  a4paper,
+  12pt,
+]{article}
+\usepackage{amsmath, amsthm, amsfonts, amssymb}
+\usepackage{microtype}
+\usepackage{geometry}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{caption, subcaption}
+\usepackage{comment}
+
+\usepackage{tikz}
+\usetikzlibrary{3d, calc, arrows.meta, positioning}
+
+\usepackage{hyperref}
+\usepackage[capitalise, nameinlink]{cleveref}
+\usepackage{xcolor}
+\hypersetup{ % this is just my personal choice, feel free to change things
+  colorlinks,
+  linkcolor={red!50!black},
+  citecolor={blue!50!black},
+  urlcolor={blue!80!black},
+}
+\input{../doc/colours.tex}
+
+\usepackage{cancel}
+\usepackage{mathtools}
+
+\usepackage{enumerate}
+\usepackage{enumitem}
+
+\setlength{\marginparwidth}{2cm}
+\usepackage{todonotes}
+
+\input{../doc/mathops.tex}
+\input{../doc/exer_sol.tex}
+
+\numberwithin{equation}{section}
+\renewcommand\thesubsection{Chap.~\arabic{subsection}}
+
+\makeatletter
+\renewcommand{\@seccntformat}[1]{%
+  \ifstrequal{#1}{section}{}{%
+    \csname the#1\endcsname\quad % chktex 41
+  }%
+}
+\makeatother
+
+\title{
+  MAT4120\\
+  \small{Possible topics and questions on the exam}
+}
+\author{August Femtehjell}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+
+\begin{abstract}
+  This document contains my notes on possible topics and questions for the exam in MAT4120--Mathematical Optimization, taught at the University of Oslo in the spring of 2025.
+  The code for everything, as well as this document, can be found at my GitHub repository: \url{https://github.com/augustfe/MAT4120}.
+\end{abstract}
+
+\include{intro_to_convex}
+
+\end{document} % chktex 17
