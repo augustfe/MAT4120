@@ -1,7 +1,8 @@
 \section{Network flows and combinatorial matrix theory}
 
 \begin{exercise}
-  Let $x$ be a flow in a a graph $D$. Show that $\sum_{v \in V} \diver_x(v) = 0$.
+  Let $x$ be a flow in a a graph $D$. Show that $\sum_{v \in V}
+  \diver_x(v) = 0$.
 \end{exercise}
 
 \begin{solution}
@@ -9,16 +10,20 @@
   \begin{equation}
     \diver_x(v) = \sum_{e \in \delta^+(v)} x_e - \sum_{e \in \delta^-(v)} x_e,
   \end{equation}
-  where $\delta^+(v)$ and $\delta^-(v)$ are the sets of outgoing and incoming edges of vertex $v$, respectively.
+  where $\delta^+(v)$ and $\delta^-(v)$ are the sets of outgoing and
+  incoming edges of vertex $v$, respectively.
   Thus, for a graph $D = (V, E)$ we have
   \begin{align*}
     \sum_{v \in V} \diver_x(v)
-    &= \sum_{v \in V} \left( \sum_{e \in \delta^+(v)} x_e - \sum_{e \in \delta^-(v)} x_e \right) \\
-    &= \sum_{v \in V} \sum_{e \in \delta^+(v)} x_e - \sum_{v \in V} \sum_{e \in \delta^-(v)} x_e \\
+    &= \sum_{v \in V} \left( \sum_{e \in \delta^+(v)} x_e - \sum_{e
+    \in \delta^-(v)} x_e \right) \\
+    &= \sum_{v \in V} \sum_{e \in \delta^+(v)} x_e - \sum_{v \in V}
+    \sum_{e \in \delta^-(v)} x_e \\
     &= \sum_{e \in E} x_e - \sum_{e \in E} x_e \\
     &= 0,
   \end{align*}
-  as each edge contributes exactly once to the sum of outgoing flows and exactly once to the sum of incoming flows.
+  as each edge contributes exactly once to the sum of outgoing flows
+  and exactly once to the sum of incoming flows.
   Therefore, we conclude that $\sum_{v \in V} \diver_x(v) = 0$.
 \end{solution}
 
@@ -31,7 +36,8 @@
 \begin{solution}
   \textbf{\color{green} TODO:}
   What is $\delta^-(v)$ and $\delta^+(v)$ in this context?
-  Are they the sets of incoming and outgoing edges, or the total incoming and outgoing flow?
+  Are they the sets of incoming and outgoing edges, or the total
+  incoming and outgoing flow?
   In what way are we supposed to sum them?
 \end{solution}
 
@@ -46,38 +52,49 @@
     \sum_{e \in \delta^-(S)} l(e) \leq \sum_{e \in \delta^+(S)} u(e)
     \qquad (S \subseteq V).
   \end{equation}
-  Moreover, if $l$ and $u$ are integral (the function values are integral), then $x$ can be taken to be integral.
+  Moreover, if $l$ and $u$ are integral (the function values are
+  integral), then $x$ can be taken to be integral.
 \end{manualtheorem}
 
 \begin{exercise}
-  Consider the problem treated in Hoffmans's circulation theorem (\cref{thm:hoffman}):
-  decide if a circulation $x$ satisfying $l \leq x \leq u$ exists, and if so, find one.
-  Show that this problem may be transformed into a flow problem with zero lower bounds, but with a given divergence.
+  Consider the problem treated in Hoffmans's circulation theorem
+  (\cref{thm:hoffman}):
+  decide if a circulation $x$ satisfying $l \leq x \leq u$ exists,
+  and if so, find one.
+  Show that this problem may be transformed into a flow problem with
+  zero lower bounds, but with a given divergence.
   Hint:\@ apply the transformation $x'(e) = x(e) - l(e)$ ($e \in E$).
 \end{exercise}
 
 \begin{solution}
-  Let $\tilde{u}(e) = u(e) - l(e)$ for each edge $e \in E$, and define the divergence vector $b : V \to \R$ as
+  Let $\tilde{u}(e) = u(e) - l(e)$ for each edge $e \in E$, and
+  define the divergence vector $b : V \to \R$ as
   \begin{equation}
     b(v) = l(\delta^-(v)) - l(\delta^+(v)), \quad (v \in V).
   \end{equation}
-  Consider the change of variables $x'(e) = x(e) - l(e)$ for each edge $e \in E$.
+  Consider the change of variables $x'(e) = x(e) - l(e)$ for each
+  edge $e \in E$.
   Then, the constraints $l(e) \leq x(e) \leq u(e)$ can be rewritten as
   \begin{equation}
     0 \leq x'(e) \leq u(e) - l(e) = \tilde{u}(e) \quad (e \in E).
   \end{equation}
-  Furthermore, the circulation condition $\diver_x(v) = x(\delta^+(v)) - x(\delta^-(v)) = 0$ for each vertex $v \in V$.
+  Furthermore, the circulation condition $\diver_x(v) =
+  x(\delta^+(v)) - x(\delta^-(v)) = 0$ for each vertex $v \in V$.
   Substituting $x = x' + l$ into this condition gives
   \begin{align*}
     x'(\delta^+(v)) - x'(\delta^-(v)) &= l(\delta^-(v)) - l(\delta^+(v)) \\
     \diver_{x'}(v) &= b(v).
   \end{align*}
-  Therefore, the original problem of finding a circulation $x$ satisfying $l \leq x \leq u$ is equivalent to finding a flow $x'$ with zero lower bounds and upper bounds $\tilde{u}$, such that the divergence of $x'$ equals the vector $b$.
+  Therefore, the original problem of finding a circulation $x$
+  satisfying $l \leq x \leq u$ is equivalent to finding a flow $x'$
+  with zero lower bounds and upper bounds $\tilde{u}$, such that the
+  divergence of $x'$ equals the vector $b$.
   Clearly, we must therefore require that $\tilde{u} \geq 0$, i.e., $u \geq l$.
 \end{solution}
 
 \begin{exercise}
-  Show that when $x$ is an $st$-flow, then $\val(x)$ is equal to the total inflow to the sink $t$.
+  Show that when $x$ is an $st$-flow, then $\val(x)$ is equal to the
+  total inflow to the sink $t$.
 \end{exercise}
 
 \begin{solution}
@@ -85,11 +102,14 @@
   \begin{equation}
     \val(x) = \sum_{e \in \delta^+(s)} x(e).
   \end{equation}
-  Assuming without loss of generality that there are no edges entering the source $s$, we additionally have that $\val(x) = \diver_x(s)$.
-  By the flow conservation property, we know that for any vertex $v \in V \setminus \{s, t\}$, the divergence is zero, i.e., $\diver_x(v) = 0$.
+  Assuming without loss of generality that there are no edges
+  entering the source $s$, we additionally have that $\val(x) = \diver_x(s)$.
+  By the flow conservation property, we know that for any vertex $v
+  \in V \setminus \{s, t\}$, the divergence is zero, i.e., $\diver_x(v) = 0$.
   Therefore, summing the divergences over all vertices in $V$ gives
   \begin{align*}
-    \sum_{v \in V} \diver_x(v) &= \diver_x(s) + \diver_x(t) + \sum_{v \in V \setminus \{s, t\}} \diver_x(v) \\
+    \sum_{v \in V} \diver_x(v) &= \diver_x(s) + \diver_x(t) + \sum_{v
+    \in V \setminus \{s, t\}} \diver_x(v) \\
     &= \diver_x(s) + \diver_x(t) + 0 \\
     &= \val(x) + \diver_x(t).
   \end{align*}
@@ -97,7 +117,8 @@
   \begin{equation}
     \val(x) = -\diver_x(t) = \sum_{e \in \delta^-(t)} x(e),
   \end{equation}
-  which shows that the value of the flow is equal to the total inflow to the sink $t$.
+  which shows that the value of the flow is equal to the total inflow
+  to the sink $t$.
 \end{solution}
 
 \begin{exercise}
@@ -106,19 +127,34 @@
 \end{exercise}
 
 \begin{solution}
-  The Extreme Value Theorem states that a continuous function defined on a compact set attains its maximum and minimum values.
-  In the context of the maximum flow problem, the set of all feasible flows in a network can be represented as a convex polytope defined by linear constraints (capacity constraints and flow conservation constraints).
+  The Extreme Value Theorem states that a continuous function defined
+  on a compact set attains its maximum and minimum values.
+  In the context of the maximum flow problem, the set of all feasible
+  flows in a network can be represented as a convex polytope defined
+  by linear constraints (capacity constraints and flow conservation
+  constraints).
   This polytope is closed and bounded, hence compact.
-  The objective function, which is the value of the flow, is a linear function and therefore continuous.
-  By the Extreme Value Theorem, there exists a flow within this feasible region that maximizes the value of the flow.
+  The objective function, which is the value of the flow, is a linear
+  function and therefore continuous.
+  By the Extreme Value Theorem, there exists a flow within this
+  feasible region that maximizes the value of the flow.
 
-  From the perspective of linear programming theory, the maximum flow problem can be formulated as a linear program where the objective is to maximize the total flow from the source to the sink subject to capacity and conservation constraints.
-  Linear programming theory guarantees that if there exists an optimal solution to this linear program, it will occur at a vertex of the feasible region.
-  Since the feasible region is non-empty and bounded due to capacity constraints, an optimal solution must exist, thus ensuring the existence of a maximum flow.
+  From the perspective of linear programming theory, the maximum flow
+  problem can be formulated as a linear program where the objective
+  is to maximize the total flow from the source to the sink subject
+  to capacity and conservation constraints.
+  Linear programming theory guarantees that if there exists an
+  optimal solution to this linear program, it will occur at a vertex
+  of the feasible region.
+  Since the feasible region is non-empty and bounded due to capacity
+  constraints, an optimal solution must exist, thus ensuring the
+  existence of a maximum flow.
 \end{solution}
 
 \begin{manualtheorem}{1.4}[Max-flow min cut theorem]\label{thm:max-flow-min-cut}
-  For any directed graph $D$, edge capacity function $c$, and distinct vertices $s, t$, the value of a maximum $st$-flow equals the minimum $st$-cut capacity, i.e.,
+  For any directed graph $D$, edge capacity function $c$, and
+  distinct vertices $s, t$, the value of a maximum $st$-flow equals
+  the minimum $st$-cut capacity, i.e.,
   \begin{equation}
     \max \{ \val(x) : x \text{ is }st\text{-flow} \}
     = \min \{ \capc_c(K) : K \text{ is } st\text{-cut} \}.
@@ -127,11 +163,13 @@
 
 \begin{manualtheorem}{1.5}\label{thm:st-flow-max}
   Let $x$ be an $st$-flow.
-  Then $x$ is a maximum flow if and only if $D_x$ contains no $x$-augmenting paths.
+  Then $x$ is a maximum flow if and only if $D_x$ contains no
+  $x$-augmenting paths.
 \end{manualtheorem}
 
 \begin{exercise}
-  Use \cref{thm:st-flow-max} to give a proof of the max-flow min-cut theorem (\cref{thm:max-flow-min-cut}).
+  Use \cref{thm:st-flow-max} to give a proof of the max-flow min-cut
+  theorem (\cref{thm:max-flow-min-cut}).
   Hint:\@ consider a maximum flow.
 \end{exercise}
 
@@ -144,7 +182,9 @@
     \{ e^{-1} : e \in E, \ l(e) < x(e) \},
   \end{equation}
   where $e^{-1}$ is the edge $e$ with reversed direction.
-  The intuitive meaning of $D_x$ is that it contains all edges that can still carry more flow (the first set) and all edges where flow can be reduced (the second set).
+  The intuitive meaning of $D_x$ is that it contains all edges that
+  can still carry more flow (the first set) and all edges where flow
+  can be reduced (the second set).
 
   Let $x$ be an $st$-flow.
   For any $S \subseteq V$ with $s \in S$ and $t \notin S$, we have that
@@ -154,10 +194,12 @@
   since $x \leq c$ on every edge and $x \geq 0$.
   Taking the minimum over all such cuts gives
   \begin{equation}\label{eq:leq_min}
-    \max \{\val(x) : x \text{ is } st\text{-flow} \} \leq \min \{ \capc_c(K) : K \text{ is } st\text{-cut} \}.
+    \max \{\val(x) : x \text{ is } st\text{-flow} \} \leq \min \{
+    \capc_c(K) : K \text{ is } st\text{-cut} \}.
   \end{equation}
   Now let $x^*$ be a maximum $st$-flow.
-  By \cref{thm:st-flow-max}, its residual graph $D_{x^*}$ contains no $x^*$-augmenting paths from $s$ to $t$.
+  By \cref{thm:st-flow-max}, its residual graph $D_{x^*}$ contains no
+  $x^*$-augmenting paths from $s$ to $t$.
   Let
   \begin{equation}
     S = \{ v \in V : v \text{ is reachable from } s \text{ in } D_{x^*} \}.
@@ -170,9 +212,12 @@
     \text{(ii)} \quad x^*(e) &= 0 \qquad \text{for every }e \in \delta^-(S).
   \end{align*}
   To see (i), let $e = (u, v)\in \delta^+(S)$.
-  If $x^*(e) < c(e)$, then $e$ would be in $E_{x^*}$, and hence $v$ would be reachable from $s$ in $D_{x^*}$, a contradiction
+  If $x^*(e) < c(e)$, then $e$ would be in $E_{x^*}$, and hence $v$
+  would be reachable from $s$ in $D_{x^*}$, a contradiction
   To see (ii), let $e = (u, v) \in \delta^-(S)$.
-  If $x^*(e) > 0$, then $e^{-1}$ would be in $E_{x^*}$, and hence $u$ would be reachable from $s$ via $u$ in $D_{x^*}$, again contradicting our choice of $S$.
+  If $x^*(e) > 0$, then $e^{-1}$ would be in $E_{x^*}$, and hence $u$
+  would be reachable from $s$ via $u$ in $D_{x^*}$, again
+  contradicting our choice of $S$.
   Thus, our claim holds.
 
   Therefore,
@@ -183,7 +228,8 @@
   \end{equation}
   and hence
   \begin{equation}
-    \val(x^*) = x^*(\delta^+(S)) - x^*(\delta^-(S)) = c(\delta^+(S)) = \capc_c(K).
+    \val(x^*) = x^*(\delta^+(S)) - x^*(\delta^-(S)) = c(\delta^+(S))
+    = \capc_c(K).
   \end{equation}
   Combining this with \cref{eq:leq_min} gives the desired
   \begin{equation}
@@ -194,11 +240,13 @@
 \end{solution}
 
 \begin{exercise}
-  Choose an example of $D, s, t, c$ and find a maximum flow and minimum cut using the Ford-Fulkerson algorithm.
+  Choose an example of $D, s, t, c$ and find a maximum flow and
+  minimum cut using the Ford-Fulkerson algorithm.
 \end{exercise}
 
 \begin{solution}
-  Consider a graph with vertices $V = \{s, a, b, t\}$ and capacities as shown in \cref{fig:ford-fulkerson-example}.
+  Consider a graph with vertices $V = \{s, a, b, t\}$ and capacities
+  as shown in \cref{fig:ford-fulkerson-example}.
 
   \begin{figure}[htbp]
     \centering
@@ -215,16 +263,22 @@
     \{ e^{-1} : e \in E, \ l(e) < x(e) \}
     = E \cup \emptyset = E.
   \end{equation}
-  We then find an $x$-augmenting path from $s$ to $t$ by applying BFS. % chktex 13
-  As $V_0 = \{s\}$, we add $a$ and $b$ to get $V_1 = \{a, b\}$, and initially discover $t$ in $V_2$ via $a$ (assuming we are going alphabetically).
+  We then find an $x$-augmenting path from $s$ to $t$ by applying
+  BFS. % chktex 13
+  As $V_0 = \{s\}$, we add $a$ and $b$ to get $V_1 = \{a, b\}$, and
+  initially discover $t$ in $V_2$ via $a$ (assuming we are going
+  alphabetically).
   This gives an initial augmenting path $P_1 = (s, a, t)$.
 
-  We then compute the bottleneck by taking the minimum of $c(e) - x(e)$ over all edges $e$ in $P_1^+$ and $x(e)$ over all edges $e$ in $P_1^-$.
+  We then compute the bottleneck by taking the minimum of $c(e) -
+  x(e)$ over all edges $e$ in $P_1^+$ and $x(e)$ over all edges $e$ in $P_1^-$.
   As $P_1$ only contains forward edges, we have
   \begin{equation}
-    \varepsilon = \min \{ c(s, a) - x(s, a), \ c(a, t) - x(a, t) \} = \min \{ 2 - 0, \ 2 - 0 \} = 2.
+    \varepsilon = \min \{ c(s, a) - x(s, a), \ c(a, t) - x(a, t) \} =
+    \min \{ 2 - 0, \ 2 - 0 \} = 2.
   \end{equation}
-  This gives us the updated flow $x'$ with $x'(s, a) = x'(a, t) = 2$ and $x'(e) = x(e) = 0$ for all other edges.
+  This gives us the updated flow $x'$ with $x'(s, a) = x'(a, t) = 2$
+  and $x'(e) = x(e) = 0$ for all other edges.
 
   In the next iteration, we construct $D_{x'}$.
   The edges in $E_{x'}$ are given by
@@ -243,17 +297,22 @@
     \input{network_flows/second_iter.tex}
     \caption{
       Residual graph $D_{x'}$ after first iteration.
-      The dashed red edges are backward edges, and the edges are labelled with the current flow/capacity.\label{fig:ford-fulkerson-iteration-2}
+      The dashed red edges are backward edges, and the edges are
+      labelled with the current
+      flow/capacity.\label{fig:ford-fulkerson-iteration-2}
     }
   \end{figure}
 
-  Applying BFS again, we start with $V_0 = \{s\}$, add $b$ to get $V_1 = \{b\}$, and then discover $t$ in $V_2$ via $b$.
+  Applying BFS again, we start with $V_0 = \{s\}$, add $b$ to get
+  $V_1 = \{b\}$, and then discover $t$ in $V_2$ via $b$.
   This gives us the augmenting path $P_2 = (s, b, t)$.
   Again, we only have forward edges, so the bottleneck is
   \begin{equation}
-    \varepsilon = \min \{ c(s, b) - x'(s, b), \ c(b, t) - x'(b, t) \} = \min \{ 1 - 0, \ 2 - 0 \} = 1.
+    \varepsilon = \min \{ c(s, b) - x'(s, b), \ c(b, t) - x'(b, t) \}
+    = \min \{ 1 - 0, \ 2 - 0 \} = 1.
   \end{equation}
-  This gives us the updated flow $x''$ with $x''(s, a) = x''(a, t) = 2$, $x''(s, b) = x''(b, t) = 1$, and $x''(e) = 0$ for all other edges.
+  This gives us the updated flow $x''$ with $x''(s, a) = x''(a, t) =
+  2$, $x''(s, b) = x''(b, t) = 1$, and $x''(e) = 0$ for all other edges.
 
   In the next iteration, we construct $D_{x''}$.
   The edges in $E_{x''}$ are given by
@@ -269,12 +328,15 @@
     \input{network_flows/final_iter.tex}
     \caption{
       Residual graph $D_{x''}$ after second iteration.
-      Note that both $(b, t)$ and its reverse $(t, b)$ are present in the residual graph.\label{fig:ford-fulkerson-final}
+      Note that both $(b, t)$ and its reverse $(t, b)$ are present in
+      the residual graph.\label{fig:ford-fulkerson-final}
     }
   \end{figure}
 
-  Starting now with $V_0 = \{ s \}$, we see that there are no outgoing edges from $s$ in $D_{x''}$, and hence we cannot reach $t$.
-  Therefore, there are no more $x''$-augmenting paths from $s$ to $t$, and the algorithm terminates.
+  Starting now with $V_0 = \{ s \}$, we see that there are no
+  outgoing edges from $s$ in $D_{x''}$, and hence we cannot reach $t$.
+  Therefore, there are no more $x''$-augmenting paths from $s$ to
+  $t$, and the algorithm terminates.
   The final flow $x''$ is a maximum flow with value
   \begin{equation}
     \val(x'') = x''(\delta^+(s)) = x''(s, a) + x''(s, b) = 2 + 1 = 3.
@@ -282,19 +344,31 @@
 \end{solution}
 
 \begin{exercise}
-  How can we find a flow $x$ with a given divergence, say $\diver_x = b$, and satisfying capacity constraints $0 \leq x \leq c$?
-  This is an important problem and it can be solved by transforming it into a maximum flow problem (for which several extremely fast algorithms exist).
-  The construction is very similar to the one we gave in the proof of Theorem~1.2.
+  How can we find a flow $x$ with a given divergence, say $\diver_x =
+  b$, and satisfying capacity constraints $0 \leq x \leq c$?
+  This is an important problem and it can be solved by transforming
+  it into a maximum flow problem (for which several extremely fast
+  algorithms exist).
+  The construction is very similar to the one we gave in the proof of
+  Theorem~1.2.
   Let $D = (V, E)$ be the given graph.
   Define $V^- = \{ v \in V : b(v) < 0 \}$ and $V^+ = \{ v \in V : b(v) > 0 \}$.
-  Construct a graph $D' = (V', E')$ with vertex set $V' = V \cup \{s, t\}$, so we add \emph{two} new vertices $s$ and $t$.
-  Let the edge set of $D'$ consist of (i) each edge $e \in E$, (ii) an edge $(s, v)$ for each $v \in V^+$, and (iii) an edge $(v, t)$ for each $v \in V^-$.
-  Define a capacity function $c' : E' \to \R$ by $c'(s, v) = b(v)$ for each $v \in V^+$, $c'(v, t) = -b(v)$ for each $v \in V^-$, and $c'(e) = c(e)$ for each $e \in E$.
+  Construct a graph $D' = (V', E')$ with vertex set $V' = V \cup \{s,
+  t\}$, so we add \emph{two} new vertices $s$ and $t$.
+  Let the edge set of $D'$ consist of (i) each edge $e \in E$, (ii)
+  an edge $(s, v)$ for each $v \in V^+$, and (iii) an edge $(v, t)$
+  for each $v \in V^-$.
+  Define a capacity function $c' : E' \to \R$ by $c'(s, v) = b(v)$
+  for each $v \in V^+$, $c'(v, t) = -b(v)$ for each $v \in V^-$, and
+  $c'(e) = c(e)$ for each $e \in E$.
 
   The questions are then:
   \begin{enumerate}[label = (\alph*)]
-    \item Show that the maximum value of an $st$-flow is at most $M \coloneq \sum_{v \in V^+} b(v)$.
-    \item Show that a flow $x$ in $D$ satisfying $\diver_x = b$ and $0 \leq x \leq c$ exists if and only if the value of a maximum $st$-flow in $D'$ equals $M$ (defined in (a)).
+    \item Show that the maximum value of an $st$-flow is at most $M
+      \coloneq \sum_{v \in V^+} b(v)$.
+    \item Show that a flow $x$ in $D$ satisfying $\diver_x = b$ and
+      $0 \leq x \leq c$ exists if and only if the value of a maximum
+      $st$-flow in $D'$ equals $M$ (defined in (a)).
     \item How do you find the desired $x$ from this maximum flow?
   \end{enumerate}
 \end{exercise}
@@ -303,10 +377,12 @@
   (a) Let $x'$ be any $st$-flow in $D'$.
   Then, by the flow conservation property, we have that
   \begin{equation}
-    \val(x') = \sum_{e \in \delta^+(s)} x'(e) - \sum_{e \in \delta^-(s)} x'(e) = \sum_{e \in \delta^+(s)} x'(e),
+    \val(x') = \sum_{e \in \delta^+(s)} x'(e) - \sum_{e \in
+    \delta^-(s)} x'(e) = \sum_{e \in \delta^+(s)} x'(e),
   \end{equation}
   since there are no edges entering $s$.
-  Furthermore, for each $v \in V^+$, we have that $x'(s, v) \leq c'(s, v) = b(v)$.
+  Furthermore, for each $v \in V^+$, we have that $x'(s, v) \leq
+  c'(s, v) = b(v)$.
   Therefore,
   \begin{equation}
     \val(x') = \sum_{v \in V^+} x'(s, v) \leq \sum_{v \in V^+} b(v) = M.
@@ -314,8 +390,10 @@
 
   (b) We prove the statement by showing both directions of the equivalence.
 
-  (Exists a flow $x$ in $D$ satisfying $\diver_x = b$ and $0 \leq x \leq c$  $\implies$ the value of a maximum $st$-flow in $D'$ equals $M$) \\
-  Assume we have a flow $x : E \to \R$ in $D$ satisfying $\diver_x = b$ and $0 \leq x \leq c$.
+  (Exists a flow $x$ in $D$ satisfying $\diver_x = b$ and $0 \leq x
+  \leq c$  $\implies$ the value of a maximum $st$-flow in $D'$ equals $M$) \\
+  Assume we have a flow $x : E \to \R$ in $D$ satisfying $\diver_x =
+  b$ and $0 \leq x \leq c$.
   We construct a new flow $x' : E' \to \R$ in $D'$ by
   \begin{equation}
     x'(e) =
@@ -333,7 +411,9 @@
   \end{align*}
   such that $0 \leq x' \leq c'$.
 
-  For all $v \in V \setminus (V^+ \cup V^-)$, we did not add any new edges incident to $v$ in $D'$, so the flow conservation property holds at these vertices.
+  For all $v \in V \setminus (V^+ \cup V^-)$, we did not add any new
+  edges incident to $v$ in $D'$, so the flow conservation property
+  holds at these vertices.
   For $v \in V^+$, we have that
   \begin{align*}
     x'(\delta^-(v)) + x'(s, v) &= x(\delta^+(v)) \\
@@ -349,16 +429,19 @@
   \begin{equation}
     \val(x') = \sum_{v \in V^+} x'(s, v) = \sum_{v \in V^+} b(v) = M.
   \end{equation}
-  Thus, $x'$ is an $st$-flow in $D'$ with value $M$, which by part (a) must be a maximum flow.
+  Thus, $x'$ is an $st$-flow in $D'$ with value $M$, which by part
+  (a) must be a maximum flow.
 
-  (Exists a flow $x$ in $D$ satisfying $\diver_x = b$ and $0 \leq x \leq c$  $\impliedby$ the value of a maximum $st$-flow in $D'$ equals $M$) \\
+  (Exists a flow $x$ in $D$ satisfying $\diver_x = b$ and $0 \leq x
+  \leq c$  $\impliedby$ the value of a maximum $st$-flow in $D'$ equals $M$) \\
   Suppose now that $x'$ is a maximum $st$-flow in $D'$ with
   \begin{equation}
     \val(x') = M.
   \end{equation}
   Again, we have
   \begin{equation}
-    \val(x') = \sum_{v \in V^+} x'(s, v) \leq \sum_{v \in V^+} c'(s, v) = \sum_{v \in V^+} b(v) = M,
+    \val(x') = \sum_{v \in V^+} x'(s, v) \leq \sum_{v \in V^+} c'(s,
+    v) = \sum_{v \in V^+} b(v) = M,
   \end{equation}
   such that we must have equality throughout.
   As all terms are non-negative, this implies that
@@ -370,7 +453,8 @@
     x'(v, t) = c'(v, t) = -b(v) \quad \text{for all } v \in V^-.
   \end{equation}
 
-  Restricting $x'$ to the edges in $E$ gives a flow $x : E \to \R$ in $D$, satisfying $0 \leq x(e) = x'(e) \leq c'(e) = c(e)$ for all $e \in E$.
+  Restricting $x'$ to the edges in $E$ gives a flow $x : E \to \R$ in
+  $D$, satisfying $0 \leq x(e) = x'(e) \leq c'(e) = c(e)$ for all $e \in E$.
   To show that $\diver_x = b$, we consider each vertex $v \in V$.
   If $v \in V^+$, then the flow conservation property at $v$ in $D'$ gives
   \begin{align*}
@@ -379,7 +463,8 @@
   \end{align*}
   where we used that $x'(s, v) = b(v)$ and $x'(e) = x(e)$ for all $e \in E$.
   We again get an equivalent result for $v \in V^-$.
-  Finally, if $v \in V \setminus (V^+ \cup V^-)$, then the flow conservation property at $v$ in $D'$ gives
+  Finally, if $v \in V \setminus (V^+ \cup V^-)$, then the flow
+  conservation property at $v$ in $D'$ gives
   \begin{equation}
     x'(\delta^+(v)) = x'(\delta^-(v)) \implies \diver_x(v) = 0 = b(v).
   \end{equation}
@@ -391,59 +476,86 @@
     \item Compute a maximum $st$-flow $x'$ in $D'$.
     \item Check its value:
       \begin{itemize}
-        \item If $\val(x') < M$, then no flow $x$ in $D$ satisfying $\diver_x = b$ and $0 \leq x \leq c$ exists.
-        \item If $\val(x') = M$, then restrict $x'$ to the edges in $E$ to obtain the desired flow $x$ in $D$.
+        \item If $\val(x') < M$, then no flow $x$ in $D$ satisfying
+          $\diver_x = b$ and $0 \leq x \leq c$ exists.
+        \item If $\val(x') = M$, then restrict $x'$ to the edges in
+          $E$ to obtain the desired flow $x$ in $D$.
       \end{itemize}
   \end{enumerate}
 \end{solution}
 
 \begin{manualtheorem}{1.6}[The integrality theorem]\label{thm:integrality}
-  If the capacity function $c$ is integral (meaning each $c(e)$ is integral), then there is a maximum flow which is integral.
+  If the capacity function $c$ is integral (meaning each $c(e)$ is
+  integral), then there is a maximum flow which is integral.
 \end{manualtheorem}
 
 \begin{exercise}
-  Fill in the details of the proof of \cref{thm:integrality} (the integrality theorem).
+  Fill in the details of the proof of \cref{thm:integrality} (the
+  integrality theorem).
 \end{exercise}
 
 \begin{solution}
-  At each iteration of the Ford-Fulkerson algorithm, we find an $x$-augmenting path $P$ and compute the bottleneck $\varepsilon$.
+  At each iteration of the Ford-Fulkerson algorithm, we find an
+  $x$-augmenting path $P$ and compute the bottleneck $\varepsilon$.
   Initially we have $x = 0$, which is clearly integral.
-  We then adjust the flow along $P$ by adding $\varepsilon$ to the flow on forward edges and subtracting $\varepsilon$ on backward edges, where $\varepsilon$ is computed as the minimum of $c(e) - x(e)$ over all forward edges $e$ in $P$ and $x(e)$ over all backward edges $e$ in $P$.
-  Since $c$ is integral and $x$ is integral at the start of each iteration, both $c(e) - x(e)$ and $x(e)$ are integral for all edges $e$.
+  We then adjust the flow along $P$ by adding $\varepsilon$ to the
+  flow on forward edges and subtracting $\varepsilon$ on backward
+  edges, where $\varepsilon$ is computed as the minimum of $c(e) -
+  x(e)$ over all forward edges $e$ in $P$ and $x(e)$ over all
+  backward edges $e$ in $P$.
+  Since $c$ is integral and $x$ is integral at the start of each
+  iteration, both $c(e) - x(e)$ and $x(e)$ are integral for all edges $e$.
   Therefore, the minimum $\varepsilon$ is also integral.
-  As a result, when we update the flow $x$ along the path $P$, the new flow values remain integral.
-  This process continues until no more $x$-augmenting paths exist, at which point we have found a maximum flow.
-  Since the flow remains integral throughout the algorithm, the final maximum flow is also integral.
+  As a result, when we update the flow $x$ along the path $P$, the
+  new flow values remain integral.
+  This process continues until no more $x$-augmenting paths exist, at
+  which point we have found a maximum flow.
+  Since the flow remains integral throughout the algorithm, the final
+  maximum flow is also integral.
 \end{solution}
 
 \begin{exercise}
-  Consider the max-flow problem in the special case where $c(e) = 1$ for each $e \in E$ (unit capacities).
+  Consider the max-flow problem in the special case where $c(e) = 1$
+  for each $e \in E$ (unit capacities).
   Choose an example of $D$, $s$ and $t$.
   Solve the max-flow problem.
   What can be said about the structure of your max-flow $x$?
-  Prove, in general, that a max-flow may be represented by a set of \emph{edge-disjoint} $st$-paths (i.e., pairwise disjoint) and where there is unit flow on each of these paths.
+  Prove, in general, that a max-flow may be represented by a set of
+  \emph{edge-disjoint} $st$-paths (i.e., pairwise disjoint) and where
+  there is unit flow on each of these paths.
 \end{exercise}
 
 \begin{solution}
-  Intuitively, in the case of unit capacities, the maximum flow is equal to finding the number of distinct non-overlapping paths from $s$ to $t$.
+  Intuitively, in the case of unit capacities, the maximum flow is
+  equal to finding the number of distinct non-overlapping paths from $s$ to $t$.
 
-  Along each path from $s$ to $t$, the flow can be at most 1 due to the unit capacity constraint on each edge.
-  As the capacities are integral, by the integrality theorem (\cref{thm:integrality}), there exists a maximum flow that is integral.
+  Along each path from $s$ to $t$, the flow can be at most 1 due to
+  the unit capacity constraint on each edge.
+  As the capacities are integral, by the integrality theorem
+  (\cref{thm:integrality}), there exists a maximum flow that is integral.
   Let $x$ be such a maximum flow.
-  Therefore, each edge $e$ carries either 0 or 1 unit of flow, and if an edge carries 1 unit of flow, it is fully utilized by a single path from $s$ to $t$.
-  We can decompose the flow $x$ into a set of edge-disjoint $st$-paths by tracing the flow from $s$ to $t$.
-  Starting from $s$, we follow edges with flow 1 until we reach $t$, marking these edges as used.
+  Therefore, each edge $e$ carries either 0 or 1 unit of flow, and if
+  an edge carries 1 unit of flow, it is fully utilized by a single
+  path from $s$ to $t$.
+  We can decompose the flow $x$ into a set of edge-disjoint
+  $st$-paths by tracing the flow from $s$ to $t$.
+  Starting from $s$, we follow edges with flow 1 until we reach $t$,
+  marking these edges as used.
   We repeat this process until no more paths can be found.
-  Since each edge can only be used once in this decomposition (due to the unit capacity), the resulting paths are edge-disjoint.
-  Thus, we can represent the maximum flow $x$ as a collection of edge-disjoint $st$-paths, each carrying a unit flow.
+  Since each edge can only be used once in this decomposition (due to
+  the unit capacity), the resulting paths are edge-disjoint.
+  Thus, we can represent the maximum flow $x$ as a collection of
+  edge-disjoint $st$-paths, each carrying a unit flow.
 
-  The number of such edge-disjoint paths corresponds to the value of the maximum flow.
+  The number of such edge-disjoint paths corresponds to the value of
+  the maximum flow.
 \end{solution}
 
 \begin{exercise}
   Prove Menger's theorem:
   \begin{manualtheorem}{}[Menger's theorem]
-    The maximum number of edge-disjoint $st$-paths is equal to the minimum cardinality of an $st$-cut.
+    The maximum number of edge-disjoint $st$-paths is equal to the
+    minimum cardinality of an $st$-cut.
   \end{manualtheorem}
   \noindent
   This is a classical minmax theorem in graph theory.
@@ -451,16 +563,28 @@
 \end{exercise}
 
 \begin{solution}
-  For a graph $D = (V, E)$, assign each edge $e \in E$ a unit capacity, i.e., $c(e) = 1$.
-  By the discussion in the previous exercise, the maximum number of edge-disjoint $st$-paths corresponds to the value of the maximum $st$-flow in this unit capacity network.
-  According to the max-flow min-cut theorem (\cref{thm:max-flow-min-cut}), the value of the maximum $st$-flow is equal to the minimum capacity of an $st$-cut.
-  In the case of unit capacities, the capacity of an $st$-cut is simply the number of edges in the cut.
-  Therefore, the minimum cardinality of an $st$-cut is equal to the number of edge-disjoint $st$-paths.
+  For a graph $D = (V, E)$, assign each edge $e \in E$ a unit
+  capacity, i.e., $c(e) = 1$.
+  By the discussion in the previous exercise, the maximum number of
+  edge-disjoint $st$-paths corresponds to the value of the maximum
+  $st$-flow in this unit capacity network.
+  According to the max-flow min-cut theorem
+  (\cref{thm:max-flow-min-cut}), the value of the maximum $st$-flow
+  is equal to the minimum capacity of an $st$-cut.
+  In the case of unit capacities, the capacity of an $st$-cut is
+  simply the number of edges in the cut.
+  Therefore, the minimum cardinality of an $st$-cut is equal to the
+  number of edge-disjoint $st$-paths.
 \end{solution}
 
 \begin{exercise}
   The \emph{matrix rounding problem} is the following problem.
-  Given a real $m \times n$ matrix $A = [a_{ij}]$ with row sums $r_i = \sum_{j = 1}^{n} a_{ij}$ $(i \leq m)$ and column sums $s_j = \sum_{i = 1}^{m} a_{ij}$ $(j \leq n)$, round each entry $a_{ij}$ to either $\floor{a_{ij}}$ or $\ceil{a_{ij}}$ and also round each $r_i$ and $s_j$ either up or down, such that the new matrix $\bar{A}$ has row and columns sums equal to the corresponding rounded sums.
+  Given a real $m \times n$ matrix $A = [a_{ij}]$ with row sums $r_i
+  = \sum_{j = 1}^{n} a_{ij}$ $(i \leq m)$ and column sums $s_j =
+  \sum_{i = 1}^{m} a_{ij}$ $(j \leq n)$, round each entry $a_{ij}$ to
+  either $\floor{a_{ij}}$ or $\ceil{a_{ij}}$ and also round each
+  $r_i$ and $s_j$ either up or down, such that the new matrix
+  $\bar{A}$ has row and columns sums equal to the corresponding rounded sums.
   For instance, consider
   \begin{equation}
     A =
@@ -470,13 +594,17 @@
       6.5 & 3.9 & 1.2
     \end{bmatrix}.
   \end{equation}
-  Here, $(r_1, r_2, r_3) = (10.3, 11.5, 11.6)$ and $(s_1, s_2, s_3) = (11.8, 9.5, 12.1)$.
-  Then we might start by rounding $a_{11}, a_{12}, a_{11}$ and $r_1$ to 4, 4, 3 and 11, respectively.
+  Here, $(r_1, r_2, r_3) = (10.3, 11.5, 11.6)$ and $(s_1, s_2, s_3) =
+  (11.8, 9.5, 12.1)$.
+  Then we might start by rounding $a_{11}, a_{12}, a_{11}$ and $r_1$
+  to 4, 4, 3 and 11, respectively.
   Go on, and try to solve the problem.
   The difficulty is that we have get the ``right'' column sums as well.
-  The general matrix rounding problem may be represented as a flow problem in the following graph.
+  The general matrix rounding problem may be represented as a flow
+  problem in the following graph.
 
-  Let $G = (V, E)$ be a graph with vertex set $v = \{ s, t, u_1, \ldots, u_m, v_1, \ldots, v_n \}$ and the following edges:
+  Let $G = (V, E)$ be a graph with vertex set $v = \{ s, t, u_1,
+  \ldots, u_m, v_1, \ldots, v_n \}$ and the following edges:
   \begin{equation}
     \begin{split}
       (s, u_i) & \text{ for } i \leq m, \\
@@ -485,18 +613,34 @@
       (t, s).
     \end{split}
   \end{equation}
-  The idea is to represent the matrix entry $\bar{a}_{ij}$ by the flow $x(e)$ in the edge $e = (u_i, v_j)$.
-  Moreover, the $i$th row sum corresponds to the flow in the edge $(s, u_i)$, and the $j$th column sum corresponds to the flow in the edge $(v_j, t)$.
+  The idea is to represent the matrix entry $\bar{a}_{ij}$ by the
+  flow $x(e)$ in the edge $e = (u_i, v_j)$.
+  Moreover, the $i$th row sum corresponds to the flow in the edge
+  $(s, u_i)$, and the $j$th column sum corresponds to the flow in the
+  edge $(v_j, t)$.
   Draw the graph for the specific example above.
-  Your task is to define a lower bound $l(e)$ and an upper bound $u(e)$ on the flow in each edge $e$ such that the matrix rounding problem becomes that of finding a circulation $x$ satisfying $l \leq x \leq u$.
+  Your task is to define a lower bound $l(e)$ and an upper bound
+  $u(e)$ on the flow in each edge $e$ such that the matrix rounding
+  problem becomes that of finding a circulation $x$ satisfying $l
+  \leq x \leq u$.
 \end{exercise}
 
 \begin{solution}
-  As an upper bound on the flow in the edge $e = (u_i, v_j)$, we set the upper bound to be $u(e) = \ceil{a_{ij}}$, and as a lower bound, we set $l(e) = \floor{a_{ij}}$.
-  For the edge $e = (s, u_i)$, we set the upper bound to be $u(e) = \ceil{r_i}$ and the lower bound to be $l(e) = \floor{r_i}$.
-  Similarly, for the edge $e = (v_j, t)$, we set the upper bound to be $u(e) = \ceil{s_j}$ and the lower bound to be $l(e) = \floor{s_j}$.
-  Finally, we'd like to leave the final edge $e = (t, s)$ as unrestricted as possible, so we set $l(t, s) = 0$ and $u(t, s) = \sum_{i = 1}^{m} \ceil{r_i}$.
-  With these definitions, finding a circulation $x$ satisfying $l \leq x \leq u$ corresponds to finding a rounded matrix $\bar{A}$ where each entry $\bar{a}_{ij}$ is either $\floor{a_{ij}}$ or $\ceil{a_{ij}}$, and the row and column sums of $\bar{A}$ match the rounded sums of the original matrix $A$.
+  As an upper bound on the flow in the edge $e = (u_i, v_j)$, we set
+  the upper bound to be $u(e) = \ceil{a_{ij}}$, and as a lower bound,
+  we set $l(e) = \floor{a_{ij}}$.
+  For the edge $e = (s, u_i)$, we set the upper bound to be $u(e) =
+  \ceil{r_i}$ and the lower bound to be $l(e) = \floor{r_i}$.
+  Similarly, for the edge $e = (v_j, t)$, we set the upper bound to
+  be $u(e) = \ceil{s_j}$ and the lower bound to be $l(e) = \floor{s_j}$.
+  Finally, we'd like to leave the final edge $e = (t, s)$ as
+  unrestricted as possible, so we set $l(t, s) = 0$ and $u(t, s) =
+  \sum_{i = 1}^{m} \ceil{r_i}$.
+  With these definitions, finding a circulation $x$ satisfying $l
+  \leq x \leq u$ corresponds to finding a rounded matrix $\bar{A}$
+  where each entry $\bar{a}_{ij}$ is either $\floor{a_{ij}}$ or
+  $\ceil{a_{ij}}$, and the row and column sums of $\bar{A}$ match the
+  rounded sums of the original matrix $A$.
   The example graph is illustrated in \cref{fig:matrix-rounding}.
 
   \begin{figure}[htbp]
@@ -505,18 +649,25 @@
     \caption{Graph representation of the example.\label{fig:matrix-rounding}}
   \end{figure}
 
-  As each lower and upper bound is integral, by \cref{thm:hoffman}, if a circulation exists, then there exists an integral circulation.
-  This integral circulation then directly corresponds to a valid rounded matrix $\bar{A}$.
+  As each lower and upper bound is integral, by \cref{thm:hoffman},
+  if a circulation exists, then there exists an integral circulation.
+  This integral circulation then directly corresponds to a valid
+  rounded matrix $\bar{A}$.
 \end{solution}
 
 \begin{exercise}
-  Let $P$ be a polytope contained in the unit cube, so that each $x \in P$ satisfies $0 \leq x_i \leq 1$ ($i \leq n$).
+  Let $P$ be a polytope contained in the unit cube, so that each $x
+  \in P$ satisfies $0 \leq x_i \leq 1$ ($i \leq n$).
   Prove that each $(0, 1)$-vector in $P$ is a vertex of $P$.
 \end{exercise}
 
 \begin{solution}
-  Let $x \in P$ be a $(0, 1)$-vector, i.e.\ such that $x_i \in \{0, 1\}$ for all $i \leq n$.
-  In order to show that $x$ is a vertex of $P$, we will show that there is no way to express $x$ as a convex combination of two distinct points in $P$, i.e., there do not exist $y, z \in P$, $y \neq z$, and $\lambda \in (0, 1)$ such that
+  Let $x \in P$ be a $(0, 1)$-vector, i.e.\ such that $x_i \in \{0,
+  1\}$ for all $i \leq n$.
+  In order to show that $x$ is a vertex of $P$, we will show that
+  there is no way to express $x$ as a convex combination of two
+  distinct points in $P$, i.e., there do not exist $y, z \in P$, $y
+  \neq z$, and $\lambda \in (0, 1)$ such that
   \begin{equation}
     x = \lambda y + (1 - \lambda) z.
   \end{equation}
@@ -527,26 +678,36 @@
     x_i = \lambda y_i + (1 - \lambda) z_i.
   \end{equation}
   For $x_i = 0$, we have that $\lambda y_i + (1 - \lambda) z_i = 0$.
-  Since $\lambda \in (0, 1)$, and $y_i, z_i \geq 0$, this implies that $y_i = z_i = 0$, and hence equals $x_i$.
+  Since $\lambda \in (0, 1)$, and $y_i, z_i \geq 0$, this implies
+  that $y_i = z_i = 0$, and hence equals $x_i$.
   Similarly, for $x_i = 1$, we have that $\lambda y_i + (1 - \lambda) z_i = 1$.
-  Since $\lambda \in (0, 1)$, and $y_i, z_i \leq 1$, this implies that $y_i = z_i = 1$, and hence again equals $x_i$.
-  Therefore, for all coordinates $i \leq n$, we have $y_i = z_i = x_i$, contradicting our assumption that $y \neq z$.
-  Thus, $x$ cannot be expressed as a convex combination of two distinct points in $P$, and hence $x$ is a vertex of $P$.
+  Since $\lambda \in (0, 1)$, and $y_i, z_i \leq 1$, this implies
+  that $y_i = z_i = 1$, and hence again equals $x_i$.
+  Therefore, for all coordinates $i \leq n$, we have $y_i = z_i =
+  x_i$, contradicting our assumption that $y \neq z$.
+  Thus, $x$ cannot be expressed as a convex combination of two
+  distinct points in $P$, and hence $x$ is a vertex of $P$.
 \end{solution}
 
 \begin{exercise}
-  Show that every permutation matrix is a vertex of $\Omega_n$ and that these are precisely the integral matrices in $\Omega_n$.
+  Show that every permutation matrix is a vertex of $\Omega_n$ and
+  that these are precisely the integral matrices in $\Omega_n$.
   Hint:\@ Use the previous exercise.
 \end{exercise}
 
 \begin{solution}
-  A permutation matrix is a matrix $P = [p_{ij}] \in \R^{n \times n}$ where each row and each column has exactly one entry equal to 1 and all other entries are 0,
+  A permutation matrix is a matrix $P = [p_{ij}] \in \R^{n \times n}$
+  where each row and each column has exactly one entry equal to 1 and
+  all other entries are 0,
   i.e., $p_{ij} \in \{0, 1\}$ for all $i, j \leq n$.
-  We then utilize the bijection between $\R^{n \times n}$ and $\R^{n^2}$ by mapping each matrix to a vector by stacking its rows, such that $P \mapsto x$ with
+  We then utilize the bijection between $\R^{n \times n}$ and
+  $\R^{n^2}$ by mapping each matrix to a vector by stacking its rows,
+  such that $P \mapsto x$ with
   \begin{equation}
     x_{(i - 1)n + j} = p_{ij} \quad \text{for } i, j \leq n.
   \end{equation}
-  We have that each such $x$ is a $(0, 1)$-vector in $\R^{n^2}$, contained in the polytope defined by the constraints
+  We have that each such $x$ is a $(0, 1)$-vector in $\R^{n^2}$,
+  contained in the polytope defined by the constraints
   \begin{equation}
     \begin{split}
       \sum_{j = 1}^{n} x_{(i - 1)n + j} &= 1 \quad \text{for } i \leq n, \\
@@ -555,5 +716,7 @@
     \end{split}
   \end{equation}
   which corresponds to a polytope contained in the unit cube.
-  By the previous exercise, each such $(0, 1)$-vector $x$ is a vertex of this polytope, and hence each permutation matrix $P$ is a vertex of $\Omega_n$.
+  By the previous exercise, each such $(0, 1)$-vector $x$ is a vertex
+  of this polytope, and hence each permutation matrix $P$ is a vertex
+  of $\Omega_n$.
 \end{solution}

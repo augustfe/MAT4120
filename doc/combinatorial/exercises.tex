@@ -18,8 +18,10 @@
       0 \leq x \leq 1
     \}.
   \end{equation}
-  Assume that the variables have been ordered such that $c_1 / a_1 \geq c_2 / a_2 \geq \cdots \geq c_n / a_n$.
-  Try to guess an optimal solution and prove the optimality by considering the dual problem.
+  Assume that the variables have been ordered such that $c_1 / a_1
+  \geq c_2 / a_2 \geq \cdots \geq c_n / a_n$.
+  Try to guess an optimal solution and prove the optimality by
+  considering the dual problem.
   Use this result to characterize all the vertices of $P$.
   What about the cover inequalities in relation to these vertices?
 \end{exercise}
@@ -38,7 +40,9 @@
       0, & j = k + 1, \ldots, n,
     \end{cases}
   \end{equation}
-  i.e., we fill the knapsack with items in order of their value-to-weight ratio until we can no longer fit a full item, at which point we take a fraction of the next item to fill the knapsack exactly.
+  i.e., we fill the knapsack with items in order of their
+  value-to-weight ratio until we can no longer fit a full item, at
+  which point we take a fraction of the next item to fill the knapsack exactly.
 
   To prove optimality, we consider the dual problem.
   The primal problem is given by
@@ -63,7 +67,8 @@
     y^* = \frac{c_{k}}{a_{k}}, \quad
     z_j^* = \max\{ c_j - a_j y^*, 0 \}
   \end{equation}
-  As the ratios are non-increasing, we have $c_j/a_j \geq c_k/a_k$ for $j < k$, so
+  As the ratios are non-increasing, we have $c_j/a_j \geq c_k/a_k$
+  for $j < k$, so
   \begin{equation}
     a_j y^* + z_j^*
     = a_j \frac{c_k}{a_k} + \max\{ c_j - a_j \frac{c_k}{a_k}, 0 \}
@@ -73,74 +78,113 @@
   The dual objective value is
   \begin{equation}
     b y^* + 1^T z^*
-    = b \frac{c_k}{a_k} + \sum_{j=1}^{k-1} (c_j - a_j \frac{c_k}{a_k}) + \sum_{j=k+1}^{n} c_j 0
+    = b \frac{c_k}{a_k} + \sum_{j=1}^{k-1} (c_j - a_j
+    \frac{c_k}{a_k}) + \sum_{j=k+1}^{n} c_j 0
     = \sum_{j=1}^{k-1} c_j + \frac{b - A_{k-1}}{a_k} c_k,
   \end{equation}
   which matches the primal objective value at $x^*$.
   By strong duality, $x^*$ is optimal.
 
-  At any vertex of $P$, we must have $n$ linearly independent constraints active.
-  If the knapsack constraint is not active, we must then have $x \in \{0, 1\}^n$.
-  If the knapsack constraint is active, we can have at most $n - 1$ variables at their bounds, meaning that exactly one variable is fractional.
-  Thus, the vertices of $P$ are exactly those points where either all variables are binary, or exactly one variable is fractional as in the solution $x^*$ above.
+  At any vertex of $P$, we must have $n$ linearly independent
+  constraints active.
+  If the knapsack constraint is not active, we must then have $x \in
+  \{0, 1\}^n$.
+  If the knapsack constraint is active, we can have at most $n - 1$
+  variables at their bounds, meaning that exactly one variable is fractional.
+  Thus, the vertices of $P$ are exactly those points where either all
+  variables are binary, or exactly one variable is fractional as in
+  the solution $x^*$ above.
 
-  Regarding cover inequalities, they are valid for the integer knapsack polytope but may cut off fractional vertices of $P$.
-  Specifically, a cover inequality is derived from a subset of items whose total weight exceeds the knapsack capacity.
-  Such inequalities can eliminate fractional solutions where a fractional variable corresponds to an item in the cover set, thus tightening the relaxation towards the integer hull.
+  Regarding cover inequalities, they are valid for the integer
+  knapsack polytope but may cut off fractional vertices of $P$.
+  Specifically, a cover inequality is derived from a subset of items
+  whose total weight exceeds the knapsack capacity.
+  Such inequalities can eliminate fractional solutions where a
+  fractional variable corresponds to an item in the cover set, thus
+  tightening the relaxation towards the integer hull.
 \end{solution}
 
 \begin{exercise}
   Consider the branch-and-bound algorithm.
-  Consider a node $u$ in the enumeration tree with $v(R(u)) > v(Q)$ where $Q$ is the integer program and $R(u)$ is the LP relaxation in node $u$.
+  Consider a node $u$ in the enumeration tree with $v(R(u)) > v(Q)$
+  where $Q$ is the integer program and $R(u)$ is the LP relaxation in node $u$.
   Can we prune node $u$?
 \end{exercise}
 
 \begin{solution}
   No, we cannot prune node $u$.
-  The condition $v(R(u)) > v(Q)$ indicates that the optimal value of the LP relaxation at node $u$ is greater than the optimal value of the integer program $Q$.
-  This means that there is potential for finding a better integer solution in the subtree rooted at node $u$.
-  Therefore, we must continue exploring this node and its children to ensure that we do not miss any optimal integer solutions.
+  The condition $v(R(u)) > v(Q)$ indicates that the optimal value of
+  the LP relaxation at node $u$ is greater than the optimal value of
+  the integer program $Q$.
+  This means that there is potential for finding a better integer
+  solution in the subtree rooted at node $u$.
+  Therefore, we must continue exploring this node and its children to
+  ensure that we do not miss any optimal integer solutions.
 \end{solution}
 
 \begin{exercise}
-  Prove, in detail, that (4.12) is a valid integer linear programming formulation of the TSP problem.
-  Then do the same for the model obtained by replacing the cut inequalities by the subtour inequalities.
+  Prove, in detail, that (4.12) is a valid integer linear programming
+  formulation of the TSP problem.
+  Then do the same for the model obtained by replacing the cut
+  inequalities by the subtour inequalities.
 \end{exercise}
 
 \begin{solution}
-  The first constraint ensures that each node has exactly degree two, which is necessary for forming a tour.
-  The second constraint ensures that for each cut in the graph, there is at least two edges crossing the cut, preventing the formation of subtours.
-  Lastly, a binary variable is used to indicate whether an edge is included in the tour or not.
+  The first constraint ensures that each node has exactly degree two,
+  which is necessary for forming a tour.
+  The second constraint ensures that for each cut in the graph, there
+  is at least two edges crossing the cut, preventing the formation of subtours.
+  Lastly, a binary variable is used to indicate whether an edge is
+  included in the tour or not.
 
-  These constraints together ensure that any feasible solution corresponds to a Hamiltonian cycle.
-  The travel salesman problem is then simply to minimize the total length subject to these constraints.
+  These constraints together ensure that any feasible solution
+  corresponds to a Hamiltonian cycle.
+  The travel salesman problem is then simply to minimize the total
+  length subject to these constraints.
 
-  The equivalent formulation replaces the cut inequalities with subtour elimination constraints, i.e.,
+  The equivalent formulation replaces the cut inequalities with
+  subtour elimination constraints, i.e.,
   \begin{equation}
-    x(E[S]) \leq \abs{S} - 1 \quad \text{for all } S \subset V, S \neq \emptyset, S \neq V,
+    x(E[S]) \leq \abs{S} - 1 \quad \text{for all } S \subset V, S
+    \neq \emptyset, S \neq V,
   \end{equation}
   where $E[S]$ is the set of edges with both endpoints in $S$.
-  A tour contains the same number of edges as nodes, so any subset of nodes $S$ in a tour can contain at most $\abs{S} - 1$ edges to avoid forming a subtour.
+  A tour contains the same number of edges as nodes, so any subset of
+  nodes $S$ in a tour can contain at most $\abs{S} - 1$ edges to
+  avoid forming a subtour.
 \end{solution}
 
 \begin{exercise}
-  Try to figure out what the odd cover inequalities might be based on in the examples given for the set covering problem.
+  Try to figure out what the odd cover inequalities might be based on
+  in the examples given for the set covering problem.
 \end{exercise}
 
 \begin{solution}
   The examples given are:
   \begin{enumerate}
-    \item Airline crew scheduling: Each flight must be covered by at least one crew.
-    \item Allocating student classes to rooms: Each class must be assigned to a room.
-    \item Network design: Certain capacity bottlenecks (like cuts) must be covered to ensure network connectivity.
+    \item Airline crew scheduling: Each flight must be covered by at
+      least one crew.
+    \item Allocating student classes to rooms: Each class must be
+      assigned to a room.
+    \item Network design: Certain capacity bottlenecks (like cuts)
+      must be covered to ensure network connectivity.
   \end{enumerate}
 
   {\large I am very unsure about this one.}
-  In each of these examples, the odd cover inequalities can be interpreted as follows:
+  In each of these examples, the odd cover inequalities can be
+  interpreted as follows:
   \begin{enumerate}
-    \item In airline crew scheduling, an odd cover inequality could ensure that at any given time, the number of crews assigned to flights is sufficient to cover all flights.
-    \item In allocating student classes to rooms, an odd cover inequality could ensure that for any subset of classes occurring at the same time, the number of rooms assigned is enough to accommodate all classes in that subset.
-    \item In network design, an odd cover inequality could ensure that for any odd number of critical network components, there are enough resources allocated to cover them, preventing any component from being left unprotected.
+    \item In airline crew scheduling, an odd cover inequality could
+      ensure that at any given time, the number of crews assigned to
+      flights is sufficient to cover all flights.
+    \item In allocating student classes to rooms, an odd cover
+      inequality could ensure that for any subset of classes
+      occurring at the same time, the number of rooms assigned is
+      enough to accommodate all classes in that subset.
+    \item In network design, an odd cover inequality could ensure
+      that for any odd number of critical network components, there
+      are enough resources allocated to cover them, preventing any
+      component from being left unprotected.
   \end{enumerate}
 \end{solution}
 
@@ -150,9 +194,15 @@
 \end{exercise}
 
 \begin{solution}
-  The \emph{degree-constrained spanning tree problem} (DCST) is the problem of finding a minimum weight spanning tree satisfying degree constraint on the vertices.
-  Let $w$ be a non-negative weight function defined on the edges of a graph $G = (V, E)$, with the degree constraints given by $b_v$ for each vertex $v \in V$.
-  The goal is to find a spanning tree $T = (V, F)$ such that the total weight $w(T) = \sum_{e \in T} w(e)$ is minimized and the degree $d_T(v)$ of each vertex $v$ in $T$ does not exceed $b_v$.
+  The \emph{degree-constrained spanning tree problem} (DCST) is the
+  problem of finding a minimum weight spanning tree satisfying degree
+  constraint on the vertices.
+  Let $w$ be a non-negative weight function defined on the edges of a
+  graph $G = (V, E)$, with the degree constraints given by $b_v$ for
+  each vertex $v \in V$.
+  The goal is to find a spanning tree $T = (V, F)$ such that the
+  total weight $w(T) = \sum_{e \in T} w(e)$ is minimized and the
+  degree $d_T(v)$ of each vertex $v$ in $T$ does not exceed $b_v$.
 
   We can formulate the DCST as an integer linear program as follows:
   \begin{equation}
@@ -163,32 +213,51 @@
       \begin{array}{rcll}
         \sum_{e \in E} x_e & = & \abs{V} - 1 \\
         \sum_{e \in \delta(v)} x_e & \leq & b_v & \forall v \in V \\
-        \sum_{e \in E(S)} x_e & \leq & \abs{S} - 1 & \forall \emptyset \neq S \subset V \\
+        \sum_{e \in E(S)} x_e & \leq & \abs{S} - 1 & \forall
+        \emptyset \neq S \subset V \\
         x_e & \in & \{0, 1\} & \forall e \in E
       \end{array}
     \end{array}
   \end{equation}
-  The first constraint ensures that we have the required number of edges in order to form a spanning tree, while the second constraint enforces the degree constraints on each vertex.
-  The third constraint prevents the formation of cycles by ensuring that any subset of vertices $S$ does not contain more than $\abs{S} - 1$ edges.
+  The first constraint ensures that we have the required number of
+  edges in order to form a spanning tree, while the second constraint
+  enforces the degree constraints on each vertex.
+  The third constraint prevents the formation of cycles by ensuring
+  that any subset of vertices $S$ does not contain more than $\abs{S}
+  - 1$ edges.
 \end{solution}
 
 \begin{exercise}
   Consider the following problem.
-  We shall decide location of service centers among a finite set of possible locations $I$.
-  There is given a (finite) set $J$ of customers, and each shall be connected to exactly one service centre.
-  The cost of building a service centre at location $i \in I$ is $c_i$ and the cost of connecting customer $j$ to centre location $i$ is $d_{i,j}$.
-  The simple plant location problem is to decide in which locations service centres should be built and the connection of customers to centres as to minimize the total cost (design + connection cost).
+  We shall decide location of service centers among a finite set of
+  possible locations $I$.
+  There is given a (finite) set $J$ of customers, and each shall be
+  connected to exactly one service centre.
+  The cost of building a service centre at location $i \in I$ is
+  $c_i$ and the cost of connecting customer $j$ to centre location
+  $i$ is $d_{i,j}$.
+  The simple plant location problem is to decide in which locations
+  service centres should be built and the connection of customers to
+  centres as to minimize the total cost (design + connection cost).
   Model this problem as an integer linear programming problem.
-  Figure out some data for a small example and solve the LP relaxation as well as the ILP on a computer using an optimization package (e.g. CPLEX).
+  Figure out some data for a small example and solve the LP
+  relaxation as well as the ILP on a computer using an optimization
+  package (e.g. CPLEX).
 \end{exercise}
 
 \begin{solution}
-  We introduce binary variables $y_i$ for each location $i \in I$ to indicate whether a service center is built at that location, and binary variables $x_{i,j}$ for each customer $j \in J$ and location $i \in I$ to indicate whether customer $j$ is connected to the service center at location $i$.
+  We introduce binary variables $y_i$ for each location $i \in I$ to
+  indicate whether a service center is built at that location, and
+  binary variables $x_{i,j}$ for each customer $j \in J$ and location
+  $i \in I$ to indicate whether customer $j$ is connected to the
+  service center at location $i$.
 
-  The integer linear programming formulation of the simple plant location problem is as follows:
+  The integer linear programming formulation of the simple plant
+  location problem is as follows:
   \begin{equation}
     \begin{array}{rl}
-      \text{minimize} & \displaystyle\sum_{i \in I} c_i y_i + \sum_{\substack{j \in J \\ i \in I}} d_{i,j} x_{i,j} \\
+      \text{minimize} & \displaystyle\sum_{i \in I} c_i y_i +
+      \sum_{\substack{j \in J \\ i \in I}} d_{i,j} x_{i,j} \\
       \text{subject to} & \\
       &
       \begin{array}{rcll}
@@ -199,21 +268,33 @@
       \end{array}
     \end{array}
   \end{equation}
-  The first constraint ensures that each customer is connected to exactly one service center, while the second ensures that a customer can only be connected to a service center if that center is built.
-  The objective function minimizes the total cost of building service centers and connecting customers to them.
+  The first constraint ensures that each customer is connected to
+  exactly one service center, while the second ensures that a
+  customer can only be connected to a service center if that center is built.
+  The objective function minimizes the total cost of building service
+  centers and connecting customers to them.
 
-  We find the LP relaxation by allowing the variables $y_i$ and $x_{i,j}$ to take values in the interval $[0, 1]$ instead of being binary.
+  We find the LP relaxation by allowing the variables $y_i$ and
+  $x_{i,j}$ to take values in the interval $[0, 1]$ instead of being binary.
 
-  The solver is implemented using the \verb|scipy.optimize| package in Python, and the LP relaxation and ILP are solved using the \verb|linprog| and \verb|milp| functions, respectively, in \href{https://github.com/augustfe/MAT4120/blob/main/doc/combinatorial/customer_service.py}{\texttt{doc/combinatorial/customer\_service.py}}.
+  The solver is implemented using the \verb|scipy.optimize| package
+  in Python, and the LP relaxation and ILP are solved using the
+  \verb|linprog| and \verb|milp| functions, respectively, in
+  \href{https://github.com/augustfe/MAT4120/blob/main/doc/combinatorial/customer_service.py}{\texttt{doc/combinatorial/customer\_service.py}}.
   Both approaches yield the same optimal solution for the dataset generated.
-  In the data, the centres and customers are randomly placed in a $300 \times 300$ domain, and the costs are calculated based on Euclidean distances.
+  In the data, the centres and customers are randomly placed in a
+  $300 \times 300$ domain, and the costs are calculated based on
+  Euclidean distances.
   The building costs are randomly assigned in the range $[10, 100]$.
-  The solution is visualized in \cref{fig:customer_service_solution}, where red squares represent service centers and blue circles represent customers, with lines indicating connections.
+  The solution is visualized in \cref{fig:customer_service_solution},
+  where red squares represent service centers and blue circles
+  represent customers, with lines indicating connections.
 
   \begin{figure}[htbp]
     \centering
     \includegraphics[width=0.7\textwidth]{combinatorial/customer_service_solution.pdf}
-    \caption{Customer service location problem solution\label{fig:customer_service_solution}}
+    \caption{Customer service location problem
+    solution\label{fig:customer_service_solution}}
   \end{figure}
 \end{solution}
 
@@ -224,10 +305,15 @@
 \end{exercise}
 
 \begin{solution}
-  We can apply Lagrangian relaxation to the simple plant location problem by relaxing the constraints that each customer must be connected to exactly one service center.
-  We introduce Lagrange multipliers $\lambda_j$ for each customer $j \in J$ and form the Lagrangian function:
+  We can apply Lagrangian relaxation to the simple plant location
+  problem by relaxing the constraints that each customer must be
+  connected to exactly one service center.
+  We introduce Lagrange multipliers $\lambda_j$ for each customer $j
+  \in J$ and form the Lagrangian function:
   \begin{equation}
-    L(y, x, \lambda) = \sum_{i \in I} c_i y_i + \sum_{\substack{j \in J \\ i \in I}} d_{i,j} x_{i,j} + \sum_{j \in J} \lambda_j \left(1 - \sum_{i \in I} x_{i,j}\right)
+    L(y, x, \lambda) = \sum_{i \in I} c_i y_i + \sum_{\substack{j \in
+    J \\ i \in I}} d_{i,j} x_{i,j} + \sum_{j \in J} \lambda_j \left(1
+    - \sum_{i \in I} x_{i,j}\right)
   \end{equation}
   The Lagrangian dual problem is then to maximize the dual function
   \begin{equation}
@@ -241,14 +327,23 @@
 \end{exercise}
 
 \begin{solution}
-  A simple heuristic is to choose a simple greedy algorithm, where we iteratively select the location that provides the maximum reduction in total cost until no further improvements can be made.
-  We start without any facilities built, and keep track of the customers current best connection costs $a_j$, initialized to infinity.
+  A simple heuristic is to choose a simple greedy algorithm, where we
+  iteratively select the location that provides the maximum reduction
+  in total cost until no further improvements can be made.
+  We start without any facilities built, and keep track of the
+  customers current best connection costs $a_j$, initialized to infinity.
   For each facility $i$, we compute the net gain if opened, given by
   \begin{equation}
     g_i = c_i + \sum_{j \in J} \min\{ d_{ij}, a_j \} - \sum_{j \in J} a_j.
   \end{equation}
-  At each pass, we build the facility with the lowest (most negative) gain $g_i$ and update the connection costs $a_j$ accordingly, until no facility has a negative gain.
+  At each pass, we build the facility with the lowest (most negative)
+  gain $g_i$ and update the connection costs $a_j$ accordingly, until
+  no facility has a negative gain.
 
-  We could also consider a genetic algorithm, where we maintain a population of potential solutions (sets of open facilities) and evolve them over generations using selection, crossover, and mutation operations.
-  The fitness of each solution can be evaluated based on the total cost, and we can use selection methods to favor lower-cost solutions.
+  We could also consider a genetic algorithm, where we maintain a
+  population of potential solutions (sets of open facilities) and
+  evolve them over generations using selection, crossover, and
+  mutation operations.
+  The fitness of each solution can be evaluated based on the total
+  cost, and we can use selection methods to favor lower-cost solutions.
 \end{solution}

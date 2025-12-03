@@ -1,12 +1,16 @@
 \section{Nonlinear and convex optimization}
 
 \begin{exercise}
-  Consider the least squares problem minimize $\norm{A x - b}$ over all $x \in \R^n$.
-  From linear algebra we know that the optimal solutions to this problem are precisely the solutions to the linear system (called the normal equations)
+  Consider the least squares problem minimize $\norm{A x - b}$ over
+  all $x \in \R^n$.
+  From linear algebra we know that the optimal solutions to this
+  problem are precisely the solutions to the linear system (called
+  the normal equations)
   \begin{equation}
     A^T A x = A^T b.
   \end{equation}
-  Show this using optimization theory by considering the function $f(x) = \norm{A x - b}^2$.
+  Show this using optimization theory by considering the function
+  $f(x) = \norm{A x - b}^2$.
 \end{exercise}
 
 \begin{solution}
@@ -18,8 +22,10 @@
   \begin{equation}
     \nabla f(x) = 2 A^T A x - 2 A^T b.
   \end{equation}
-  $f$ is convex, as the Hessian $A^T A$ is positive semidefinite for any matrix $A$ (as $x^T A^T A x = \norm{A x}^2 \geq 0$ for all $x$).
-  Since $f$ is convex we know that a point $x^*$ is a global minimizer if and only if
+  $f$ is convex, as the Hessian $A^T A$ is positive semidefinite for
+  any matrix $A$ (as $x^T A^T A x = \norm{A x}^2 \geq 0$ for all $x$).
+  Since $f$ is convex we know that a point $x^*$ is a global
+  minimizer if and only if
   \begin{equation}
     \nabla f(x^*) = 0,
   \end{equation}
@@ -27,12 +33,14 @@
   \begin{equation}
     A^T A x^* = A^T b.
   \end{equation}
-  Thus, the optimal solutions to the least squares problem are precisely the solutions to the normal equations.
+  Thus, the optimal solutions to the least squares problem are
+  precisely the solutions to the normal equations.
 \end{solution}
 
 \begin{manualtheorem}{6.2.1}[Optimality condition]\label{thm:optim-cond}
   Let $x^* \in C$.
-  Then $x^*$ is a (local and therefore global) minimum of $f$ over $C$ if and only if
+  Then $x^*$ is a (local and therefore global) minimum of $f$ over
+  $C$ if and only if
   \begin{equation}\label{eq:optim-cond}
     \nabla f(x^*)^T (x - x^*) \geq 0 \quad \text{for all } x \in C.
   \end{equation}
@@ -44,21 +52,30 @@
 
 \begin{solution}
   Let's consider \cref{thm:optim-cond} in the case where $C = \R^n_+$.
-  If $x^* \in \intr(R^n_+)$, then the condition is clearly satisfied only when $\nabla f(x^*) = 0$, which is the standard unconstrained optimality condition.
-  If $x^* \in \bd(\R^n_+)$, let $I = \{i : x^*_i = 0\}$ be the set of indices where $x^*$ is on the boundary.
+  If $x^* \in \intr(R^n_+)$, then the condition is clearly satisfied
+  only when $\nabla f(x^*) = 0$, which is the standard unconstrained
+  optimality condition.
+  If $x^* \in \bd(\R^n_+)$, let $I = \{i : x^*_i = 0\}$ be the set of
+  indices where $x^*$ is on the boundary.
   Then \cref{eq:optim-cond} is reduces to
   \begin{gather*}
     \nabla f(x^*)^T (x - x^*) \geq 0 \\
     \sum_{i=1}^n \frac{\partial f(x^*)}{\partial x_i} (x_i - x^*_i) \geq 0 \\
-    \sum_{i \in I} \frac{\partial f(x^*)}{\partial x_i} x_i + \sum_{i \notin I} \frac{\partial f(x^*)}{\partial x_i} (x_i - x^*_i) \geq 0.
+    \sum_{i \in I} \frac{\partial f(x^*)}{\partial x_i} x_i + \sum_{i
+    \notin I} \frac{\partial f(x^*)}{\partial x_i} (x_i - x^*_i) \geq 0.
   \end{gather*}
-  Considering the sums separately, we see that the first sum is nonnegative for all $x \in \R^n_+$ if and only if $\frac{\partial f(x^*)}{\partial x_i} \geq 0$ for all $i \in I$.
-  The second sum is nonnegative for all $x \in \R^n_+$ if and only if $\frac{\partial f(x^*)}{\partial x_i} = 0$ for all $i \notin I$.
+  Considering the sums separately, we see that the first sum is
+  nonnegative for all $x \in \R^n_+$ if and only if $\frac{\partial
+  f(x^*)}{\partial x_i} \geq 0$ for all $i \in I$.
+  The second sum is nonnegative for all $x \in \R^n_+$ if and only if
+  $\frac{\partial f(x^*)}{\partial x_i} = 0$ for all $i \notin I$.
   This is equivalent to the conditions stated in Example~6.2.1.
 \end{solution}
 
 \begin{exercise}
-  Consider the problem to minimize a (continuously differentiable) convex function $f$ subject to $x \in C = \{ x \in \R^n : 0 \leq x \leq p \}$ where $p$ is some nonnegative vector.
+  Consider the problem to minimize a (continuously differentiable)
+  convex function $f$ subject to $x \in C = \{ x \in \R^n : 0 \leq x
+  \leq p \}$ where $p$ is some nonnegative vector.
   Find the optimality conditions for this problem.
   Suggest a numerical algorithm for solving this problem.
 \end{exercise}
@@ -67,28 +84,37 @@
   We proceed similarly to the previous exercise.
   First, let
   \begin{equation}
-    A = \{ i : x^*_i = 0 \}, \quad B = \{ i : x^*_i = p_i \}, \quad C = \{ i : 0 < x^*_i < p_i \},
+    A = \{ i : x^*_i = 0 \}, \quad B = \{ i : x^*_i = p_i \}, \quad C
+    = \{ i : 0 < x^*_i < p_i \},
   \end{equation}
   for an optimal point $x^*$.
   Then, the optimality condition from \cref{thm:optim-cond} reduces to
   \begin{equation}
-    \sum_{i \in A} \frac{\partial f(x^*)}{\partial x_i} x_i + \sum_{i \in B} \frac{\partial f(x^*)}{\partial x_i} (x_i - p_i) + \sum_{i \in C} \frac{\partial f(x^*)}{\partial x_i} (x_i - x^*_i) \geq 0.
+    \sum_{i \in A} \frac{\partial f(x^*)}{\partial x_i} x_i + \sum_{i
+    \in B} \frac{\partial f(x^*)}{\partial x_i} (x_i - p_i) + \sum_{i
+    \in C} \frac{\partial f(x^*)}{\partial x_i} (x_i - x^*_i) \geq 0.
   \end{equation}
-  The sum over $A$ is nonnegative for all $x \in C$ if and only if $\frac{\partial f(x^*)}{\partial x_i} \geq 0$ for all $i \in A$.
-  As $x_i - p_i < 0$ for all $i \in B$, the sum over $B$ is nonnegative for all $x \in C$ if and only if $\frac{\partial f(x^*)}{\partial x_i} \leq 0$ for all $i \in B$.
-  Finally, the sum over $C$ is nonnegative for all $x \in C$ if and only if $\frac{\partial f(x^*)}{\partial x_i} = 0$ for all $i \in C$.
+  The sum over $A$ is nonnegative for all $x \in C$ if and only if
+  $\frac{\partial f(x^*)}{\partial x_i} \geq 0$ for all $i \in A$.
+  As $x_i - p_i < 0$ for all $i \in B$, the sum over $B$ is
+  nonnegative for all $x \in C$ if and only if $\frac{\partial
+  f(x^*)}{\partial x_i} \leq 0$ for all $i \in B$.
+  Finally, the sum over $C$ is nonnegative for all $x \in C$ if and
+  only if $\frac{\partial f(x^*)}{\partial x_i} = 0$ for all $i \in C$.
 
   In order to solve this numerically, we can use the Frank-Wolfe method.
 \end{solution}
 
 \begin{exercise}
-  Consider the optimization problem minimize $f(x)$ subject to $x \geq 0$, where $f : \R^n \to \R$ is a differentiable convex function.
+  Consider the optimization problem minimize $f(x)$ subject to $x
+  \geq 0$, where $f : \R^n \to \R$ is a differentiable convex function.
   Show that the KKT conditions for this problem are
   \begin{equation}
     \begin{split}
       x &\geq 0, \\
       \nabla f(x) &\geq 0, \\
-      x_k \cdot \frac{\partial f(x)}{\partial x_k}  &= 0, \quad k = 1, \ldots, n.
+      x_k \cdot \frac{\partial f(x)}{\partial x_k}  &= 0, \quad k =
+      1, \ldots, n.
     \end{split}
   \end{equation}
   Discuss the consequences of these conditions for optimal solutions.
@@ -105,7 +131,8 @@
   where $g_j(x) = -x_j$.
   This gives the Lagrangian
   \begin{equation}
-    \mathcal{L}(x, \mu) = f(x) + \sum_{j=1}^n \mu_j g_j(x) = f(x) - \sum_{j=1}^n \mu_j x_j.
+    \mathcal{L}(x, \mu) = f(x) + \sum_{j=1}^n \mu_j g_j(x) = f(x) -
+    \sum_{j=1}^n \mu_j x_j.
   \end{equation}
   The KKT conditions are then
   \begin{equation}
@@ -115,11 +142,16 @@
       \mu_j^* &= 0, \quad j \in J(x^*),
     \end{split}
   \end{equation}
-  for a feasible point $x^*$, where $J(x^*) = \{ j \leq n : g_j(x^*) = x^* = 0 \}$ is the set of active constraints at $x^*$.
+  for a feasible point $x^*$, where $J(x^*) = \{ j \leq n : g_j(x^*)
+  = x^* = 0 \}$ is the set of active constraints at $x^*$.
 
-  If $j \notin J(x^*)$, then $x_j^* > 0$ and thus $\mu_j^* = 0$ by complementary slackness, giving $\frac{\partial f(x^*)}{\partial x_j} = 0$.
-  If $j \in J(x^*)$, then $x_j^* = 0$ and $\mu_j^* \geq 0$, giving $\frac{\partial f(x^*)}{\partial x_j} \geq 0$.
-  In both cases we have that $x_j^* \cdot \frac{\partial f(x^*)}{\partial x_j} = 0$, $\frac{\partial f(x)}{\partial x_j} \geq 0$ and $x^* \geq 0$ by feasibility of $x^*$.
+  If $j \notin J(x^*)$, then $x_j^* > 0$ and thus $\mu_j^* = 0$ by
+  complementary slackness, giving $\frac{\partial f(x^*)}{\partial x_j} = 0$.
+  If $j \in J(x^*)$, then $x_j^* = 0$ and $\mu_j^* \geq 0$, giving
+  $\frac{\partial f(x^*)}{\partial x_j} \geq 0$.
+  In both cases we have that $x_j^* \cdot \frac{\partial
+  f(x^*)}{\partial x_j} = 0$, $\frac{\partial f(x)}{\partial x_j}
+  \geq 0$ and $x^* \geq 0$ by feasibility of $x^*$.
 \end{solution}
 
 \begin{exercise}
@@ -164,8 +196,11 @@
       2 (y - 1)
     \end{pmatrix} = 0.
   \end{equation}
-  The gradient of the constraint is zero at $(2, 1)$, which gives the candidate solution $f(2, 1) = 1$.
-  Alternatively, we see by close inspection that $(1, 1)$ also satisfies the constraint with $f(1, 1) = 0$, the global minimum we found previously.
+  The gradient of the constraint is zero at $(2, 1)$, which gives the
+  candidate solution $f(2, 1) = 1$.
+  Alternatively, we see by close inspection that $(1, 1)$ also
+  satisfies the constraint with $f(1, 1) = 0$, the global minimum we
+  found previously.
 \end{solution}
 
 \begin{exercise}
@@ -226,7 +261,8 @@
   \end{equation}
   giving $(x, y) = (1, 1)$ with $f(1, 1) = -18$.
 
-  If only the first is active, we have $\nabla f(x, y) - \mu_1 (1, 1)^T = 0$ and $x + y = 2$, giving
+  If only the first is active, we have $\nabla f(x, y) - \mu_1 (1,
+  1)^T = 0$ and $x + y = 2$, giving
   \begin{equation}
     \begin{bmatrix}
       1 & 1 \\
@@ -263,7 +299,8 @@
   \end{equation}
   which gives $f(3, -1) = -26$.
 
-  If only the second is active, we have $\nabla f(x, y) - \mu_2 (1, 2)^T = 0$ and $x + 2y = 3$, giving
+  If only the second is active, we have $\nabla f(x, y) - \mu_2 (1,
+  2)^T = 0$ and $x + 2y = 3$, giving
   \begin{equation}
     \begin{bmatrix}
       1 & 2 \\
@@ -333,7 +370,8 @@
       0 \leq y.
     \end{split}
   \end{equation}
-  Combining the first two, we see that we must have $y^2 \leq y + 2$, or equivalently $y^2 - y - 2 \leq 0$.
+  Combining the first two, we see that we must have $y^2 \leq y + 2$,
+  or equivalently $y^2 - y - 2 \leq 0$.
   This factors as $(y - 2)(y + 1) \leq 0$, so we have $-1 \leq y \leq 2$.
   Together with the third constraint, we have $0 \leq y \leq 2$.
   We wish to choose the smallest possible $x$, so we set $x = y^2$.
@@ -346,7 +384,8 @@
   \end{equation}
   The derivative is $g'(y) = 4y^3 - 1$, which is zero at $y = 4^{-1/3}$.
   As $g''(y) = 12 y^2 \geq 0$, this is a minimum.
-  This yields the optimal solution $(x, y) = (4^{-2/3}, 4^{-1/3})$ with objective value
+  This yields the optimal solution $(x, y) = (4^{-2/3}, 4^{-1/3})$
+  with objective value
   \begin{equation}
     f(4^{-2/3}, 4^{-1/3})
     = 4^{-4/3} - 4^{-1/3}

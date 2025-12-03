@@ -61,7 +61,8 @@
       \pgfmathsetmacro{\rowsum}{\rowsum + {\A}[\idx]}%
       \xdef\rowsum{\rowsum}%
     }
-    \draw[edge] (s) -- node[capacity, sloped] {\pgfmathprintnumber{\rowsum}} (u\i);
+    \draw[edge] (s) -- node[capacity, sloped]
+    {\pgfmathprintnumber{\rowsum}} (u\i);
   }
 
   % Edges from column nodes to sink: column sums s_j = sum_i A_{ij}
@@ -72,7 +73,8 @@
       \pgfmathsetmacro{\colsum}{\colsum + {\A}[\idx]}%
       \xdef\colsum{\colsum}%
     }
-    \draw[edge] (v\j) -- node[capacity, sloped] {\pgfmathprintnumber{\colsum}} (t);
+    \draw[edge] (v\j) -- node[capacity, sloped]
+    {\pgfmathprintnumber{\colsum}} (t);
   }
 
   % Draw the edges in the center

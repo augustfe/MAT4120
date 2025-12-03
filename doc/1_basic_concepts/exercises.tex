@@ -1,7 +1,8 @@
 \section{The basic concepts}
 
 \begin{exercise}
-  Let \( x_1, x_2, y_1, y_2 \in \R^n \) and assume that $x_1 \leq x_2$ and $y_1 \leq y_2$.
+  Let \( x_1, x_2, y_1, y_2 \in \R^n \) and assume that $x_1 \leq
+  x_2$ and $y_1 \leq y_2$.
   Verify that the inequality $x_1 + y_1 \leq x_2 + y_2$ holds.
   Let now $\lambda$ be a non-negative real number.
   Explain why $\lambda x_1 \leq \lambda x_2$ holds.
@@ -33,13 +34,18 @@
 \paragraph{Example 1.2.1}
 (\emph{The non-negative real vectors})
 The sum of two non-negative numbers is again a non-negative number.
-Similarly, we see that the sum of two non-negative vectors is a non-negative vector.
-Moreover, if we multiply a non-negative vector by a non-negative number, we get another non-negative vector.
-These two properties may be summarized by saying that $\R^n_+$ is closed under addition and multiplication by non-negative scalars.
-We shall see that this means that $\R^n_+$ is a convex cone, a special type of convex set.
+Similarly, we see that the sum of two non-negative vectors is a
+non-negative vector.
+Moreover, if we multiply a non-negative vector by a non-negative
+number, we get another non-negative vector.
+These two properties may be summarized by saying that $\R^n_+$ is
+closed under addition and multiplication by non-negative scalars.
+We shall see that this means that $\R^n_+$ is a convex cone, a
+special type of convex set.
 
 \begin{exercise}
-  Think about the question in Exercise 1.1 again, now in light of the properties explained in Example 1.2.1.
+  Think about the question in Exercise 1.1 again, now in light of the
+  properties explained in Example 1.2.1.
 \end{exercise}
 
 \begin{solution}
@@ -49,12 +55,14 @@ We shall see that this means that $\R^n_+$ is a convex cone, a special type of c
     (x_2 + y_2) - (x_1 + y_1) = (x_2 - x_1) + (y_2 - y_1) \in \R^n_+,
   \end{equation}
   as $\R^n_+$ is closed under addition.
-  Similarly, we can use the fact that $\R^n_+$ is closed under multiplication by non-negative scalars to see that
+  Similarly, we can use the fact that $\R^n_+$ is closed under
+  multiplication by non-negative scalars to see that
   \begin{equation}
     (\lambda x_2 - \lambda x_1) = \lambda (x_2 - x_1) \in \R^n_+,
   \end{equation}
   for $\lambda \geq 0$.
-  As $\R^n_+$ is not closed under multiplication by negative scalars, we cannot conclude that $\lambda x_1 \leq \lambda x_2$ for $\lambda < 0$.
+  As $\R^n_+$ is not closed under multiplication by negative scalars,
+  we cannot conclude that $\lambda x_1 \leq \lambda x_2$ for $\lambda < 0$.
 \end{solution}
 
 \begin{exercise}
@@ -77,16 +85,20 @@ We shall see that this means that $\R^n_+$ is a convex cone, a special type of c
   \begin{equation}
     a^T x \leq a^T y.
   \end{equation}
-  With $a$ not necessarily non-negative, we may have neither $a^T x \geq a^T y$ nor $a^T x \leq a^T y$, as we could have $a_i x_i > a_i y_i$ for some $i$.
+  With $a$ not necessarily non-negative, we may have neither $a^T x
+  \geq a^T y$ nor $a^T x \leq a^T y$, as we could have $a_i x_i > a_i
+  y_i$ for some $i$.
 \end{solution}
 
 \begin{exercise}
-  Show that every ball $B(a, r): = \{ x \in \R^n : \norm{x - a} \leq r \}$ is convex (where $a \in \R^n$ and $r \geq 0$).
+  Show that every ball $B(a, r): = \{ x \in \R^n : \norm{x - a} \leq
+  r \}$ is convex (where $a \in \R^n$ and $r \geq 0$).
 \end{exercise}
 
 \begin{solution}
   Let $x, y \in B(a, r)$ for some $a \in \R^n$ and $r \geq 0$.
-  Then, let $0 \leq \lambda \leq 1$ and consider $z = \lambda x + (1 - \lambda) y$.
+  Then, let $0 \leq \lambda \leq 1$ and consider $z = \lambda x + (1
+  - \lambda) y$.
   We then have
   \begin{equation}
     \begin{split}
@@ -100,11 +112,13 @@ We shall see that this means that $\R^n_+$ is a convex cone, a special type of c
 \end{solution}
 
 \begin{exercise}
-  Explain how you can write the LP problem $\max\{ c^T x : Ax \leq b \}$ in the form $\max\{ c^T x : Ax = b, x \geq O \}$
+  Explain how you can write the LP problem $\max\{ c^T x : Ax \leq b
+  \}$ in the form $\max\{ c^T x : Ax = b, x \geq O \}$
 \end{exercise}
 
 \begin{solution}
-  We introduce new slack variables $w \in \R^m_+$, where $m$ is the number of rows/inequalities in $A$, defined by
+  We introduce new slack variables $w \in \R^m_+$, where $m$ is the
+  number of rows/inequalities in $A$, defined by
   \begin{equation}
     w_j = b_j - (Ax)_j \quad \forall j = 1, \ldots, m.
   \end{equation}
@@ -136,8 +150,11 @@ We shall see that this means that $\R^n_+$ is a convex cone, a special type of c
 
 \begin{exercise}
   Make a drawing of the standard simplices $S_1$, $S_2$, and $S_3$.
-  Verify that each unit vector $e_j$ lies in $S_n$ ($e_j$ has a one in position $j$, all other components are zero).
-  Each $x \in S_n$ may be written as a linear combination $x = \sum_{j=1}^{n} \lambda_j e_j$ where each $\lambda_j$ is non-negative and $\sum_{j = 1}^{n} \lambda_j = 1$.
+  Verify that each unit vector $e_j$ lies in $S_n$ ($e_j$ has a one
+  in position $j$, all other components are zero).
+  Each $x \in S_n$ may be written as a linear combination $x =
+  \sum_{j=1}^{n} \lambda_j e_j$ where each $\lambda_j$ is
+  non-negative and $\sum_{j = 1}^{n} \lambda_j = 1$.
   How?
   Can this be done in several ways?
 \end{exercise}
@@ -146,7 +163,8 @@ We shall see that this means that $\R^n_+$ is a convex cone, a special type of c
 
   \cref{fig:simplices} shows the standard simplices $S_1$, $S_2$, and $S_3$.
   Clearly each unit vector $e_j$ lies in $S_n$.
-  Each $x \in S_n$ may be written as $\sum_{j=1}^{n} \lambda_j e_j$ where $\lambda_j = x_j$, i.e.\ the coordinate components of $x$.
+  Each $x \in S_n$ may be written as $\sum_{j=1}^{n} \lambda_j e_j$
+  where $\lambda_j = x_j$, i.e.\ the coordinate components of $x$.
 
   \begin{figure}[htbp]
     \centering
@@ -157,8 +175,10 @@ We shall see that this means that $\R^n_+$ is a convex cone, a special type of c
     \caption{
       The simplices $S_1$, $S_2$, and $S_3$.
       For $S_1$, the standard simplex is the point $e_1$,
-      for $S_2$, the standard simplex is the line segment between $e_1$ and $e_2$,
-      and for $S_3$, the standard simplex is the triangle with vertices $e_1$, $e_2$, and $e_3$.\label{fig:simplices}
+      for $S_2$, the standard simplex is the line segment between
+      $e_1$ and $e_2$,
+      and for $S_3$, the standard simplex is the triangle with
+      vertices $e_1$, $e_2$, and $e_3$.\label{fig:simplices}
     }
   \end{figure}
 \end{solution}
@@ -178,7 +198,8 @@ We shall see that this means that $\R^n_+$ is a convex cone, a special type of c
 \end{solution}
 
 \begin{exercise}
-  Let $A \in \R^{m \times n}$ and consider the set $C = \{ x \in \R^n : Ax \leq O \}$.
+  Let $A \in \R^{m \times n}$ and consider the set $C = \{ x \in \R^n
+  : Ax \leq O \}$.
   Prove that $C$ is a convex cone.
 \end{exercise}
 
@@ -186,14 +207,17 @@ We shall see that this means that $\R^n_+$ is a convex cone, a special type of c
   Let $x_1, x_2 \in C$ and $\lambda_1, \lambda_2 \in \R_+$.
   We then have
   \begin{equation}
-    A(\lambda_1 x_1 + \lambda_2 x_2) = \lambda_1 Ax_1 + \lambda_2 Ax_2 \leq \lambda_1 O + \lambda_2 O = O,
+    A(\lambda_1 x_1 + \lambda_2 x_2) = \lambda_1 Ax_1 + \lambda_2
+    Ax_2 \leq \lambda_1 O + \lambda_2 O = O,
   \end{equation}
   showing that the set is a convex cone.
 \end{solution}
 
 \paragraph{Polyhedral cone}
-A convex cone of the form $\{x \in \R^n : Ax \leq O \}$ where $A \in \R^{m \times n}$ is called a \emph{polyhedral cone}.
-Let $x_1, \ldots, x_t \in \R^n$ and let $C(x_1, \ldots, x_t)$ be the set of vectors of the form
+A convex cone of the form $\{x \in \R^n : Ax \leq O \}$ where $A \in
+\R^{m \times n}$ is called a \emph{polyhedral cone}.
+Let $x_1, \ldots, x_t \in \R^n$ and let $C(x_1, \ldots, x_t)$ be the
+set of vectors of the form
 \begin{equation}
   u = \sum_{j = 1}^{t} \lambda_j x_j,
 \end{equation}
@@ -205,12 +229,15 @@ where $\lambda_j \geq 0$ for each $j = 1, \ldots, t$.
 
 \begin{solution}
   Let $C = C(x_1, \ldots, x_t)$ here for convenience.
-  Let $u, v \in C$ with respective coefficients $\lambda_j, \mu_j \geq 0$ for $j = 1, \ldots, t$.
+  Let $u, v \in C$ with respective coefficients $\lambda_j, \mu_j
+  \geq 0$ for $j = 1, \ldots, t$.
   Then, for arbitrary coefficients $\alpha, \beta \geq 0$, we have
   \begin{equation}
     \begin{split}
-      A(\alpha u + \beta v) &= A\left(\alpha \sum_{j=1}^{t} \lambda_j x_j + \beta \sum_{j=1}^{t} \mu_j x_j\right) \\
-      &= \alpha A \sum_{j=1}^{t} \lambda_j x_j + \beta A \sum_{j=1}^{t} \mu_j x_j \\
+      A(\alpha u + \beta v) &= A\left(\alpha \sum_{j=1}^{t} \lambda_j
+      x_j + \beta \sum_{j=1}^{t} \mu_j x_j\right) \\
+      &= \alpha A \sum_{j=1}^{t} \lambda_j x_j + \beta A
+      \sum_{j=1}^{t} \mu_j x_j \\
       &\leq \alpha O + \beta O = O,
     \end{split}
   \end{equation}
@@ -224,33 +251,44 @@ where $\lambda_j \geq 0$ for each $j = 1, \ldots, t$.
 \end{exercise}
 
 \begin{solution}
-  Let $u = (x_1, y_1, z_1)$ and $v = (x_2, y_2, z_2)$ be two points in $S$, and $0 \leq \lambda \leq 1$.
+  Let $u = (x_1, y_1, z_1)$ and $v = (x_2, y_2, z_2)$ be two points
+  in $S$, and $0 \leq \lambda \leq 1$.
   We then seek to show that $\lambda u + (1 - \lambda) v \in S$.
-  Note that $f(x) = x^2$ is convex, i.e.\ that $f(\lambda x_1 + (1 - \lambda) x_2) \leq \lambda f(x_1) + (1 - \lambda) f(x_2)$.
+  Note that $f(x) = x^2$ is convex, i.e.\ that $f(\lambda x_1 + (1 -
+  \lambda) x_2) \leq \lambda f(x_1) + (1 - \lambda) f(x_2)$.
 
-  Considering the right hand side of the inequality first, we have component-wise that
+  Considering the right hand side of the inequality first, we have
+  component-wise that
   \begin{equation}
     \begin{split}
-      (\lambda x_1 + (1 - \lambda) x_2)^2 &\leq \lambda x_1^2 + (1 - \lambda) x_2^2 \\
-      (\lambda y_1 + (1 - \lambda) y_2)^2 &\leq \lambda y_1^2 + (1 - \lambda) y_2^2,
+      (\lambda x_1 + (1 - \lambda) x_2)^2 &\leq \lambda x_1^2 + (1 -
+      \lambda) x_2^2 \\
+      (\lambda y_1 + (1 - \lambda) y_2)^2 &\leq \lambda y_1^2 + (1 -
+      \lambda) y_2^2,
     \end{split}
   \end{equation}
   and therefore
   \begin{equation}
     \begin{split}
-      (\lambda x_1 + (1 - \lambda) x_2)^2 + (\lambda y_1 + (1 - \lambda) y_2)^2 &\leq \lambda (x_1^2 + y_1^2) + (1 - \lambda) (x_2^2 + y_2^2) \\
+      (\lambda x_1 + (1 - \lambda) x_2)^2 + (\lambda y_1 + (1 -
+      \lambda) y_2)^2 &\leq \lambda (x_1^2 + y_1^2) + (1 - \lambda)
+      (x_2^2 + y_2^2) \\
       &\leq \lambda z_1 + (1 - \lambda) z_2,
     \end{split}
   \end{equation}
   and so $\lambda u + (1 - \lambda) v \in S$, showing that $S$ is convex.
 
-  $S$ is not a finitely generated cone, as it should then be closed under scaling.
-  Consider e.g.\ $u = (1,0,1)$, which satisfies $1 \geq 1^2 + 0^2$ and so $u \in S$.
-  Letting however $\lambda_1 = 2$ (and $\lambda_2 = 0$), we have $2u = (2,0,2) \notin S$ as $2 \not\geq 2^2 + 0^2$.
+  $S$ is not a finitely generated cone, as it should then be closed
+  under scaling.
+  Consider e.g.\ $u = (1,0,1)$, which satisfies $1 \geq 1^2 + 0^2$
+  and so $u \in S$.
+  Letting however $\lambda_1 = 2$ (and $\lambda_2 = 0$), we have $2u
+  = (2,0,2) \notin S$ as $2 \not\geq 2^2 + 0^2$.
 \end{solution}
 
 \begin{exercise}
-  Consider the linear system $0 \leq x_i \leq 1$ for $i = 1, \ldots, n$, and let $P$ denote the solution set.
+  Consider the linear system $0 \leq x_i \leq 1$ for $i = 1, \ldots,
+  n$, and let $P$ denote the solution set.
   Explain how to solve a linear programming problem
   \begin{equation}
     \max\{ c^T x : x \in P \}.
@@ -262,8 +300,10 @@ where $\lambda_j \geq 0$ for each $j = 1, \ldots, t$.
 \begin{solution}
   We choose the solution component-wise, by maximizing each component $c_i x_i$.
   If $c_i > 0$, simply let $x_i = 1$.
-  If $c_i < 0$, increasing $x_i$ decreases the objective function, so we let $x_i = 0$.
-  The same argument holds in the alternate case, just choose $x_i = b_i$ or $x_i = a_i$ respectively based on the sign of $c_i$.
+  If $c_i < 0$, increasing $x_i$ decreases the objective function, so
+  we let $x_i = 0$.
+  The same argument holds in the alternate case, just choose $x_i =
+  b_i$ or $x_i = a_i$ respectively based on the sign of $c_i$.
 \end{solution}
 
 \begin{exercise}
@@ -273,7 +313,8 @@ where $\lambda_j \geq 0$ for each $j = 1, \ldots, t$.
 \begin{solution}
   No.
   Let $A = [-2, -1]$ and $B = [1, 2]$.
-  Then $A \cup B = [-2, -1] \cup [1, 2]$ is not convex, as e.g.\ $\tfrac{1}{2} 1 + (1 - \tfrac{1}{2}) (-1) = 0 \notin A \cup B$.
+  Then $A \cup B = [-2, -1] \cup [1, 2]$ is not convex, as
+  e.g.\ $\tfrac{1}{2} 1 + (1 - \tfrac{1}{2}) (-1) = 0 \notin A \cup B$.
 \end{solution}
 
 \begin{exercise}
@@ -281,7 +322,8 @@ where $\lambda_j \geq 0$ for each $j = 1, \ldots, t$.
   \begin{align*}
     (i) && A &= \{ (x, y) : x^2 + y^2 \leq 1 \}, & B &= \{ (3, 4) \}; \\
     (ii) && A &= \{ (x, y) : x^2 + y^2 \leq 1 \}, & B &= [0, 1] \times \{0\}; \\
-    (iii) && A &= \{ (x, y) : x + 2y = 5 \}, & B &= \{ (x, y) : x = y, 0 \leq x \leq 1 \}; \\
+    (iii) && A &= \{ (x, y) : x + 2y = 5 \}, & B &= \{ (x, y) : x =
+    y, 0 \leq x \leq 1 \}; \\
     (iv) && A &= [0, 1] \times [1, 2], & B &= [0, 2] \times [0, 2].
   \end{align*}
 \end{exercise}
@@ -289,9 +331,12 @@ where $\lambda_j \geq 0$ for each $j = 1, \ldots, t$.
 \begin{solution}
   Taking the cases in turn:
 
-  (\emph{i}) The sum $A + B$ is given by the set of points $\{ u + (3, 4) : u \in A \}$, that is, the unit disk centred around $(3, 4)$.
+  (\emph{i}) The sum $A + B$ is given by the set of points $\{ u +
+  (3, 4) : u \in A \}$, that is, the unit disk centred around $(3, 4)$.
 
-  (\emph{ii}) The sum $A + B$ is given by those points that are either in the rectangle with corners at $(0,-1)$, $(1, -1)$, $(1, 1)$ and $(0, 1)$, or in the unit disks centred about $(0,0)$ or $(1, 0)$.
+  (\emph{ii}) The sum $A + B$ is given by those points that are
+  either in the rectangle with corners at $(0,-1)$, $(1, -1)$, $(1,
+  1)$ and $(0, 1)$, or in the unit disks centred about $(0,0)$ or $(1, 0)$.
 
   (\emph{iii}) Let $B = \{ (\lambda, \lambda) : 0 \leq \lambda \leq 1 \}$.
   Then we can write a point $(x, y) \in A + B$ as
@@ -314,12 +359,15 @@ where $\lambda_j \geq 0$ for each $j = 1, \ldots, t$.
   More enumerated exercises\dots
 
   \begin{enumerate}[label = (\emph{\roman*})]
-    \item Prove that, for every $\lambda \in \R$ and $A, B \subseteq \R^n$, it holds that $\lambda(A + B) = \lambda A + \lambda B$.
+    \item Prove that, for every $\lambda \in \R$ and $A, B \subseteq
+      \R^n$, it holds that $\lambda(A + B) = \lambda A + \lambda B$.
 
-    \item Is it true that $(\lambda + \mu) A = \lambda A + \mu A$ for every $\lambda, \mu \in \R$ and $A \subseteq \R^n$?
+    \item Is it true that $(\lambda + \mu) A = \lambda A + \mu A$ for
+      every $\lambda, \mu \in \R$ and $A \subseteq \R^n$?
       If not, find a counterexample.
 
-    \item Show that, if $\lambda, \mu \geq 0$ and $A \subseteq \R^n$ is convex, then $(\lambda + \mu) A = \lambda A + \mu A$.
+    \item Show that, if $\lambda, \mu \geq 0$ and $A \subseteq \R^n$
+      is convex, then $(\lambda + \mu) A = \lambda A + \mu A$.
   \end{enumerate}
 \end{exercise}
 
@@ -357,7 +405,8 @@ where $\lambda_j \geq 0$ for each $j = 1, \ldots, t$.
       \frac{\lambda}{\lambda + \mu} a + \frac{\mu}{\lambda + \mu} b
     \right).
   \end{equation}
-  As both the inner coefficients are non-negative and sum to one, and $a, b \in A$, we have that
+  As both the inner coefficients are non-negative and sum to one, and
+  $a, b \in A$, we have that
   \begin{equation}
     \frac{\lambda}{\lambda + \mu} a + \frac{\mu}{\lambda + \mu} b \in A,
   \end{equation}
@@ -366,14 +415,17 @@ where $\lambda_j \geq 0$ for each $j = 1, \ldots, t$.
 \end{solution}
 
 \begin{exercise}
-  Show that if $C_1, \dots, C_t \subseteq \R^n$ are all convex sets, then $C_1 \cap \dots \cap C_t$ is convex.
+  Show that if $C_1, \dots, C_t \subseteq \R^n$ are all convex sets,
+  then $C_1 \cap \dots \cap C_t$ is convex.
   Do the same when all sets are affine (or linear subspaces, or convex cones).
   In fact, a similar result for the intersection of any family of convex sets.
   Explain this.
 \end{exercise}
 
 \begin{solution}
-  Let $x, y \in C_1 \cap \dots \cap C_t$ and $0 \leq \lambda \leq 1$. Then $x, y \in C_i$ for all $i = 1, \dots, t$. Since each $C_i$ is convex, we have that
+  Let $x, y \in C_1 \cap \dots \cap C_t$ and $0 \leq \lambda \leq 1$.
+  Then $x, y \in C_i$ for all $i = 1, \dots, t$. Since each $C_i$ is
+  convex, we have that
   \begin{equation}
     \lambda x + (1 - \lambda) y \in C_i
   \end{equation}
@@ -389,18 +441,22 @@ where $\lambda_j \geq 0$ for each $j = 1, \ldots, t$.
     C = \{ x \in \R^n : Ax = b \}
   \end{equation}
   is an affine set.
-  Then let $x \in \bigcap_{i = 1}^t C_i$, meaning that $A_i x = b_i$ for all $i = 1, \dots, t$.
+  Then let $x \in \bigcap_{i = 1}^t C_i$, meaning that $A_i x = b_i$
+  for all $i = 1, \dots, t$.
   Thus, $x$ satisfies
   \begin{equation}
     (A_1 + A_2 + \cdots + A_t) x = b_1 + b_2 + \cdots + b_t,
   \end{equation}
   and $\bigcap_{i = 1}^t C_i$ is itself affine.
 
-  A similar argument shows that the closure property of convex sets is preserved under finite intersections.
+  A similar argument shows that the closure property of convex sets
+  is preserved under finite intersections.
 \end{solution}
 
 \begin{exercise}
-  Consider a family (possibly infinite) of linear inequalities $a_i^T x \leq b, i \in I$, and $C$ be its solution set, i.e., $C$ is the set of points satisfying all the inequalities.
+  Consider a family (possibly infinite) of linear inequalities $a_i^T
+  x \leq b, i \in I$, and $C$ be its solution set, i.e., $C$ is the
+  set of points satisfying all the inequalities.
   Prove that $C$ is a convex set.
 \end{exercise}
 
@@ -408,18 +464,22 @@ where $\lambda_j \geq 0$ for each $j = 1, \ldots, t$.
   Let $x, y \in C$, and $0 \leq \lambda \leq 1$.
   Then, for each $i \in I$, we have
   \begin{equation}
-    a_i^T (\lambda x + (1 - \lambda) y) = \lambda a_i^T x + (1 - \lambda) a_i^T y \leq \lambda b_i + (1 - \lambda) b_i = b_i.
+    a_i^T (\lambda x + (1 - \lambda) y) = \lambda a_i^T x + (1 -
+    \lambda) a_i^T y \leq \lambda b_i + (1 - \lambda) b_i = b_i.
   \end{equation}
   Therefore, $\lambda x + (1 - \lambda) y \in C$, and $C$ is convex.
 \end{solution}
 
 \begin{exercise}
-  Consider the unit disc $S = \{ (x_1, x_2) \in \R^2 : x_1^2 + x_2^2 \leq 1 \}$ in $\R^2$.
-  Find a family of linear inequalities as in the previous problem with solution set $S$.
+  Consider the unit disc $S = \{ (x_1, x_2) \in \R^2 : x_1^2 + x_2^2
+  \leq 1 \}$ in $\R^2$.
+  Find a family of linear inequalities as in the previous problem
+  with solution set $S$.
 \end{exercise}
 
 \begin{solution}
-  Let $U = \{ (\cos\theta, \sin\theta) : 0 \leq \theta < 2\pi \}$ be the unit circle in $\R^2$.
+  Let $U = \{ (\cos\theta, \sin\theta) : 0 \leq \theta < 2\pi \}$ be
+  the unit circle in $\R^2$.
   Then, for each $(u, v) \in U$, we have the linear inequalities
   \begin{equation}
     u x_1 + v x_2 \leq 1.
@@ -433,12 +493,16 @@ where $\lambda_j \geq 0$ for each $j = 1, \ldots, t$.
 
 \begin{solution}
   I don't believe the unit ball is a polyhedron.
-  A polyhedron requires a \emph{finite} number of linear inequalities, i.e.\ constraints which can be written as $Ax \leq b$.
-  The unit ball however is inherently smooth, without edges, and therefore requires an infinite number of linear constraints, as those applied in the previous exercise.
+  A polyhedron requires a \emph{finite} number of linear
+  inequalities, i.e.\ constraints which can be written as $Ax \leq b$.
+  The unit ball however is inherently smooth, without edges, and
+  therefore requires an infinite number of linear constraints, as
+  those applied in the previous exercise.
 \end{solution}
 
 \begin{exercise}
-  Show that the unit ball $B_\infty = \{ x \in \R^n : \norm{x}_\infty \leq 1 \}$ is convex.
+  Show that the unit ball $B_\infty = \{ x \in \R^n : \norm{x}_\infty
+  \leq 1 \}$ is convex.
   Here $\norm{x}_\infty = \max_j \abs{x_j}$ is the max norm of $x$.
   Show that $B_\infty$ is a polyhedron.
   Illustrate when $n = 2$.
@@ -448,7 +512,9 @@ where $\lambda_j \geq 0$ for each $j = 1, \ldots, t$.
   Let $x, y \in B_\infty$ and $0 \leq \lambda \leq 1$.
   We then have
   \begin{equation}
-    \norm{\lambda x + (1 - \lambda) y}_\infty \leq \lambda \norm{x}_\infty + (1 - \lambda) \norm{y}_\infty \leq \lambda + (1 - \lambda) = 1,
+    \norm{\lambda x + (1 - \lambda) y}_\infty \leq \lambda
+    \norm{x}_\infty + (1 - \lambda) \norm{y}_\infty \leq \lambda + (1
+    - \lambda) = 1,
   \end{equation}
   so $\lambda x + (1 - \lambda) y \in B_\infty$, and $B_\infty$ is convex.
   $B_\infty$ is a polyhedron, as it is described by the constraints
@@ -459,7 +525,8 @@ where $\lambda_j \geq 0$ for each $j = 1, \ldots, t$.
     \qquad
     j = 1, \ldots, n.
   \end{equation}
-  When $n = 2$, $B_\infty$ is the unit square, with corners $(\pm 1, \pm 1)$ and $(\pm 1, \mp 1)$, as seen in \cref{fig:unit_square}.
+  When $n = 2$, $B_\infty$ is the unit square, with corners $(\pm 1,
+  \pm 1)$ and $(\pm 1, \mp 1)$, as seen in \cref{fig:unit_square}.
 
   \begin{figure}[htbp]
     \centering
@@ -472,7 +539,8 @@ where $\lambda_j \geq 0$ for each $j = 1, \ldots, t$.
 \end{solution}
 
 \begin{exercise}
-  Show that the unit ball $B_1 = \{ x \in \R^n : \norm{x}_1 \leq 1 \}$ is convex.
+  Show that the unit ball $B_1 = \{ x \in \R^n : \norm{x}_1 \leq 1
+  \}$ is convex.
   Here $\norm{x}_1 = \sum_{j=1}^n \abs{x_j}$ is the absolute norm of $x$.
   Show that $B_1$ is a polyhedron.
   Illustrate when $n = 2$.
@@ -494,9 +562,11 @@ where $\lambda_j \geq 0$ for each $j = 1, \ldots, t$.
 
   $B_1$ is a polyhedron, as it is described by the constraints
   \begin{equation}
-    \sum_{j = 1}^{n} \sigma_j x_j \leq 1, \quad \forall (\sigma_1, \ldots, \sigma_n) \in \{-1, 1\}^n.
+    \sum_{j = 1}^{n} \sigma_j x_j \leq 1, \quad \forall (\sigma_1,
+    \ldots, \sigma_n) \in \{-1, 1\}^n.
   \end{equation}
-  When $n = 2$, $B_1$ is the unit diamond, with corners $(\pm 1, 0)$ and $(0, \pm 1)$, as seen in \cref{fig:unit_diamond}.
+  When $n = 2$, $B_1$ is the unit diamond, with corners $(\pm 1, 0)$
+  and $(0, \pm 1)$, as seen in \cref{fig:unit_diamond}.
 
   \begin{figure}[htbp]
     \centering
@@ -509,11 +579,13 @@ where $\lambda_j \geq 0$ for each $j = 1, \ldots, t$.
 
 \paragraph{Proposition 1.5.1} (\emph{Affine sets}).
 Let $C$ be a non-empty subset of $\R^n$.
-Then $C$ is an affine set if an only if there is a matrix $A \in \R^{m \times n}$ and a vector $b \in \R^m$ for some $m$ such that
+Then $C$ is an affine set if an only if there is a matrix $A \in
+\R^{m \times n}$ and a vector $b \in \R^m$ for some $m$ such that
 \begin{equation}
   C = \{ x \in \R^n : Ax = b \}.
 \end{equation}
-Moreover, $C$ may be written as $C = L + x_0 = \{ x + x_0 : x \in L \}$ for some linear subspace $L$ of $\R^n$.
+Moreover, $C$ may be written as $C = L + x_0 = \{ x + x_0 : x \in L
+\}$ for some linear subspace $L$ of $\R^n$.
 The subspace $L$ is unique.
 
 \begin{exercise}
@@ -550,5 +622,6 @@ The subspace $L$ is unique.
   for some $\alpha, \beta \in L$.
   Then $x - y = \alpha - \beta \in L$, showing that $C - C \subseteq L$.
   For the reverse inclusion, let $\alpha \in L$.
-  Then $\alpha = x - x_0$ for some $x \in C$, showing that $L \subseteq C - C$, proving that $L = C - C$.
+  Then $\alpha = x - x_0$ for some $x \in C$, showing that $L
+  \subseteq C - C$, proving that $L = C - C$.
 \end{solution}
