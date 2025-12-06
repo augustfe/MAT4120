@@ -1,0 +1,168 @@
+\subsection{}
+
+\begin{exercise}
+  State the general combinatorial optimisation problem.
+  What is the node-edge incidence matrix of graph?
+\end{exercise}
+
+\begin{solution}
+  In a combinatorial optimisation problem, we consider a class
+  \(\mathcal{F}\) which is a subset of some finite ground set \(E\).
+  Associated with the problem is a weight function \( w : E \to \R
+  \), defined for an \(F \in \mathcal{F}\) as \( w(F) = \sum_{e \in F} w(e) \).
+  The problem is then simply given by
+  \begin{equation}
+    \max \{ w(F) : F \in \mathcal{F} \}.
+  \end{equation}
+
+  For a graph \(G = (V, E)\), the node-edge incidence matrix is the
+  matrix \(A \in \{0, 1\}^{V \times E}\), such that the column
+  corresponding to an edge \(e = (u, v)\) has two non-zero entries,
+  corresponding to the nodes \(u\) and \(v\).
+\end{solution}
+
+\begin{exercise}
+  What is the forest polytope \((F(G))\) of a graph?
+\end{exercise}
+
+\begin{solution}
+  The forest polytope is the convex hull of all incidence vectors of
+  all forests in \(G\), where an incidence vector is the vector
+  \(\chi^F\) with \(\chi_e^F = 1\) if \(e \in F\) and zero otherwise.
+\end{solution}
+
+\begin{exercise}
+  Can you describe \(F(G)\) as a polyhedron in \((Q)\)?
+  What are the constraints?
+  (\(x(E[S]) \geq \abs{S} - 1\)).
+  Say something about the proof (%
+    look at the vertices, characterise them as optimal solutions of
+    an LP problem, show by complementary slackness that the greedy
+    algorithm finds optimal solutions.
+    This is an incidence vector%
+  ).
+\end{exercise}
+
+\begin{solution}
+  There is a lemma which states that \(x \in \{ 0, 1 \}^E \) is an
+  incidence vector of a forest if and only if
+  \begin{equation}
+    x(E[S]) \leq \abs{S} - 1
+    \qquad \text{for all} \ S \subseteq V.
+  \end{equation}
+  Considering the \(Q\) be the polytope defined by
+  \begin{equation}
+    \begin{split}
+      x_e \geq 0 \qquad &\text{for all} \ e \in E \\
+      x(E[S]) \leq \abs{S} - 1 \qquad &\text{for all} \ S \subseteq V.
+    \end{split}
+  \end{equation}
+  The integral vectors in \(Q\) are precisely the incidence vectors
+  by the lemma, so \( F(G) \subseteq Q \).
+
+  Let now \(\bar{x}\) be a vertex of \(Q\), meaning we can find it as
+  a unique optimal solution \(\bar{x} = \argmax_{x \in Q} c^T\), for
+  some suitable \(c\).
+  The dual of this LP problem is given by
+  \begin{equation}
+    \begin{split}
+      \text{minimize} \quad& \sum_{S \subseteq V} y_S(\abs{S} - 1) \\
+      \text{subject to} \\
+      & \sum_{\{S : e_r \in E[S] \} }^{} y_S \geq c_e \qquad
+      \text{for all} \ e \in E \\
+      & y_S \geq 0 \qquad \text{for all} \ S \subseteq V.
+    \end{split}
+  \end{equation}
+
+  Applying the greedy algorithm to the primal problem, we get a
+  solution \( F = \{ e_1, \ldots, e_s \} \), and assume it is in that order.
+  At the \(i\)-th iteration, we therefore find \( e_i = (u, v) \),
+  joining together two components in the current solution into the
+  new component \( V_i \).
+
+  For the dual problem, we need to define the dual solution \(y\).
+  We let \(y_S = 0\) for all \(S \notin \{V_1, \ldots, V_s\}\).
+  We define the values for the remaining solutions recursively,
+  starting from the back with \( y_{V_s} = c(e_r) \).
+  By the complementary slackness condition for an edge \(e\), as
+  \(x_e' > 0\), we have that \(\sum_{\{S : e_r \in E[S] \} }^{} y_S = c_e\).
+  By our definition of \(y_{V_s}\), we are then required to set \(y_S
+  = 0\) for all sets not including the endpoints of \(e_s\).
+
+  We define the remaining components of \(y\) with the index set
+  \begin{equation}
+    I(j) = \{ i : j + 1 \leq i \leq s \ \text{and both end nodes of}
+    \ e_j \ \text{are in} \ V_i\},
+  \end{equation}
+  for \(j \in \{1, \ldots, r - 1\} \).
+  We then set
+  \begin{equation}
+    y_{V_j} = c(e_j) - \sum_{i \in I(j)}^{} y_{V_i}
+  \end{equation}
+  for \(j = r - 1, r - 2, \ldots, 1 \).
+
+  We then check that the solution \(y\) is dual feasible, \(x'\) is
+  primal feasible and that the complementary slackness condition holds.
+  Both solutions are then optimal in their respective problems, and
+  so by uniqueness we have \(\bar{x} = x'\), showing that every
+  vertex of \(Q\) is integral, so \(Q = F(G)\).
+\end{solution}
+
+\begin{exercise}
+  What is a formulation for a set \(S\)?
+\end{exercise}
+
+\begin{solution}
+  With \( S \subseteq \{0, 1\}^n \), a formulation for \(S\) is a
+  polyhedron \(P \subseteq \R^n\) which satisfies \(P \cap \{0, 1\}^n = S \).
+\end{solution}
+
+\begin{exercise}
+  What is a Hamiltonian tour in a graph?
+  Can you state (in)equalities which characterise incidence vectors  % chktex 36
+  of Hamiltonian cycles?
+  (Subtour/degree constraints)
+\end{exercise}
+
+\begin{solution}
+  A Hamiltonian tour is a tour which visits each vertex in a graph exactly once.
+  A Hamiltonian cycle similarly requires that the tour starts and
+  stops in the same node.
+  We can formulate this with inequalities, by requiring that each
+  strict subset of the graph contains at most \( \abs{S} - 1\) edges,
+  such that no interior cycle exists.
+  Additionally, each vertex must have degree two.
+\end{solution}
+
+\begin{exercise}
+  What is the travelling salesman problem?
+\end{exercise}
+
+\begin{solution}
+  TSP is the problem of finding a Hamiltonian cycle which minimizes
+  some distance metric, in the simplest case the physical distance a
+  salesman must travel to pass through as number of cities, before
+  ending up back at home.
+\end{solution}
+
+\begin{exercise}
+  What is a separation oracle?
+  Why do we use these?
+\end{exercise}
+
+\begin{solution}
+  A separation oracle is an algorithm, which from a trial solution
+  \(\bar{x}\) to some problem defined on a polyhedron
+  \begin{equation}
+    P = \{ x \in \R^n : Ax \leq b \},
+  \end{equation}
+  either confirms that \(\bar{x} \in P\), or returns a constraint
+  which \(\bar{x}\) violates.
+
+  We use these as we can very quickly encounter problems with a large
+  number of constraints, wherein we do not need to actually consider
+  all in order to get a solution.
+  Some of the inequalities might be able to be reduced to each other.
+  Figuring this out however can be a lot of work, so just getting the
+  violated ones can be a nice time save.
+\end{solution}

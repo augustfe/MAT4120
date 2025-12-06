@@ -1,0 +1,32 @@
+\subsection{}
+
+\begin{exercise}
+  Explain Christofides algorithm for finding a Hamiltonian tour in a
+  weighted graph.
+  What does it mean that this is a factor \(2\)-approximation algorithm?
+\end{exercise}
+
+\begin{solution}
+  Christofides algorithm is a heuristic algorithm for the metric TSP,
+  wherein the weight function satisfies the triangle inequality, i.e.\
+  \begin{equation}
+    w( u, v) \leq w(u, z) + w(z, v)
+  \end{equation}
+  for all \( u, v, z \in V \).
+  It is a \(2\)-approximation algorithm in the sense that the
+  solution we obtain is at most a factor of 2 away, i.e.\
+  \begin{equation}
+    w(x) \leq \alpha v(Q).
+  \end{equation}
+
+  The algorithm consists of first finding a spanning tree \(T\) of \(G\).
+  Then, we double every edge of \(T\) in order to obtain an Eulerian
+  graph, and then find an Eulerian tour \(\mathcal{T}\) in this graph.
+  We then return the Hamiltonian tour that visits the vertices of
+  \(G\) in the order of their first appearance in \(\mathcal{T}\).
+\end{solution}
+
+\begin{exercise}
+  What is an enumeration tree?
+  What do we mean by branch and bound?
+\end{exercise}

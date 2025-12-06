@@ -1,0 +1,85 @@
+\subsection{}
+
+\begin{exercise}
+  What is an integral polyhedron?
+  What is a rational polyhedron?
+\end{exercise}
+
+\begin{solution}
+  From a polyhedron \( P \subset \R^n\) we define the integer hull \(P_I\) by
+  \begin{equation}
+    P_I = \conv(P \cap \Z^n).
+  \end{equation}
+  A polyhedron \(P\) is then integral if \(P = P_I\).
+  A polyhedron is rational if it is defined by linear inequalities
+  with only rational numbers.
+\end{solution}
+
+\begin{exercise}
+  What is a totally unimodular matrix?
+  Is a matrix with \(-1\) in all entries TU? % chktex 13
+\end{exercise}
+
+\begin{solution}
+  A totally unimodular matrix has the property that each square
+  submatrix has determinant \(-1\), \(0\) or \(1\).
+  A matrix with all negative ones is TU, as each submatrix contains
+  only linearly dependent rows, and thus all have determinant \(0\),
+  except the trivial submatrices which only have the element \(-1\).
+\end{solution}
+
+\begin{exercise}
+  If \(A\) is TU and \(b\) is integral, what can you say about the
+  polyhedron \(P = \{x \in \R^n : A x \leq b\} \)?
+\end{exercise}
+
+\begin{solution}
+  We then have that the polyhedron is integral.
+  The proof is based around Cramer's rule, from which we can show
+  that if a matrix \(C\) is integral with \(\det{C}\) is either
+  \(-1\) or \(1\), then \(C^{-1}\) is also integral.
+\end{solution}
+
+\begin{exercise}
+  When is the node-edge incidence matrix of a graph TU? % chktex 13
+\end{exercise}
+
+\begin{solution}
+  The node-edge incidence matrix \(A_G\) of a graph \(G\) is TU if
+  and only if \(G\) is bipartite.
+  The proof here is based on the Ghouila--Houri criterion, which % chktex 8
+  states that a \(-1, 0, 1\)-matrix \(A\) is TU if and only if for
+  each subset of rows \(J \subseteq \{1, \ldots, n\}\) there are
+  partitions \(J_1, J-2\) of \(J\) such that
+  \begin{equation}
+    \abs*{\sum_{j \in J_1}^{} a_{i j} - \sum_{j \in J_2}^{} a_{i j}}
+    \quad\text{for} \ i = 1, \ldots, m.
+  \end{equation}
+\end{solution}
+
+\begin{exercise}
+  Explain the following concepts in a graph:
+  \begin{itemize}
+    \item Matching,
+    \item Node cover,
+    \item Node packing,
+    \item Edge cover.
+  \end{itemize}
+\end{exercise}
+
+\begin{solution}
+  A matching is an edge subset wherein no node is incident to more
+  than one edge.
+  Each node in the subset is therefore either ``matched'' with
+  another node, or solitary.
+
+  A node cover is a node subset such that each edge has an endnode in the cover.
+  A node packing on the other hand is a node subset wherein no nodes
+  are adjacent.
+  An edge cover is finally an edge subset such that each node is
+  connected to one of the edges in the subset.
+
+  In particular, in a bipartite graph we have a minmax relation where
+  the maximum cardinality of a node packing equals the minimum
+  cardinality of an edge cover.
+\end{solution}
