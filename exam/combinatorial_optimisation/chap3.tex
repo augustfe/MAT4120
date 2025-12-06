@@ -30,3 +30,95 @@
   What is an enumeration tree?
   What do we mean by branch and bound?
 \end{exercise}
+
+\begin{solution}
+  An enumeration tree is a way to list out the possible solutions.
+  Consider \(S \in \{0, 1\}^n\).
+  We build the tree by fixing the first node, according to some fixed ordering.
+  That is, \(S^0\) includes all vectors \(x \in S\) with \(x_0 = 0\).
+  This set then becomes the root node in the tree.
+
+  We build upon this tree with the child nodes \(S^{0, 0}\) and
+  \(S^{0, 1}\), which is those \(x\) with \(x_0 = 0\) and
+  respectively \(x_1 = 0\) and \(x_1 = 1\).
+  This tree is then built recursively, with the final leaf nodes
+  being complete enumerations of the solutions.
+
+  This is not entirely practical however, as the number of nodes in
+  the tree grows exponentially.
+  It is however useful, as we may need only consider a small part of
+  the tree in order to solve the problem.
+  This stems from the fact that we can in some cases prune a node
+  \(u\), and therefore the entire branches below \(u\), meaning we do
+  not need to consider any of the problems in \(Q(u')\) for \(u'\) below \(u\).
+
+  The conditions for pruning a node \(u\) is that one of the following holds:
+  \begin{enumerate}
+    \item (Infeasibility) \(S(u)\) is empty.
+    \item (Optimality) An optimal solution of \(Q(u)\) is known.
+    \item (Value dominance) \(v(Q(u)) \leq v(Q)\).
+  \end{enumerate}
+
+  A relative of the enumeration tree is the branching tree, where we
+  do not necessarily always fix node \(k\) in layer \(k\), but rather
+  may fix \(i\) in some part, and \(k\) in another.
+
+  The branch and bound algorithm is a way to work through enumeration trees.
+  It consists of:
+  \begin{enumerate}[label=Step~\arabic*.]
+    \item (Initialization.)
+      Let \(V_n = \{ v_r \} \), \(z_L = -\infty\) and \(z_U = \infty\).
+
+    \item (Termination.)~\label{step:2}
+      If \(V_n = \emptyset\), the current best solution \(x^*\) is
+      optimal, terminate the algorithm.
+
+    \item (Node selection and processing.)
+      Select a node \(u \in V_n\) and set \(V_n \coloneq V_n
+      \setminus \{ u \} \).
+      Solve the LP relaxation \(R(u)\).
+      Let \(z(u)\) and \(x(u)\) respectively denote the optimal value
+      and solution to \(R(u)\).
+
+    \item (Pruning.)
+      \begin{enumerate}[label = \emph{(\roman*)}]
+        \item If \(R(u)\) is infeasible, go to \labelcref{step:2}
+        \item If \(x(u) \in S(u)\) and \(z(u) > z_L \), update the
+          best solution by setting \(x^* = s(u)\) and \(z_L = z(u)
+          \), go to \labelcref{step:2}
+        \item If \(z(u) \leq z_L \), go to \labelcref{step:2}.
+        \item Otherwise, continue to \labelcref{step:5}
+      \end{enumerate}
+
+    \item (Branching.)\label{step:5}
+      Add two new nodes \(u_0\) and \(u_1\) to \(V_n\), each being a
+      child of node \(u\) such that \(S(u_0)\) and \(S(u_1)\) is a
+      partition of \(S(u)\).
+      Go to \labelcref{step:2}
+  \end{enumerate}
+\end{solution}
+
+\begin{exercise}
+  What do we mean by pruning?
+  Can you state a case where pruning can be applied?
+\end{exercise}
+
+\begin{solution}
+  We prune a node by removing it, and all child nodes, from the
+  enumeration tree.
+  We can apply pruning if for instance the optimal value \(v(Q(u))\)
+  is lower (or equal) to \(v(Q)\), or e.g.\ if \(S(u)\) is empty.
+\end{solution}
+
+\begin{exercise}
+  What do we mean by valid inequalities for a set \(S\)?
+\end{exercise}
+
+\begin{solution}
+  An inequality is considered valid if each point \(x \in S\)
+  satisfies it, i.e.\
+  \begin{equation}
+    S \subseteq \{ x \in \R^n : a^T x \leq \alpha \},
+  \end{equation}
+  for a given inequality \(a^T x \leq \alpha\).
+\end{solution}
