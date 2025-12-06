@@ -1,73 +1,79 @@
 \section{Representation of convex sets}
 
 \begin{exercise}
-  Consider the polytope $P \subset \R^2$ being the convex hull of the
-  point $(0, 0)$, $(1, 0)$ and $(0, 1)$ (so $P$ is a simplex in $\R^2$).
+  Consider the polytope \(P \subset \R^2\) being the convex hull of the
+  point \((0, 0)\), \((1, 0)\) and \((0, 1)\) (so \(P\) is a simplex
+  in \(\R^2\)).
   \begin{enumerate}[label = (\emph{\roman*})]
-    \item Find the unique face of $P$ that contains the point $(1/3, 1/2)$.
-    \item Find all faces of $P$ that contain the point $(1/3, 2/3)$.
-    \item Determine all the faces of $P$.
+    \item Find the unique face of \(P\) that contains the point \((1/3, 1/2)\).
+    \item Find all faces of \(P\) that contain the point \((1/3, 2/3)\).
+    \item Determine all the faces of \(P\).
   \end{enumerate}
 \end{exercise}
 
 \begin{solution}
-  Beginning with (\emph{iii}), we note the the dimension $0$ faces of
-  $P$ are the vertices.
-  The dimension $1$ faces are the edges between the vertices, and the
-  dimension $2$ face is $P$ itself.
-  (\emph{i}): The point $(1/3, 1/2)$ clearly does not lie on any of
-  the edges or vertices, so the only face containing it is $P$ itself.
-  (\emph{ii}): The point $(1/3, 2/3)$ lies on the edge between $(0,
-  1)$ and $(1, 0)$ ($\lambda = 1/3$), so the faces containing it are
-  this edge and $P$ itself.
+  Beginning with (\emph{iii}), we note the the dimension \(0\) faces of
+  \(P\) are the vertices.
+  The dimension \(1\) faces are the edges between the vertices, and the
+  dimension \(2\) face is \(P\) itself.
+  (\emph{i}): The point \((1/3, 1/2)\) clearly does not lie on any of
+  the edges or vertices, so the only face containing it is \(P\) itself.
+  (\emph{ii}): The point \((1/3, 2/3)\) lies on the edge between
+  \((0, 1)\) and \((1, 0)\) (\(\lambda = 1/3\)), so the faces containing it are
+  this edge and \(P\) itself.
 \end{solution}
 
 \begin{exercise}
   Explain why an equivalent definition of face is obtained using the
-  condition: if whenever $x_1, x_2 \in C$ and $(1/2)(x_1 + x_2) \in
-  F$, then $x_1, x_2 \in F$.
+  condition: if whenever \(x_1, x_2 \in C\) and \((1/2)(x_1 + x_2)
+  \in F\), then \(x_1, x_2 \in F\).
 \end{exercise}
 
 \begin{solution}
-  Let $F$ be a face of $C$.
-  Then, by definition, if $x_1, x_2 \in C$ and $\lambda x_1 + (1 -
-  \lambda) x_2 \in F$ for some $\lambda \in (0, 1)$, then $x_1, x_2 \in F$.
-  In particular, this holds for $\lambda = 1/2$, so the condition is satisfied.
+  Let \(F\) be a face of \(C\).
+  Then, by definition, if \(x_1, x_2 \in C\) and \(\lambda x_1 + (1 -
+  \lambda) x_2 \in F\) for some \(\lambda \in (0, 1)\), then \(x_1, x_2 \in F\).
+  In particular, this holds for \(\lambda = 1/2\), so the condition
+  is satisfied.
 
-  For the converse, assume that $F$ satisfies the midpoint condition:
-  whenever $x_1, x_2 \in C$ and $(1/2)(x_1 + x_2) \in F$, then $x_1, x_2 \in F$.
+  For the converse, assume that \(F\) satisfies the midpoint condition:
+  whenever \(x_1, x_2 \in C\) and \((2)(x_1 + x_2) \in F\), then
+  \(x_1, x_2 \in F\).
   We can essentially perform a binary search to find each point on
-  the line segment between $x_1$ and $x_2$.
-  More precisely, for a point $y = \lambda x_1 + (1 - \lambda) x_2$
-  where $\lambda \in (0, 1)$, we can express $\lambda$ in its binary
+  the line segment between \(x_1\) and \(x_2\).
+  More precisely, for a point \(y = \lambda x_1 + (1 - \lambda) x_2\)
+  where \(\lambda \in (0, 1)\), we can express \(\lambda\) in its binary
   representation.
-  This means that there is a sequence $\{ \sigma_i (1/2)^i
-  \}_{i=1}^\infty$ where $\sigma_i \in \{ -1, 1 \}$, $\sigma_1 = 1/2$, such that
+  This means that there is a sequence \(\{ \sigma_i (1/2)^i
+  \}_{i=1}^\infty\) where \(\sigma_i \in \{ -1, 1 \}\), \(\sigma_1 =
+  1/2\), such that
   \begin{equation}
     \lambda_n = \sum_{i=1}^n \sigma_i (1/2)^i,
   \end{equation}
-  and $\lambda_n \to \lambda$ as $n \to \infty$.
-  We can then define a sequence of points $\{ y_n \}_{n=1}^\infty$
-  where $y_n = \lambda_n x_1 + (1 - \lambda_n) x_2$.
-  At each step $n$, we are only considering a subinterval $[x_l^n,
-  x_r^n] \subseteq [x_1, x_2]$ where $y_n = \frac{1}{2}(x_l^n + x_r^n)$.
-  By the midpoint condition, if $y_n \in F$, then $x_l^n, x_r^n \in F$.
-  If $\lambda > \lambda_n$, we set $x_l^{n+1} = y_n$ and $x_r^{n+1} = x_r^n$.
-  If $\lambda < \lambda_n$, we set $x_l^{n+1} = x_l^n$ and $x_r^{n+1} = y_n$.
-  In either case, we have that $y_{n+1} = \frac{1}{2}(x_l^{n+1} + x_r^{n+1})$.
-  Since $y_1 \in F$, we have that $x_l^1, x_r^1 \in F$.
-  By induction, we have that $x_l^n, x_r^n \in F$ for all $n$.
-  Since $y_n$ is the midpoint of $x_l^n$ and $x_r^n$, we have that
-  $y_n \in F$ for all $n$.
-  Finally, since $y_n \to y$ as $n \to \infty$ and $F$ is closed, we
-  have that $y \in F$.
-  Thus, $F$ is a face of $C$.
+  and \(\lambda_n \to \lambda\) as \(n \to \infty\).
+  We can then define a sequence of points \(\{ y_n \}_{n=1}^\infty\)
+  where \(y_n = \lambda_n x_1 + (1 - \lambda_n) x_2\).
+  At each step \(n\), we are only considering a subinterval \([x_l^n,
+  x_r^n] \subseteq [x_1, x_2]\) where \(y_n = \frac{1}{2}(x_l^n + x_r^n)\).
+  By the midpoint condition, if \(y_n \in F\), then \(x_l^n, x_r^n \in F\).
+  If \(\lambda > \lambda_n\), we set \(x_l^{n+1} = y_n\) and
+  \(x_r^{n+1} = x_r^n\).
+  If \(\lambda < \lambda_n\), we set \(x_l^{n+1} = x_l^n\) and
+  \(x_r^{n+1} = y_n\).
+  In either case, we have that \(y_{n+1} = \frac{1}{2}(x_l^{n+1} + x_r^{n+1})\).
+  Since \(y_1 \in F\), we have that \(x_l^1, x_r^1 \in F\).
+  By induction, we have that \(x_l^n, x_r^n \in F\) for all \(n\).
+  Since \(y_n\) is the midpoint of \(x_l^n\) and \(x_r^n\), we have that
+  \(y_n \in F\) for all \(n\).
+  Finally, since \(y_n \to y\) as \(n \to \infty\) and \(F\) is closed, we
+  have that \(y \in F\).
+  Thus, \(F\) is a face of \(C\).
 \end{solution}
 
 \begin{manualprop}{4.1.2}[Face of face]
-  Let $C \subseteq \R^n$ be a non-empty convex set.
-  Let $F_1$ be a face of $C$ and $F_2$ a face of $F_1$.
-  Then $F_2$ is also a face of $C$.
+  Let \(C \subseteq \R^n\) be a non-empty convex set.
+  Let \(F_1\) be a face of \(C\) and \(F_2\) a face of \(F_1\).
+  Then \(F_2\) is also a face of \(C\).
 \end{manualprop}
 
 \begin{exercise}
@@ -75,14 +81,14 @@
 \end{exercise}
 
 \begin{solution}
-  We have that $F_2 \subseteq C$ and that $F_2$ is convex.
-  As $F_2$ is a face of $F_1$, we have that for $a, b \in F_1$ such
-  that $\tfrac{1}{2} (a + b) = x \in F_2$, then $a, b \in F_1$.
-  However, $a \in F_1$ gives us that for $a_1, a_2 \in C$ such that
-  $\tfrac{1}{2} (a_1 + a_2) = a$ implies that $a_1, a_2 \in F_1$.
-  As $a \in F_2$, we then have that $a_1, a_2 \in F_2$, as $F_2$ is a
-  face of $F_1$.
-  Therefore, $F_2$ is also a face of $C$.
+  We have that \(F_2 \subseteq C\) and that \(F_2\) is convex.
+  As \(F_2\) is a face of \(F_1\), we have that for \(a, b \in F_1\) such
+  that \(\tfrac{1}{2} (a + b) = x \in F_2\), then \(a, b \in F_1\).
+  However, \(a \in F_1\) gives us that for \(a_1, a_2 \in C\) such that
+  \(\tfrac{1}{2} (a_1 + a_2) = a\) implies that \(a_1, a_2 \in F_1\).
+  As \(a \in F_2\), we then have that \(a_1, a_2 \in F_2\), as \(F_2\) is a
+  face of \(F_1\).
+  Therefore, \(F_2\) is also a face of \(C\).
 \end{solution}
 
 \begin{exercise}
@@ -95,26 +101,27 @@
       x_1 + x_2 \leq 1
     \}.
   \end{equation}
-  Why does $C$ not have any extreme half-line?
-  Find all the extreme points of $C$.
+  Why does \(C\) not have any extreme half-line?
+  Find all the extreme points of \(C\).
 \end{exercise}
 
 \begin{solution}
   We can formulate this as a polyhedra, which gives us that the
-  extreme points of $C$ are $(0, 0)$, $(0, 1)$ and $(1, 0)$.
-  All the faces of $C$ with dimension $1$ are bounded, and are
+  extreme points of \(C\) are \((0, 0)\), \((0, 1)\) and \((1, 0)\).
+  All the faces of \(C\) with dimension \(1\) are bounded, and are
   therefore edges, and not half-lines.
 \end{solution}
 
 \begin{exercise}
-  Consider a polytope $P \subset \R^n$, say $P = \conv(\{x_1, \ldots, x_n\})$.
-  Show that if $x$ is an extreme point of $P$, then $x \in \{ x_1,
+  Consider a polytope \(P \subset \R^n\), say \(P = \conv(\{x_1,
+  \ldots, x_n\})\).
+  Show that if \(x\) is an extreme point of \(P\), then $x \in \{ x_1,
   \ldots, x_t \}$.
-  Is every $x_j$ necessarily an extreme point?
+  Is every \(x_j\) necessarily an extreme point?
 \end{exercise}
 
 \begin{solution}
-  Any point $x \in P$ can be written as
+  Any point \(x \in P\) can be written as
   \begin{equation}
     x = \sum_{i = 0}^{t} \lambda_i x_i
     \quad\text{with}\quad
@@ -123,50 +130,301 @@
   \end{equation}
   Therefore, the only possible candidates which can only be written
   as the convex combination of itself, are necessarily the points
-  $\{ x_1, \ldots, x_t \}$.
-  Not every $x_i$ are extreme, say e.g.\ that $x_2$ lies on the line
-  between $x_1$ and $x_2$.
+  \(\{ x_1, \ldots, x_t \}\).
+  Not every \(x_i\) are extreme, say e.g.\ that \(x_2\) lies on the line
+  between \(x_1\) and \(x_2\).
 \end{solution}
 
 \begin{exercise}
-  Show that $\rec(C, x)$ is a closed convex cone.
-  First, verify that $z \in \rec(C, x)$ implies that $\mu z \in
-  \rec(C, x)$ for each $\mu \geq 0$.
+  Show that \(\rec(C, x)\) is a closed convex cone.
+  First, verify that \(z \in \rec(C, x)\) implies that \(\mu z \in
+  \rec(C, x)\) for each \(\mu \geq 0\).
   Next, in order to verify convexity, you may show that
   \begin{equation}
     \rec(C, x) = \bigcap_{\lambda > 0} \frac{1}{\lambda} (C - x),
   \end{equation}
-  where $\tfrac{1}{\lambda} (C - x)$ is the set of all vectors of the
-  form $\tfrac{1}{\lambda}(y - x)$ where $y \in C$.
+  where \(\tfrac{1}{\lambda} (C - x)\) is the set of all vectors of the
+  form \(\tfrac{1}{\lambda}(y - x)\) where \(y \in C\).
 \end{exercise}
 
 \begin{solution}
-  $z \in \rec(C, x)$ implies that $\mu z \in \rec(C, x)$ when $\mu
-  \geq 0$, as we have that $x + \lambda z \in C$ for all $\lambda
-  \geq 0$, and particularly for $\tfrac{\lambda}{\mu} \geq 0$.
-  (The case with $\mu = 0$ follows trivially).
+  \(z \in \rec(C, x)\) implies that \(\mu z \in \rec(C, x)\) when
+  \(\mu \geq 0\), as we have that \(x + \lambda z \in C\) for all
+  \(\lambda \geq 0\), and particularly for \(\tfrac{\lambda}{\mu} \geq 0\).
+  (The case with \(\mu = 0\) follows trivially).
 
-  Note next that $C - x$ is convex, as for any $y - x \in (C - x)$, we can write
+  Note next that \(C - x\) is convex, as for any \(y - x \in (C -
+  x)\), we can write
   \begin{equation}
     y - x = \lambda (y_1 - x) + (1 - \lambda) (y_2 - x),
   \end{equation}
-  with $y_1, y_2 \in C$.
-  Next, note that this also holds for $\tfrac{1}{\lambda} (C - x)$
-  for any $\lambda > 0$ by similar logic.
-  $z \in \tfrac{1}{\lambda} (C - x)$ is then equivalent with
+  with \(y_1, y_2 \in C\).
+  Next, note that this also holds for \(\tfrac{1}{\lambda} (C - x)\)
+  for any \(\lambda > 0\) by similar logic.
+  \(z \in \tfrac{1}{\lambda} (C - x)\) is then equivalent with
   \begin{equation}
     x + \lambda z \in C,
   \end{equation}
-  and if $z$ is in the intersection of all such sets, then this holds
-  for all $\lambda > 0$.
+  and if \(z\) is in the intersection of all such sets, then this holds
+  for all \(\lambda > 0\).
   This is equivalent with the original definition of the recession cone.
 \end{solution}
 
 \begin{exercise}
-  Show that a closed convex set of $C$ is bounded if and only if
-  $\rec(C) = \{ 0 \}$.
+  Show that a closed convex set of \(C\) is bounded if and only if
+  \(\rec(C) = \{ 0 \}\).
 \end{exercise}
 
 \begin{solution}
+  Suppose that \(\rec(C) \neq \{ 0 \}\).
+  There is then some non-zero \(z \in \rec(C)\) such that \(x +
+  \lambda z \in C\) for all \(\lambda \geq 0\).
+  Then, by the reverse triangle inequality for sufficiently large \(\lambda\),
+  \begin{equation}
+    \norm{x + \lambda z} \geq \abs{\lambda \norm{z} - \norm{x}} =
+    \lambda \norm{z} - \norm{x},
+  \end{equation}
+  meaning there is no \(M\) such that \(\norm{x} \leq M\) for all \(x
+  \in C\), so \(C\) is unbounded.
 
+  Suppose now that \(C\) is unbounded, and let \(x_0\) be some point in \(C\).
+  As \(C\) is unbounded, we can find a sequence \(x_k \in C\) with
+  \(\norm{x_k} \to \infty\).
+  Define next \(y_k \coloneq x_k - x_0\) and \(u_k \coloneq
+  \frac{y_k}{\norm{y_k}}\).
+  Then \(\norm{u_k} = 1\) for all \(k > 0\), and as the unit sphere is
+  compact, we can choose a subsequence, still denoted \(u_k\), and some
+  \(u\) with \(\norm{u} = 1\) such that \(u_k \to u\).
+
+  Fix any \(\lambda \geq 0\).
+  For \(k\) sufficiently large, \(\lambda \leq \norm{y_k}\), so
+  \begin{equation}
+    t_k \coloneq \frac{\lambda}{\norm{y_k}} \in [0, 1].
+  \end{equation}
+  As \(C\) is convex,
+  \begin{equation}
+    x_0 + t_k y_k = (1 - t_k) x_0 + t_k x_k \in C.
+  \end{equation}
+  However, we have
+  \begin{equation}
+    x_0 + t_k y_k = x_0 + \frac{\lambda}{\norm{y_k}} y_k = x_0 + \lambda u_k.
+  \end{equation}
+  As \(u_k \to u\) and \(C\) is closed, we have that \(x_0 + \lambda
+  u \in C\), and as \(\lambda \geq 0\) was arbitrary, this proves
+  that \(u \in \rec(C)\).
+  Additionally, as \(\norm{u} = 1\), we have that \(u \neq 0\), so
+  \(\rec(C) \neq \{ 0 \}\).
+\end{solution}
+
+\begin{exercise}
+  Consider a hyperplane \(H\).
+  Determine its recession cone and lineality space.
+\end{exercise}
+
+\begin{solution}
+  A hyperplane is given by \( H = \{ x \in \R^n : a^T x = \alpha \}
+  \), so an element of \( z \in \rec(H) \) satisfies
+  \begin{equation}
+    x + \lambda z \in H
+  \end{equation}
+  for all \(\lambda \geq 0\).
+  We must therefore have
+  \begin{equation}
+    a^T (x + \lambda z) = \alpha,
+  \end{equation}
+  such that \(a^T z = 0\).
+  Therefore, the recession cone of \(H\) contains the vectors
+  orthogonal to \( a \).
+  Note that if \(z\) satisfies \(a^T z = 0\), then so does \(-z\).
+  Therefore, \( \rec(H) = -\rec(H) \), and we have \( \lin(H) = \rec(H) \).
+\end{solution}
+
+\begin{exercise}
+  What is \(\rec(P)\) and \(\lin(P)\) when \( P \) is a polytope?
+\end{exercise}
+
+\begin{solution}
+  Polytopes are compact, so they are closed and of interest here bounded.
+  Therefore, \(\rec(P) = \{ 0 \} = -\rec(P) = \lin(P)\).
+\end{solution}
+
+\begin{exercise}
+  Let \(C\) be a closed convex cone in \(\R^n\).
+  Show that \(\rec(C) = C\).
+\end{exercise}
+
+\begin{solution}
+  A convex cone \(C\) has the property that \(\lambda_1 x_1 +
+  \lambda_2 x_2 \in C\) whenever \( x_1, x_2 \in C \) and
+  \(\lambda_1, \lambda_2 \geq 0\).
+  Now, simply let \(\lambda_1 = 1\).
+  This leaves us with the definition of the recession cone, so the
+  sets are equal.
+\end{solution}
+
+\begin{exercise}
+  Prove that \(\lin(C)\) is a linear subspace of \(\R^n\).
+\end{exercise}
+
+\begin{solution}
+  We have that \(\lin(C)\) is closed under scalar multiplication, as
+  \(x \in \rec(C)\) implies that \(-x \in -\rec(C)\).
+  As they are both closed under addition, so is the intersection, and
+  \(\lin(C)\) is a linear subspace.
+\end{solution}
+
+\begin{exercise}
+  Show that \(\rec(\{ x : Ax \leq b\}) = \{ x : Ax \leq 0\} \).
+\end{exercise}
+
+\begin{solution}
+  Suppose that \(z\) satisfies \(Az \leq 0\).
+  Then,
+  \begin{equation}
+    A(x + \lambda z) = Ax + \lambda Az \leq b,
+  \end{equation}
+  so \(\{z : Az \leq 0\} \subseteq \rec(\{ x : Ax \leq b \})\).
+
+  Let \( C = \{ x : Ax \leq b \} \).
+  Next, suppose that \( x \in C \) and \( z \in \rec(C) \).
+  We then have both \(Ax \leq b\) and \(A (x + \lambda z) \leq b \)
+  for all \(\lambda \geq 0\).
+  For this to hold for all \(\lambda\), we must clearly have \(Az
+  \leq 0\), showing that the sets are equal.
+\end{solution}
+
+\begin{exercise}
+  Let \( C \) be a line-free closed convex set and let \(F\) be an
+  extreme halfline of \(C\).
+  Show that then there is an \( x \in C \) and a \( z \in \rec(C) \)
+  such that \( F = x + \cone(\{z\}) \).
+\end{exercise}
+
+\begin{solution}
+  An extreme halfline is of the form \( \{ x_{0} + \lambda z :
+  \lambda \geq 0 \} \).
+  As \(C\) is closed, we have that \( F \subseteq C \), which then
+  coincides with the definition given.
+\end{solution}
+
+\begin{exercise}
+  Decide if the following statement is true:
+  if \(z \in \rec(C) \) then \( x + \cone(\{z\} )\) is an extreme
+  halfline of \(C\).
+\end{exercise}
+
+\begin{solution}
+  The statement is false.
+  The halfline need not be extreme.
+  Consider \( C \subset \R^n \) given by
+  \begin{equation}
+    C = \{ (x_1, x_2) : x_1 \geq 0, x_2 \geq 0 \}.
+  \end{equation}
+  Then \( z = (1, 1) \in \rec(C) \), however the only extreme
+  halflines are \( (0, 1) \) and \( (1, 0) \).
+\end{solution}
+
+\begin{exercise}
+  Consider again the set \( C = \{ (x_1, x_2, 0) \in \R^3 : x_1^2 +
+  x_2^2 \leq 1 \} \) from \cref{ex:referenced_again}.
+  Convince yourself that \(C\) equals the convex hull of its relative boundary.
+  Note that we here have \(\bd(C) = C\) so the fact that \(C\) is the
+  convex hull of its boundary is not very impressive!
+\end{exercise}
+
+\begin{solution}
+  We can convince ourselves of this by considering the triangle
+  inequality of convex combinations of points at the relative
+  boundary, which must then be less than 1.
+\end{solution}
+
+\begin{exercise}
+  Let \(H\) be a hyperplane in \(\R^n\).
+  Prove that \( H \neq \conv(\rbd(H)) \).
+\end{exercise}
+
+\begin{solution}
+  We've previously shown that \( H = \rint(H) \), so \( \rbd(H) =
+  \emptyset \) and the inequality follows.
+\end{solution}
+
+\begin{exercise}
+  Consider a polyhedral cone \(C = \{ x \in \R^n : Ax \leq 0 \} \)
+  (where, as usual, \(A\) is a real \(m \times n\)-matrix).
+  Show that \(0\) is the unique vertex of \(C\).
+\end{exercise}
+
+\begin{solution}
+  Assume that \(\rank(A) < n\).
+  Then, there exists a non-zero vector \(z\) such that \(Az = 0\).
+  As such, we have that for any \(x \in C\) and any \(\lambda \in \mathbb{R}\),
+  \begin{align*}
+    A(x + \lambda z) = Ax + \lambda Az = Ax \leq 0,
+  \end{align*}
+  showing that \(x + \lambda z \in C\).
+  Therefore, if \(\rank(A) < n\), then \(C\) has no vertices.
+  As such, the exercise is missing information, as it is not
+  necessarily true that \(0\) is the unique vertex of \(C\).
+
+  As a simple counterexample, consider
+  \begin{equation}
+    C = \{ (x_0, x_1) \in \mathbb{R}^2 : x_0 \leq 0 \},
+  \end{equation}
+  which contains the line \(\{ (0, x_1) : x_1 \in \mathbb{R} \}\), and
+  thus has no vertices.
+
+  If on the other hand \(\rank(A) = n\), then there exists an \(n
+  \times n\) submatrix \(A'\) of \(A\) such that \(\det(A') \neq 0\).
+  Then, the only solution to \(A'x = 0\) is \(x = 0\), regardless of
+  which such submatrix we choose.
+  Therefore, \(0\) is the only point that can be a vertex of \(C\).
+\end{solution}
+
+\begin{exercise}
+  Let \(F\) be a face of a convex set \(C\) in \(\R^n\).
+  Show that every extreme point of \(F\) is also an extreme point of \(C\).
+\end{exercise}
+
+\begin{solution}
+  An extreme point of \(F\) is a face of \(F\) of dimension 0, and is
+  hence also a face of dimension 0 of \(C\) as \(F\) is a face of \(C\).
+\end{solution}
+
+\begin{exercise}
+  Find all the faces of the unit ball in \(\R^2\).
+  What about the unit ball in \(\R^n\)?
+\end{exercise}
+
+\begin{solution}
+  The faces of dimension \(0\) are the boundary points, while the
+  face of dimension \(n\) is the ball itself.
+\end{solution}
+
+\begin{exercise}
+  Let \(F\) be a face of a convex set \(C\) in \(\R^n\).
+  Show that \(F \subseteq \bd(C) \) (recall that \(\bd(C) \) is the
+  boundary of \(C\)).
+  Is the stronger statement \(F \subseteq \rbd(C)\) also true?
+  Find an example where \( F = \bd(C) \).
+\end{exercise}
+
+\begin{solution}
+  \todo[inline]{TODO}
+\end{solution}
+
+\begin{exercise}
+  Consider the convex set \(C = B + ([0, 1] \times \{0\} )\) where
+  \(B\) is the unit ball (of the Euclidean norm) in \(\R^2\).
+  Find a point on the boundary of \(C\) which is a face of \(C\), but
+  not an exposed face.
+\end{exercise}
+
+\begin{solution}
+  Consider the boundary point \(p = (0, 1)\).
+  The unique supporting half-plane \(H\) of \(B\) at that point is the line
+  \begin{equation}
+    H = \{(x_1, x_2) : x_2 = 1\}.
+  \end{equation}
+  However, \( H \cap C \neq \{ p \} \), so \(\{p\}\) is a face, but
+  not an exposed face.
 \end{solution}

@@ -1,0 +1,174 @@
+
+\subsection{}
+
+\begin{exercise}
+  What is a face of a convex set?
+  What are the faces of different dimensions for the unit cube of $\R^3$?
+\end{exercise}
+
+\begin{solution}
+  A face $F$ of a convex set $C$ is a set wherein $x = \lambda x_1 +
+  (1 - \lambda) x_2 \in F$ implies that both $x_1$ and $x_2$ lie in
+  $F$, for each such possible convex combination in $C$.
+
+  The faces of dimension $0$ for the unit cube of $\R^3$ is each vertex.
+  Of dimension $1$, we have the edges, while we for dimension $2$
+  have the surfaces typically called faces.
+  For dimension $3$, we have the full cube.
+  Not sure if defined, but the face of dimension $-1$ might logically
+  be concluded to be the empty set, as it doesn't contain any
+  affinely independent points, and fulfils the requirements for a face.
+\end{solution}
+
+\begin{exercise}
+  What is an extreme point?
+  What are those for the unit cube and the unit sphere?
+\end{exercise}
+
+\begin{solution}
+  An extreme point of a set $C$ is a point $x \in C$ where $x_1, x_2
+  \in C$ such that $x = \tfrac{1}{2} (x_1 + x_2)$ implies that $x_1 = x = x_2$.
+
+  For the unit cube, these are the vertices, while on the unit sphere
+  this is every point on the boundary, satisfying $\norm{x} = 1$.
+\end{solution}
+
+\begin{exercise}
+  Given a polytope $\conv(x_1, \ldots, x_t)$, what can you say about
+  the extreme points?
+\end{exercise}
+
+\begin{solution}
+  We have that the only candidates for extreme points are $x_1,
+  \ldots, x_t$, however we do not necessarily have that all $x_1,
+  \ldots, x_t$ are extreme.
+\end{solution}
+
+\begin{exercise}
+  Let $S$ be a subset of vectors with all components being either 0 or 1.
+  Explain why the extreme points of $\conv(S)$ are precisely $S$.
+\end{exercise}
+
+\begin{solution}
+  We have that $S$ is a finite set of vectors, so the only candidates
+  for the extreme points are precisely those vectors.
+  In order for one of the points to not be an extreme point, we
+  require that we write it as a combination of other points.
+  Considering a specific component, say a $0$, we would either need
+  for both corresponding components to be zero, or have opposite sign.
+  Clearly, as there are no negative components involved, they must be equal.
+  Similarly, for a component $1$, we must have either numbers above
+  and below, or equivalence.
+  As none are above, they must also be equal.
+  The vectors are therefore identical, so the points are extreme.
+\end{solution}
+
+\begin{exercise}
+  What is the recession cone of a closed convex set?
+\end{exercise}
+
+\begin{solution}
+  The recession cone of a closed convex set $C$ contains all
+  direction vectors, such that each halfline starting at a point in
+  $C$ is entirely contained in $C$.
+  Explicitly, the set of halflines starting at a point $x \in C$, given by
+  \begin{equation}
+    \rec(C, x) = \{ z \in \R^n : x + \lambda z \in C \ \forall
+    \lambda \geq 0 \},
+  \end{equation}
+  is actually independent of the chosen point $x$.\todo{Read up on
+  why it is independent.}
+\end{solution}
+
+\begin{exercise}
+  Suppose $C$ is a convex compact set.
+  What does Minkowski's theorem say about $C$?
+  ($C = \conv(\ext(C))$.)
+\end{exercise}
+
+\begin{solution}
+  Minkowski's theorem tells us that a convex compact set $C$ is the
+  convex hull of its extreme points.
+  This build upon the inner description of closed convex sets, which
+  states that a non-empty and line-free closed convex set $C$ is the
+  convex hull of its extreme points \emph{and extreme half-lines}.
+  As $C$ in our case is compact, it is necessarily bounded, and
+  therefore contains no half-lines.
+\end{solution}
+
+\begin{exercise}
+  What is a vertex of a polyhedron?
+  What is the connection between vertices and extreme points?
+\end{exercise}
+
+\begin{solution}
+  We consider a non-empty polyhedron $P = \{ x \in \R^n : Ax \leq b
+  \}$ for some $A \in \R^{m, n}$ and $b \in \R^m$.
+  Each vertex in a polyhedron is then the solution of $n$ linearly
+  independent equations from the linear system.
+
+  As each such vertex lies in the polyhedron, $x_0 \in P$, it is also
+  an extreme point.
+  Assume for contradiction that we can write $x_0 = \tfrac{1}{2} (x_1
+  + x_2)$ with $x_1 \neq x_2 \in P$.
+  Then,
+  \begin{equation}
+    A_0 x_0 = A_0 (\tfrac{1}{2} (x_1 + x_2)) = \tfrac{1}{2} A_0 x_1 +
+    \tfrac{1}{2} A_0 x_2 < b,
+  \end{equation}
+  where we have a strict inequality as $x_0$ is a unique solution, as
+  the equations are linearly independent, contradicting $A_0 x_0 = b$.
+\end{solution}
+
+\begin{exercise}
+  Why is the intersection of two polytopes again a polytope?
+\end{exercise}
+
+\begin{solution}
+  Consider two polytopes
+  \begin{equation}
+    \begin{split}
+      P_1 &= \{ x : A_1 x \leq b_1 \}, \\
+      P_2 &= \{ x : A_2 x \leq b_2 \}.
+    \end{split}
+  \end{equation}
+  The intersection is then given by
+  \begin{equation}
+    P_1 \cap P_2
+    = \{ x :
+      A_1 x \leq b_1
+      \text{ and }
+      A_2 x \leq b_2
+    \},
+  \end{equation}
+  which we can achieve as a single polygon with
+  \begin{equation}
+    P_1 \cap P_2
+    = \left\{
+      x :
+      \begin{bmatrix}
+        A_1 \\ A_2
+      \end{bmatrix}
+      x \leq
+      \begin{bmatrix}
+        b_1 \\ b_2
+      \end{bmatrix}
+    \right\}.
+  \end{equation}
+\end{solution}
+
+\begin{exercise}
+  What does the main theorem for polyhedra say?
+\end{exercise}
+
+\begin{solution}
+  The main theorem for polyhedra states that for each polyhedra \(P
+  \subseteq \R^n\) there are finite sets \(V\) and \(Z\) such that
+  \begin{equation}
+    P = \conv(V) + \cone(Z).
+  \end{equation}
+  Additionally, for finite sets \(V\) and \(Z\), \(\conv(V) +
+  \cone(Z)\) is a polyhedron.
+  For a pointed polyhedra, $V$ is the set of vertices, while $Z$ is
+  the set of direction vectors for each extreme half-line.
+\end{solution}

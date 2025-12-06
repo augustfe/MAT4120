@@ -1,0 +1,48 @@
+\subsection{}
+
+\begin{exercise}
+  What is a convex function?
+\end{exercise}
+
+\begin{solution}
+  A convex function is a function \(f : C \to \R \), where \(C
+  \subseteq \R^n\) is convex, satisfying
+  \begin{equation}
+    f(\lambda x + (1 - \lambda) y) \leq
+    \lambda f(x) + (1 - \lambda) f(y)
+  \end{equation}
+  for all \(x, y \in A\) and \(\lambda \in [0, 1]\).
+\end{solution}
+
+\begin{exercise}
+  What is the slope function, and its connection to convexity?
+\end{exercise}
+
+\begin{solution}
+  We here consider points \(P_x = (x, f(x))\), and define the slope by
+  \begin{equation}
+    \slope(P_x, P_y) = \frac{f(x) - f(y)}{x - y},
+  \end{equation}
+  for \( x < y \).
+  Adjacent to this is the slope function, defined by
+  \begin{equation}
+    x \mapsto \frac{f(x) - f(x_0)}{x - x_0},
+  \end{equation}
+  for some point \( x_0 \in C \).
+  The function \(f\) is then convex if and only if the slope function
+  is increasing on \(\R \setminus \{x_0\}\).
+\end{solution}
+
+\begin{exercise}
+  What is the epigraph of a function?
+  What can you say about the epigraph of a convex function?
+\end{exercise}
+
+\begin{solution}
+  The epigraph of a function is the set defined by
+  \begin{equation}
+    \epi(f) = \{ (x, y) \in \R^{n + 1} : y \geq f(x) \ \forall x \in C \}.
+  \end{equation}
+  That is, the set ``above'' the function.
+  A function \(f\) is convex if and only if \(\epi(f)\) is a convex set.
+\end{solution}

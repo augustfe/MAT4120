@@ -1,0 +1,85 @@
+
+\subsection{}
+
+\begin{exercise}
+  What is a convex set?
+  What is an affine set?
+  Examples:\@ the unit cube, hyperplanes.
+\end{exercise}
+
+\begin{solution}
+  A convex set is intuitively a set where for each pair of two
+  points, all the points one the line between those two points are
+  also in the set.
+  This for instance means that the unit circle is convex, while a
+  typical drawing of a star is not, as connecting two ``points''
+  places you outside the star.
+  Explicitly, we have that a set $C$ is convex if and only if
+  \begin{equation}
+    \lambda x + (1 - \lambda) y \in C
+  \end{equation}
+  for all $x, y \in C$ and $\lambda \in [0, 1]$.
+
+  An affine set is practically a linear subspace centred around some
+  point other than zero.
+  It is an affine set if and only if it is the solution set to some
+  linear equation.
+  That is, for a non-empty set $S \subseteq \R^n$, there is a matrix
+  $A  \in \R^{m,n}$ and a vector $b \in \R^m$ such that
+  \begin{equation}
+    S = \{ x \in \R^n : Ax = b \}.
+  \end{equation}
+  It can equivalently be written as $C = L + x_0 = \{ x + x_0 : x \in
+  L \}$ for some linear subspace $L$ of $\R^n$.
+
+  To see the equivalence, let $x_0$ be a solution of the linear
+  equation, such that $Ax_0 = b$.
+  Then, $L$ is the kernel of $A$, as then for $z \in S$ we have
+  \begin{equation}
+    Az = A(x + x_0) = Ax + Ax_0 = b \implies Ax = 0.
+  \end{equation}
+\end{solution}
+
+\begin{exercise}
+  Is the sum of convex sets also convex?
+\end{exercise}
+
+\begin{solution}
+  Yes.
+  Consider two convex sets $A,B \subseteq \R^n$.
+  We then have that the sum of the sets is given by
+  \begin{equation}
+    A + B = \{ a + b : a \in A, b \in B \}.
+  \end{equation}
+  As $A$ and $B$ are convex, we have for $a_1, a_2 \in A$, $b_1, b_2
+  \in B$ and $\lambda \in [0, 1]$ that
+  \begin{equation}
+    \lambda a_1 + (1 - \lambda) a_2 + \lambda b_2 + (1 - \lambda) b_2
+    = \lambda (a_1 + b_1) + (1 - \lambda) (a_2 + b_2)
+    \in A + B.
+  \end{equation}
+\end{solution}
+
+\begin{exercise}
+  What is a cone?
+  Example:\@ First octant in $\R^3$.
+\end{exercise}
+
+\begin{solution}
+  A cone $C$ is a set with the property that a non-negative
+  combination of two points in the cone, is also in the cone.
+  That is, for $\lambda_1, \lambda_2 \geq 0$ and $x, y \in C$, we have
+  \begin{equation}
+    \lambda_1 x + \lambda_2 y \in C.
+  \end{equation}
+  The first octant in $\R^3$, often denoted $\R^3_+$, is an example
+  of such a space.
+\end{solution}
+
+\begin{exercise}
+  What is a polyhedron?
+\end{exercise}
+
+\begin{solution}
+  A polyhedron is the solution set to any linear equation $Ax \leq b$.
+\end{solution}

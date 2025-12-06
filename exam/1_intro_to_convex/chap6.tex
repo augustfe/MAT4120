@@ -1,0 +1,66 @@
+\subsection{}
+
+\begin{exercise}
+  Write down the general form of an optimisation problem with
+  equality and inequality constraints.
+  What do we mean by regular points and active constraints?
+\end{exercise}
+
+\begin{solution}
+  The general form of an optimisation problem with equality and
+  inequality constraints is given by
+  \begin{equation}
+    \begin{split}
+      \text{minimize} \quad& f(x) \\
+      \text{subject to} \quad& \\
+      & h_i(x) = 0 \quad \text{for } i = 1, \ldots, m \\
+      & g_j(x) = 0 \quad \text{for } j = 1, \ldots, r.
+    \end{split}
+  \end{equation}
+  Equivalently, we write \( h(x) = 0 \in \R^m \) and \( g(x) \leq 0 \in \R^r \).
+  Active constraints are those which are active in an optimal
+  solution, such that we only need to consider equalities, being
+  \(h\) and the inequalities which are active (\(g_j(x) = 0\)).
+
+  A feasible point \(x^*\) is called regular if the gradients of
+  \(h_i\) and the active \(g_j\) are linearly independent at \(x^*\).
+\end{solution}
+
+\begin{exercise}
+  What do we mean by the KKT conditions?
+  What is the connection with Lagrange's multiplier method?
+\end{exercise}
+
+\begin{solution}
+  The KKT conditions are optimality conditions for optimisation
+  problems with equality and inequality constraints.
+  Along with the conditions, we consider the Lagrangian
+  \begin{equation}
+    L(x, \lambda, \mu)
+    = f(x)
+    + \sum_{i = 1}^{m} \lambda_i h_i(x)
+    + \sum_{j = 1}^{r} \mu_j g_j(x).
+  \end{equation}
+  A triple \((x^*, \lambda^*, \mu^*)\) is said to satisfy the KKT
+  conditions if we have primal feasibility, i.e.\
+  \begin{equation}
+    g(x^*) \leq 0
+    \quad\text{and}\quad
+    h(x^*) = 0,
+  \end{equation}
+  dual feasibility,
+  \begin{equation}
+    \mu_j \geq 0
+    \quad \text{for } j = 1, \ldots, r,
+  \end{equation}
+  stationarity,
+  \begin{equation}
+    \nabla_x L(x^*, \lambda^*, \mu^*)
+    = \nabla f(x)
+    + \sum_{i = 1}^{m} \lambda_i \nabla h_i(x^*)
+    + \sum_{j = 1}^{r} \mu_j \nabla g_j(x^*)
+  \end{equation}
+  and complimentary slackness, \(\mu^*_i g_i(x^*) = 0\).
+  If \(x^*\) is regular, then the multiplies are unique, as the
+  active inequality constraints are linearly independent.
+\end{solution}
