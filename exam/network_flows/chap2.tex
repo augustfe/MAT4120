@@ -1,0 +1,96 @@
+\subsection{}
+
+\begin{exercise}
+  What is a doubly stochastic matrix?
+  Is the set of doubly stochastic matrices convex?
+\end{exercise}
+
+\begin{solution}
+  A doubly stochastic matrix is a matrix with non-negative entries
+  where each row and column sums to one.
+  The set is convex, as it is the convex hull of the set of
+  permutation matrices.
+\end{solution}
+
+\begin{exercise}
+  What does it mean that a vector \(x\) is majorized by a vector \(y\)?
+\end{exercise}
+
+\begin{solution}
+  A vector is majorized if
+  \begin{equation}
+    \sum_{i = 1}^{k} x_i \leq \sum_{i = 1}^{k} y_i
+  \end{equation}
+  for all \(k = 1, \ldots, n - 1\), and \(\sum_{i = 1}^{n} x_i =
+  \sum_{i = 1}^{n} y_i\).
+\end{solution}
+
+\begin{exercise}
+  State the Gale Ryser theorem, in particular its connection to
+  majorization and given row/column sums.
+\end{exercise}
+
+\begin{solution}
+  Let \(R = (r_1, \ldots, r_m)\) and \(S = (s_1, \ldots, s_n)\) be
+  non-negative integral vectors with the same sum.
+  The Gale Ryser theorem then tells us that is an \(m \times n\)
+  \((0, 1)\)-matrix \(A\) with
+  \begin{equation}
+    \begin{split}
+      \sum_{j = 1}^{n} a_{ij} &= r_i \qquad (i \leq m) \\
+      \sum_{i = 1}^{m} a_{ij} &= s_j \qquad (j \leq n)
+    \end{split}
+  \end{equation}
+  if and only if \(S \preceq R^*\).
+
+  Here, \(R^*\) is the conjugate of the integral vector \(R\), defined by
+  \begin{equation}
+    r_k^* = \abs*{\{i : r_i \geq k\}} \qquad (k \leq n).
+  \end{equation}
+
+  Therefore, there exists a \((0, 1)\)-matrix with row sums \(R\) and
+  columns sums \(S\) if and only if \(S\) majorizes the conjugate of \(R\).
+\end{solution}
+
+\begin{exercise}
+  Let \(R\) and \(S\) be vectors with positive integers.
+  When can we find an integral matrix \(A\) with row sums \(R\) and
+  column sums \(S\), and so that \(0 \leq A \leq C\) (with \(C\) integral)?
+  Can this be related to graphs?
+\end{exercise}
+
+\begin{solution}
+  Such a matrix exists if and only if
+  \begin{equation}
+    \sum_{\substack{i \in I \\ j \in J}}^{} c_{ij}
+    \geq \sum_{j \in J}^{} s_j
+    - \sum_{i \notin I}^{} r_i,
+  \end{equation}
+  for all \(I \subseteq \{1, 2, \ldots, m\} \) and \(J \subseteq \{1,
+  2, \ldots, n\} \).
+
+  This coincides with an integral flow of a bipartite graph with
+  nodes \(u_1, \ldots, u_m\) and \(v_1, \ldots, v_n\), with \(b(u_i)
+  = r_i\) and \(b(v_j) = s_j\).
+  An integral flow \(x\) with \(\diver_x = b\) and \(0 \leq x \leq
+  c\) then corresponds to the matrix \(C\) with the properties desired.
+\end{solution}
+
+\begin{exercise}
+  What are the vertices/extreme points for the set of doubly
+  stochastic matrices?
+\end{exercise}
+
+\begin{solution}
+  The vertices are the permutation matrix.
+  They clearly cannot be written as convex combinations of other
+  doubly stochastic matrices.
+  Additionally, for a doubly stochastic matrix \(A\), we can trace
+  out a cycle going through non-integer entries.
+  We can then construct a matrix with a positive one in even places,
+  and negative ones in the odd places.
+  As each entry lies in the open interval \((0, 1)\), there is an
+  \(\varepsilon > 0\) such that \(A \pm \varepsilon V\) is a doubly
+  stochastic matrix.
+  Therefore, no other doubly stochastic matrix is an extreme point.
+\end{solution}

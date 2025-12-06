@@ -1,0 +1,133 @@
+\subsection{}
+
+\begin{exercise}
+  What is a flow in a graph?
+\end{exercise}
+
+\begin{solution}
+  A flow is a function \( x : E \to \R\), or equivalently \(x \in \R^E\).
+  \(x\) therefore assigns a value \(x(e)\) to each edge \(e \in E\).
+  We typically require it to be non-negative.
+\end{solution}
+
+\begin{exercise}
+  What is the divergence of a flow?
+\end{exercise}
+
+\begin{solution}
+  The divergence of a flow \(x\) is the function \(\diver_x : V \to
+  \R\), given by
+  \begin{equation}
+    \diver_x(v) = \sum_{e \in \delta^+(v)}^{} x(e) - \sum_{e \in
+    \delta^-(v)}^{} x(e).
+  \end{equation}
+  It is therefore the difference between the outflow and inflow for
+  all nodes connected to \(v\).
+\end{solution}
+
+\begin{exercise}
+  What is a circulation in a graph?
+\end{exercise}
+
+\begin{solution}
+  A circulation in a graph is a flow such that \(\diver_x(v) = 0\)
+  for all \(v \in V\).
+\end{solution}
+
+\begin{exercise}
+  What does Hoffman's circulation theorem say?
+  The proof is rather technical, but you should understand the role
+  of the auxiliary graph therein.
+\end{exercise}
+
+\begin{solution}
+  Hoffman's circulation theorem states that for functions \(l, u : E
+  \to \R\) satisfying \(l \leq u\), then there exists a circulation
+  \(x\) such that
+  \begin{equation}
+    l \leq x \leq u
+  \end{equation}
+  if and only if
+  \begin{equation}
+    \sum_{e \in \delta^-(S)}^{} l(e)
+    \leq
+    \sum_{e \in \delta^+(S)}^{} u(e)
+  \end{equation}
+  for all \(S \subseteq V\).
+
+  Intuitively, the requirement is that for each subset of nodes, the
+  capacity of what can flow out from the subset must be more than
+  what needs to flow in.\todo{Look closer at auxiliary graphs.}
+\end{solution}
+
+\begin{exercise}
+  What is an \(s t\)-flow, and the value of a flow?
+\end{exercise}
+
+\begin{solution}
+  An \(s t\)-flow is a flow along a path from \(s\) to \(t\), where
+  the divergence of each internal node in the flow is zero.
+  The value of the flow, how much flows from \(s\) to \(t\) is then
+  equal to the flow out of \(s\) by the flow balance equations.
+\end{solution}
+
+\begin{exercise}
+  What is an \(s t\)-cut?
+\end{exercise}
+
+\begin{solution}
+  An \(s t\)-cut is an edge subset of the form \(K = \delta^+(S)\)
+  for a vertex subset \(S \subseteq V\) with \(s \in S\) and \(t \notin S\).
+\end{solution}
+
+\begin{exercise}
+  What is the maximum \(s t\)-flow problem, and what is the minimum
+  \(s t\)-cut problem?
+  What is the connection between the two?
+\end{exercise}
+
+\begin{solution}
+  The maximum \(s t\)-flow problem is the problem of finding the \(s
+  t\)-flow which maximizes the value of the flow.
+  Similarly, the minimum \(s t\)-cut problem the is the problem of
+  finding the cut \(K\) which minimizes the capacities in the cut.
+
+  Through duality theory, the optimal value for both problems is the same.
+\end{solution}
+
+\begin{exercise}
+  How is Hoffman's theorem used in the proof?
+  Algorithm (Ford Fulkerson and \(x\)-augmenting paths.)
+\end{exercise}
+
+\begin{solution}
+  The proof uses the theorem by adding the edge \((t, s)\) with
+  \(l(e) = u(e) = M\), the minimum cut capacity.
+  We therefore just need to show that there is a circulation which
+  satisfies the given constraints, as then \(\diver_x(s) = 0\), so
+  \(\sum_{e \in \delta^+(s)}^{} x(e) = M\).
+  We set \(l(e) = 0\) and \(u(e) = c(e)\) for each other edge \(e \in E\).
+
+  Consider then a subset \(S\) with \(s \in S\) and \( t \notin S\).
+  We then have that
+  \begin{equation}
+    \sum_{e \in \delta^-(S)}^{} l(e) = M + 0 = M,
+  \end{equation}
+  and
+  \begin{equation}
+    \sum_{e \in \delta^+(S)}^{} u(e) =
+    \sum_{e \in \delta^+(S)}^{} c(e) =
+    \capc_c(\delta^+(S)).
+  \end{equation}
+  The second condition in Hoffman's circulation theorem then reduces to
+  \begin{equation}
+    M \leq \capc_c(\delta^+(S))
+  \end{equation}
+  for all \(S \subseteq V\), which we know to be true as \(M\) is minimal.
+
+  The Ford-Fulkerson algorithm starts out with a zero flow \(x = 0\).
+  It then repeatedly looks for an \(x\)-augmenting path \(P\) in
+  \(D_x\), and if it exists then increase the forward edges in the
+  path by the determined amount \(\varepsilon\), while decreasing the
+  value of the backward edges by \(\varepsilon\).
+\end{solution}
